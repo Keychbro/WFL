@@ -9,7 +9,7 @@ namespace WOFL.Settings
     {
         #region Variables
 
-        //[SerializeField] private Skin[]
+        [SerializeField] private Skin[] _skins;
 
         #endregion
     }
