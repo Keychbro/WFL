@@ -88,6 +88,7 @@ namespace Kamen.UI
         #region Properties
 
         public float TransitionDuration { get => _transitionInfo.Duration; }
+        public string StartScreen { get => _startScreen; }
 
         #endregion
 
