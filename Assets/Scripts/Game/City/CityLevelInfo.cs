@@ -24,8 +24,8 @@ namespace WOFL.Settings
         public Sprite CityView { get => _cityView; }
         public float ProduceGoldPerSeconds { get => _produceGoldPerSeconds; }
         public float ProduceDiamondsPerSeconds { get => _produceDimondsPerSeconds; }
-        public float _produceToolsPerSeconds { get => _produceToolsPerSeconds; }
-        public int AmountToolsToUpgrade { get => _amountCardToUpgrade; }
+        public float ProduceToolsPerSeconds { get => _produceToolsPerSeconds; }
+        public int AmountToolsToUpgrade { get => _amountToolsToUpgrade; }
 
         #endregion
     }

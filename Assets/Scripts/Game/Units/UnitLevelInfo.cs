@@ -24,7 +24,7 @@ namespace WOFL.Settings
 
         public int MaxHealthValue { get => _maxHealthValue; }
         public WeaponLevelInfo WeaponInfo { get => _weaponInfo; }
-        public int GolldForKill { get => _goldForKill; }
+        public int AmountGoldForKill { get => _amountGoldForKill; }
 
         public int AmountCardToUpgrade { get => _amountCardToUpgrade; }
         public int AmountGoldToUpgrade { get => _amountGoldToUpgrade; }
