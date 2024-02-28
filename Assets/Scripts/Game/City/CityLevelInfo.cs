@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,24 +9,48 @@ namespace WOFL.Settings
     [CreateAssetMenu(fileName = "City Level Info", menuName = "WOFL/Settings/City Level Info", order = 1)]
     public class CityLevelInfo : ScriptableObject
     {
+        #region Classes
+
+        [Serializable] public class ResourceProduceInfo
+        {
+            #region ResourceProduceInfo Variables
+
+            [SerializeField] private Resources _type;
+            [SerializeField] private float _producePerSeconds;
+
+            #endregion
+
+            #region ResourceProduceInfo Properties
+
+            public Resources Type { get => _type; }
+            public float ProducePerSeconds { get => _producePerSeconds; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
-        [Header("Settings")]
+        [Header("View Settings")]
         [SerializeField] private Sprite _cityView;
-        [SerializeField] private float _produceGoldPerSeconds;
-        [SerializeField] private float _produceDimondsPerSeconds;
-        [SerializeField] private float _produceToolsPerSeconds;
-        [SerializeField] private int _amountToolsToUpgrade;
+        [Header("Level Up Settings")]
+        [SerializeField] private int _amountToolsToLevelUp;
+        [SerializeField] private int _amountCompleteLevelsToLevelUp;
+
+        [Header("Produce Settings")]
+        [SerializeField] private ResourceProduceInfo[] _resourceProduceInfos;
 
         #endregion
 
         #region Properties
 
         public Sprite CityView { get => _cityView; }
-        public float ProduceGoldPerSeconds { get => _produceGoldPerSeconds; }
-        public float ProduceDiamondsPerSeconds { get => _produceDimondsPerSeconds; }
-        public float ProduceToolsPerSeconds { get => _produceToolsPerSeconds; }
-        public int AmountToolsToUpgrade { get => _amountToolsToUpgrade; }
+
+        public int AmountToolsToLevelUp { get => _amountToolsToLevelUp; }
+        public int AmountCompleteLevelsToLevelUp { get => _amountCompleteLevelsToLevelUp; }
+
+        public ResourceProduceInfo[] ResourceProduceInfos { get => _resourceProduceInfos; }
 
         #endregion
     }

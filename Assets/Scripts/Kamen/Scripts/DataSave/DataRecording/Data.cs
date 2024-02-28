@@ -19,6 +19,10 @@ namespace Kamen.DataSave
         [SerializeField] private int _tools;
         public event Action OnToolsAmountChanged;
 
+        [Header("City")]
+        [SerializeField] private int _cityLevel;
+        public event Action OnCityLevelChanged;
+
         public Action OnDataChanged;
 
         #endregion
@@ -35,6 +39,9 @@ namespace Kamen.DataSave
             }
         }
 
+        #endregion
+
+        #region Currency Properties
         public int Gold
         {
             get => _gold;
@@ -42,7 +49,7 @@ namespace Kamen.DataSave
             {
                 if (value < 0)
                 {
-                    Debug.LogError($"[Data] - Attempt to assign variable ''_gold'' 0 value");
+                    Debug.LogError($"[Data] - Attempt to assign variable ''_gold'' minus value");
                     return;
                 }
 
@@ -57,7 +64,7 @@ namespace Kamen.DataSave
             {
                 if (value < 0)
                 {
-                    Debug.LogError($"[Dats] - Attempy to assign variable ''_diamonds'' 0 value ");
+                    Debug.LogError($"[Dats] - Attempy to assign variable ''_diamonds'' minus value ");
                     return;
                 }
 
@@ -72,12 +79,32 @@ namespace Kamen.DataSave
             {
                 if (value < 0)
                 {
-                    Debug.LogError($"[Dats] - Attempy to assign variable ''_tools'' 0 value ");
+                    Debug.LogError($"[Dats] - Attempy to assign variable ''_tools'' minus value ");
                     return;
                 }
 
                 _tools = value;
                 OnToolsAmountChanged?.Invoke();
+            }
+        }
+
+        #endregion
+
+        #region City Properties
+
+        public int CityLevel
+        {
+            get => _cityLevel;
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError($"[Data] - Attempt to assign variable ''_cityLevel'' minus value");
+                    return;
+                }
+
+                _cityLevel = value;
+                OnCityLevelChanged?.Invoke();
             }
         }
 

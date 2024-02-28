@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kamen.DataSave;
 
-public class ToolsViewUpdater : MonoBehaviour
+namespace WOFL.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ToolsViewUpdater : CurrencyViewUpdaterBase
     {
-        
-    }
+        #region Control Methods
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DataSaveManager.Instance.MyData.OnToolsAmountChanged += UpdateText;
+            UpdateText();
+        }
+
+        protected override void Unsubscribe()
+        {
+            DataSaveManager.Instance.MyData.OnToolsAmountChanged -= UpdateText;
+        }
+
+        protected override void UpdateText() => _viewText.text = DataSaveManager.Instance.MyData.Tools.ToString();
+
+        #endregion
     }
 }

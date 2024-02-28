@@ -13,6 +13,7 @@ namespace WOFL.UI
         {
             base.Initialize();
             DataSaveManager.Instance.MyData.OnGoldAmountChanged += UpdateText;
+            UpdateText();
         }
 
         protected override void Unsubscribe()
