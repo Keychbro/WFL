@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ce38556f3c7fb4db9c210666481b76, type: 3}
+  m_Name: Human_Warrior_LevelHolder
+  m_EditorClassIdentifier: 
+  _unitLevelsInfo:
+  - {fileID: 11400000, guid: 16ddd24d5fcff554d9b2a70aa8161ae4, type: 2}
+  - {fileID: 11400000, guid: 6d4c709c8eb229742ae7792635c95d15, type: 2}
+  - {fileID: 11400000, guid: 2cd42b99c523fd5449def2b4710e5945, type: 2}
+  - {fileID: 11400000, guid: 617c86ffa56699f47b3df66a8bbb677c, type: 2}
+  - {fileID: 11400000, guid: 982cc3943106492438951819806f87e7, type: 2}
+  - {fileID: 11400000, guid: 2d4f046baca690048bca829d66b24795, type: 2}
+  - {fileID: 11400000, guid: 78eb5d9484a0c6d47aabe45f38f45d8e, type: 2}
+  - {fileID: 11400000, guid: 6e65e236b4849544f810d5a219d6fff6, type: 2}
+  - {fileID: 11400000, guid: 71488f95ed5da7945b5c3d2e93c2957a, type: 2}
+  - {fileID: 11400000, guid: 5a38913dd3341504d979f4f5d119309a, type: 2}

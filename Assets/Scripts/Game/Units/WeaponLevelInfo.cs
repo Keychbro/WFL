@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WOFL.Settings
 {
-    [CreateAssetMenu(fileName = "Weapon Level Info", menuName = "WOFL/Settings/Weapon Level Info", order = 1)]
+    [CreateAssetMenu(fileName = "Weapon Level Info", menuName = "WOFL/Settings/Units/Weapon Level Info", order = 1)]
     public class WeaponLevelInfo : ScriptableObject
     {
         #region Variables

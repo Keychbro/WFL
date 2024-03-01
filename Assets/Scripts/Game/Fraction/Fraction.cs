@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WOFL.Settings;
 
 namespace WOFL.Game
 {
@@ -11,10 +12,10 @@ namespace WOFL.Game
 
         public enum FractionName
         {
-            Ice,
-            Fire,
-            Blood,
-            Weapon
+            Angle,
+            Demon,
+            Vampire,
+            Human
         }
 
         #endregion
@@ -23,12 +24,14 @@ namespace WOFL.Game
 
         [Header("Settings")]
         [SerializeField] private FractionName _name;
+        [SerializeField] private CastleSettings _castleSettings;
 
         #endregion
 
         #region Properties
 
         public FractionName Name { get => _name; }
+        public CastleSettings CastleSettings { get => _castleSettings; }
 
         #endregion
     }

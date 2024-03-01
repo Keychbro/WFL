@@ -23,6 +23,10 @@ namespace Kamen.DataSave
         [SerializeField] private int _cityLevel;
         public event Action OnCityLevelChanged;
 
+        [Header("Castle")]
+        [SerializeField] private int _castleManaSpeedCollectLevel;
+        [SerializeField] private int _castleHealthIncreaseLevel;
+
         public Action OnDataChanged;
 
         #endregion
@@ -109,6 +113,29 @@ namespace Kamen.DataSave
                 _cityLevel = value;
                 OnCityLevelChanged?.Invoke();
                 OnDataChanged?.Invoke();
+            }
+        }
+
+        #endregion
+
+        #region Castle Properties
+
+        public int CastleManaSpeedCollectLevel 
+        { 
+            get => _castleManaSpeedCollectLevel; 
+            set
+            {
+                if (value < 0) return;
+                _castleManaSpeedCollectLevel = value;
+            }
+        }
+        public int CastleHealthIncreaseLevel 
+        { 
+            get => _castleHealthIncreaseLevel;
+            set
+            {
+                if (value < 0) return;
+                _castleHealthIncreaseLevel = value;
             }
         }
 

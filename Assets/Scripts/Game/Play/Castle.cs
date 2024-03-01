@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WOFL.Settings;
+using Kamen.DataSave;
 
 namespace WOFL.Game
 {
@@ -13,6 +15,7 @@ namespace WOFL.Game
         [Header("Variables")]
         private int _currentHealth;
         private int _currentMana;
+        private CastleSettings _castleSettings;
 
         #endregion
 
@@ -20,7 +23,6 @@ namespace WOFL.Game
 
         public int CurrentGold { get; private set; }
         public int MaxHealth { get; }
-
         public int Mana { get => _currentMana; }
 
         public event Action<int> OnTakedDamage;
@@ -37,10 +39,11 @@ namespace WOFL.Game
         }
         public IEnumerator Collect()
         {
+            float fillDuration = 100f / _castleSettings.StartManaSpeedCollectValue + _castleSettings.IncreaseManaSpeedCollectStep * DataSaveManager.Instance.MyData.CastleManaSpeedCollectLevel;
             while (true)
             {
-                DOVirtual.Float(0f, 1f, 1, CallOnManaFiller);
-                yield return new WaitForSeconds(1);
+                DOVirtual.Float(0f, 1f, fillDuration, CallOnManaFiller);
+                yield return new WaitForSeconds(fillDuration);
                 _currentMana++;
                 OnManaValueChanged?.Invoke();
             }
