@@ -13,14 +13,11 @@ MonoBehaviour:
   m_Name: CityLevel_0
   m_EditorClassIdentifier: 
   _cityView: {fileID: 21300000, guid: b4a6a7b801abea545a2f80611afa1c21, type: 3}
-  _amountToolsToLevelUp: 10
+  _price: 10
   _amountCompleteLevelsToLevelUp: 10
-  _producesGoldPerSeconds: 0.1
-  _producesDimondsPerSeconds: 0
-  _producesToolsPerSeconds: 0
   _resourceProduceInfos:
   - _type: 0
-    _producePerSeconds: 0.1
+    _producePerSeconds: 0
   - _type: 1
     _producePerSeconds: 0
   - _type: 2

@@ -2,6 +2,7 @@ using Kamen.DataSave;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WOFL.Control;
 
 namespace WOFL.UI
 {
@@ -21,7 +22,7 @@ namespace WOFL.UI
             DataSaveManager.Instance.MyData.OnGoldAmountChanged -= UpdateText;
         }
 
-        protected override void UpdateText() => _viewText.text = DataSaveManager.Instance.MyData.Gold.ToString();
+        protected override void UpdateText() => _viewText.text = BigNumberViewConverter.Instance.Convert(DataSaveManager.Instance.MyData.Gold);
 
         #endregion
     }

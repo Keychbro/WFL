@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cityView: {fileID: 21300000, guid: 589cf188312eee448851afcf63da4b1f, type: 3}
   _amountToolsToLevelUp: 20000
+  _price: 20000
   _amountCompleteLevelsToLevelUp: 400
-  _producesGoldPerSeconds: 20
-  _producesDimondsPerSeconds: 0.04
-  _producesToolsPerSeconds: 2
   _resourceProduceInfos:
   - _type: 0
     _producePerSeconds: 20

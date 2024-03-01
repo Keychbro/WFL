@@ -35,7 +35,7 @@ namespace WOFL.Settings
         [Header("View Settings")]
         [SerializeField] private Sprite _cityView;
         [Header("Level Up Settings")]
-        [SerializeField] private int _amountToolsToLevelUp;
+        [SerializeField] private int _price;
         [SerializeField] private int _amountCompleteLevelsToLevelUp;
 
         [Header("Produce Settings")]
@@ -47,7 +47,7 @@ namespace WOFL.Settings
 
         public Sprite CityView { get => _cityView; }
 
-        public int AmountToolsToLevelUp { get => _amountToolsToLevelUp; }
+        public int Price { get => _price; }
         public int AmountCompleteLevelsToLevelUp { get => _amountCompleteLevelsToLevelUp; }
 
         public ResourceProduceInfo[] ResourceProduceInfos { get => _resourceProduceInfos; }
