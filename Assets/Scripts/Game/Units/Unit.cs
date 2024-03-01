@@ -12,9 +12,6 @@ namespace WOFL.Game
     {
         #region Variables
 
-        [Header("Objects")]
-        [SerializeField] private HealthBar _healtBar;
-
         [Header("Settings")]
         [SerializeField] private string _name;
         [SerializeField] private int _startHealthValue;

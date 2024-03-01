@@ -49,7 +49,7 @@ namespace WOFL.UI
             _cityView.sprite = _currentLevelInfo.CityView;
             for (int i = 0; i < _resourceInfos.Length; i++)
             {
-                _resourceInfos[i].ResourceHandler( _currentLevelInfo.ResourceProduceInfos.First(resourceProduceInfo => resourceProduceInfo.Type == _resourceInfos[i].Type));
+                _resourceInfos[i].ResourceHandler(_currentLevelInfo.ResourceProduceInfos.First(resourceProduceInfo => resourceProduceInfo.Type == _resourceInfos[i].Type));
             }
 
             _levelUpButton.UpdateButtonView(DataSaveManager.Instance.MyData.CityLevel, DataSaveManager.Instance.MyData.CityLevel == _levelInfos.Length);
