@@ -9,6 +9,7 @@ namespace WOFL.Settings
     {
         #region Variables
 
+        [SerializeField] private string _uniqueName;
         [SerializeField] private Sprite _skinSprite;
         [SerializeField] private UnlockStatus _unlockStatus;
 
@@ -16,6 +17,7 @@ namespace WOFL.Settings
 
         #region Properties
 
+        public string UniqueName { get => _uniqueName; }
         public Sprite SkinSprite { get => _skinSprite; }
         public UnlockStatus UnlockStatus { get => _unlockStatus; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WOFL.Game;
 using Kamen;
+using Kamen.DataSave;
 
 namespace WOFL.Control
 {
@@ -15,11 +16,18 @@ namespace WOFL.Control
 
         #endregion
 
+        #region Properties
+
+        public Fraction[] Fractions { get => _fractions; }
+
+        #endregion
+
         #region Unity Methods
 
         protected override void Awake()
         {
             base.Awake();
+            InitializeUnitsInBase();
         }
 
         #endregion
@@ -28,7 +36,11 @@ namespace WOFL.Control
 
         private void InitializeUnitsInBase()
         {
-
+            for (int i = 0; i < _fractions.Length; i++)
+            {
+                DataSaveManager.Instance.MyData.AdjustUnitsDatas(_fractions[i].Units);
+            }
+            DataSaveManager.Instance.SaveData();
         }
 
         #endregion

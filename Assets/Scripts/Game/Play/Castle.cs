@@ -6,6 +6,7 @@ using UnityEngine;
 using WOFL.Settings;
 using Kamen.DataSave;
 using System.Linq;
+using WOFL.Save;
 
 namespace WOFL.Game
 {
@@ -31,8 +32,9 @@ namespace WOFL.Game
         public int CurrentMana { get; private set; }
         public float ManaFillDuration { get; private set; }
 
-        public event Action<int> OnTakedDamage;
+        public UnitInfo[] Units { get => _units; }
 
+        public event Action<int> OnTakedDamage;
         public event Action OnManaValueChanged;
         public event Action<float> OnManaFilled;
 
@@ -40,24 +42,36 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize(CastleSettings castleSettings)
+        public void Initialize(CastleSettings castleSettings, UnitInfo[] units)
         {
             _castleSettings = castleSettings;
 
             _castleView.sprite = _castleSettings.CastleView;
             MaxHealth = _castleSettings.StartHealth + _castleSettings.IncreaseHealthStep * DataSaveManager.Instance.MyData.CastleHealthIncreaseLevel;
             ManaFillDuration = 100f / _castleSettings.StartManaSpeedCollectValue + _castleSettings.IncreaseManaSpeedCollectStep * DataSaveManager.Instance.MyData.CastleManaSpeedCollectLevel;
+
+            _units = units;
+
+            StartCoroutine(Collect());
         }
         private void CreateUnitForMana(string name)
         {
-            UnitInfo createdUnit = GetUnitInfoByName(name);
-            if (createdUnit != null)
-            {
-                Debug.LogError($"[Castle] - Unit with name <<{name}>>, doesnt exist!");
-                return;
-            }
+            UnitInfo createdUnitInfo = GetUnitInfoByName(name);
+            if (CheckUnitForNull(createdUnitInfo)) return;
 
-            U
+            UnitDataForSave unitData = DataSaveManager.Instance.MyData.UnitsDatas.First(unitData => unitData.UniqueName == createdUnitInfo.UniqueName);
+            if (!CheckUnitForLevel(createdUnitInfo, unitData)) return;
+            if (!CheckUnitForMana(createdUnitInfo, unitData)) return;
+
+            Unit createdUnit = Instantiate(createdUnitInfo.Prefab, _unitsSpawnPoint.position, transform.rotation, transform);
+            CurrentMana -= createdUnitInfo.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice;
+        }
+        private void CreateUnitForFree(string name)
+        {
+            UnitInfo createdUnitInfo = GetUnitInfoByName(name);
+            if (CheckUnitForNull(createdUnitInfo)) return;
+
+            Unit createdUnit = Instantiate(createdUnitInfo.Prefab, _unitsSpawnPoint.position, transform.rotation, transform);
         }
         private UnitInfo GetUnitInfoByName(string name)
         {
@@ -72,7 +86,7 @@ namespace WOFL.Game
         {
             while (true)
             {
-                DOVirtual.Float(0f, 1f, ManaFillDuration, CallOnManaFiller);
+                DOVirtual.Float(0f, 1f, ManaFillDuration, CallOnManaFiller).SetEase(Ease.Linear);
                 yield return new WaitForSeconds(ManaFillDuration);
                 CurrentMana++;
                 OnManaValueChanged?.Invoke();
@@ -107,10 +121,6 @@ namespace WOFL.Game
 
         #region Spawn Unit Checks Methods
 
-        private bool DoAllUnitChecks()
-        {
-
-        }
         private bool CheckUnitForNull(UnitInfo unit)
         {
             if (unit != null)
@@ -120,13 +130,15 @@ namespace WOFL.Game
             }
             return true;
         }
-        private bool CheckUnitForLevel(UnitInfo unit)
+        private bool CheckUnitForLevel(UnitInfo unit, UnitDataForSave unitData)
         {
-            if ()
+            if (unitData.CurrentLevel == 0) return false;
+            return true;
         }
-        private bool CheckUnitForMana()
+        private bool CheckUnitForMana(UnitInfo unit, UnitDataForSave unitData)
         {
-
+            if (unit.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice < CurrentMana) return false;
+            return true;
         }
 
         #endregion

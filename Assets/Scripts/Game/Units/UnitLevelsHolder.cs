@@ -9,13 +9,13 @@ namespace WOFL.Settings
     {
         #region Variables
 
-        [SerializeField] private UnitLevelInfo[] _unitLevelsInfo;
+        [SerializeField] private UnitLevelInfo[] _levels;
 
         #endregion
 
         #region Properties
 
-        public UnitLevelInfo[] UnitLevelsInfo { get => _unitLevelsInfo; } 
+        public UnitLevelInfo[] Levels { get => _levels; } 
 
         #endregion
     }

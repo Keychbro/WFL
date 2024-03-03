@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 667be2be6d679c84ea51387149525c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _castleView: {fileID: 2061933221072097313}
+  _unitsSpawnPoint: {fileID: 4650033365128800733}
 --- !u!1 &2569561212610399198
 GameObject:
   m_ObjectHideFlags: 0

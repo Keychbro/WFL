@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using WOFL.Save;
 using WOFL.Settings;
 using System.Linq;
+using WOFL.Game;
 
 namespace Kamen.DataSave
 {
@@ -32,6 +33,9 @@ namespace Kamen.DataSave
 
         [Header("Units")]
         [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
+
+        [Header("Fraction")]
+        [SerializeField] private Fraction.FractionName _choosenFraction;
 
         public Action OnDataChanged;
 
@@ -161,10 +165,21 @@ namespace Kamen.DataSave
             {
                 if (!UnitsDatas.Any(unitData => unitData.UniqueName == unitsInfos[i].UniqueName))
                 {
-                    UnitsDatas.Add(new UnitDataForSave());
+                     List<string> obtainedUnitList = unitsInfos[i].SkinsHolder.Skins
+                        .Where(skin => skin.UnlockStatus != UnlockStatus.Locked)
+                        .Select(skin => skin.name)
+                        .ToList();
+
+                    UnitsDatas.Add(new UnitDataForSave(unitsInfos[i].UniqueName, obtainedUnitList, obtainedUnitList[0]));
                 }
             }
         }
+
+        #endregion
+
+        #region Fraction Methods
+
+        public Fraction.FractionName ChoosenFraction { get => _choosenFraction; }
 
         #endregion
     }

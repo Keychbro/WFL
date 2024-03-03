@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WOFL.Save
 {
-    [Serializable] public struct UnitDataForSave
+    [Serializable] public class UnitDataForSave
     {
         #region Variables
 

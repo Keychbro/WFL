@@ -13,33 +13,32 @@ namespace WOFL.UI
         #region Variables
 
         [Header("Objects")]
-        [SerializeField] private Castle _playerCastle;
-        [Space]
         [SerializeField] private TextMeshProUGUI _currentManaValue;
         [SerializeField] private Slider _manaFiller;
+
+        [Header("Variables")]
+        [SerializeField] private Castle _castle;
 
         #endregion
 
         #region Unity Methods
 
-        private void Start()
-        {
-            Initialize();
-        }
         private void OnDestroy()
         {
-            _playerCastle.OnManaFilled -= UpdateFillerView;
-            _playerCastle.OnManaValueChanged -= UpdateManaAmountValue;
+            _castle.OnManaFilled -= UpdateFillerView;
+            _castle.OnManaValueChanged -= UpdateManaAmountValue;
         }
 
         #endregion
 
         #region Control Methods
 
-        private void Initialize()
+        public void Initialize(Castle castle)
         {
-            _playerCastle.OnManaFilled += UpdateFillerView;
-            _playerCastle.OnManaValueChanged += UpdateManaAmountValue;
+            _castle = castle;
+
+            _castle.OnManaFilled += UpdateFillerView;
+            _castle.OnManaValueChanged += UpdateManaAmountValue;
 
             _manaFiller.value = 0;
 
@@ -47,7 +46,7 @@ namespace WOFL.UI
             UpdateFillerView(0);
         }
         private void UpdateFillerView(float value) => _manaFiller.value = value;
-        private void UpdateManaAmountValue() => _currentManaValue.text = BigNumberViewConverter.Instance.Convert(_playerCastle.Mana);
+        private void UpdateManaAmountValue() => _currentManaValue.text = BigNumberViewConverter.Instance.Convert(_castle.CurrentMana);
 
         #endregion
     }

@@ -12,8 +12,8 @@ namespace WOFL.Settings
 
         [Header("Settings")]
         [SerializeField] private string _uniqueName;
-        [SerializeField] private UnitLevelsHolder _levels;
-        [SerializeField] private SkinsHolder _skins;
+        [SerializeField] private UnitLevelsHolder _levelsHolder;
+        [SerializeField] private SkinsHolder _skinsHolder;
         [SerializeField] private Unit _prefab;
 
         #endregion
@@ -21,8 +21,8 @@ namespace WOFL.Settings
         #region Properties
 
         public string UniqueName { get => _uniqueName; }
-        public UnitLevelsHolder Levels { get => _levels; }
-        public SkinsHolder Skins { get => _skins; }
+        public UnitLevelsHolder LevelsHolder { get => _levelsHolder; }
+        public SkinsHolder SkinsHolder { get => _skinsHolder; }
         public Unit Prefab { get => _prefab; }
 
         #endregion
