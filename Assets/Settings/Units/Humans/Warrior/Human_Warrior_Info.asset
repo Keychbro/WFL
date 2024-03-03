@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff196f89e6a86554eb81fa78fcfb5e93, type: 3}
+  m_Name: Human_Warrior_Info
+  m_EditorClassIdentifier: 
+  _uniqueName: Human_Warrior_001
+  _levels: {fileID: 11400000, guid: bf68ae4f61cbedd4795987a15a98b170, type: 2}
+  _skins: {fileID: 11400000, guid: bfab1d7e36b308d4f9cece693fa9fe83, type: 2}
+  _prefab: {fileID: 0}

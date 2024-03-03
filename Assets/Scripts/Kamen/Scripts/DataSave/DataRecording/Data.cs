@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using WOFL.Save;
+using WOFL.Settings;
+using System.Linq;
 
 namespace Kamen.DataSave
 {
@@ -26,6 +29,9 @@ namespace Kamen.DataSave
         [Header("Castle")]
         [SerializeField] private int _castleManaSpeedCollectLevel;
         [SerializeField] private int _castleHealthIncreaseLevel;
+
+        [Header("Units")]
+        [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
 
         public Action OnDataChanged;
 
@@ -136,6 +142,27 @@ namespace Kamen.DataSave
             {
                 if (value < 0) return;
                 _castleHealthIncreaseLevel = value;
+            }
+        }
+
+        #endregion
+
+        #region Unit Properties
+
+        public List<UnitDataForSave> UnitsDatas { get => _unitsDatas; }
+
+        #endregion
+
+        #region Unit Methods
+
+        public void AdjustUnitsDatas(UnitInfo[] unitsInfos)
+        {
+            for (int i = 0; i < unitsInfos.Length; i++)
+            {
+                if (!UnitsDatas.Any(unitData => unitData.UniqueName == unitsInfos[i].UniqueName))
+                {
+                    UnitsDatas.Add(new UnitDataForSave());
+                }
             }
         }
 

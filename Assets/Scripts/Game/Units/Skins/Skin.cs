@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WOFL.Settings
 {
-    [CreateAssetMenu(fileName = "Skin", menuName = "WOFL/Settings/Skin", order = 1)]
+    [CreateAssetMenu(fileName = "Skin", menuName = "WOFL/Settings/Units/Skin", order = 1)]
     public class Skin : ScriptableObject
     {
         #region Variables

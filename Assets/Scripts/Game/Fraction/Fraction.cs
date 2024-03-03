@@ -25,6 +25,7 @@ namespace WOFL.Game
         [Header("Settings")]
         [SerializeField] private FractionName _name;
         [SerializeField] private CastleSettings _castleSettings;
+        [SerializeField] private UnitInfo[] _units;
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace WOFL.Game
 
         public FractionName Name { get => _name; }
         public CastleSettings CastleSettings { get => _castleSettings; }
+        public UnitInfo[] Units { get => _units; }
 
         #endregion
     }

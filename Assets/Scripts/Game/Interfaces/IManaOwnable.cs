@@ -9,7 +9,8 @@ namespace WOFL.Game
     {
         #region Properties
 
-        public int Mana { get; }
+        public int CurrentMana { get; }
+        public float ManaFillDuration { get; }
         public event Action OnManaValueChanged;
         public event Action<float> OnManaFilled;
 
