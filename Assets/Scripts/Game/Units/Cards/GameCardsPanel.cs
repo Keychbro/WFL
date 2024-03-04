@@ -13,7 +13,10 @@ namespace WOFL.UI
 
         [Header("Prefabs")]
         [SerializeField] private UnitCardInGame _unitCardPrefab;
-        [SerializeField] private GameObject _cardsHolder;
+
+        [Header("Objects")]
+        [SerializeField] private RectTransform _cardsHolder;
+        [SerializeField] private ScrollRect _cardScroll;
 
         [Header("Variables")]
         private Castle _currentCastle;
@@ -34,12 +37,15 @@ namespace WOFL.UI
                 CreateUnitCard(_units[i]);
             }
             _currentCastle.OnManaValueChanged += UpdateCards;
+
+            if (_cardsHolder.sizeDelta.x < _cardScroll.GetComponent<RectTransform>().sizeDelta.x) _cardScroll.horizontal = false;
         }
         private void CreateUnitCard(UnitInfo unitInfo)
         {
             UnitCardInGame unitCard = Instantiate(_unitCardPrefab, _cardsHolder.transform);
             unitCard.Adjust(unitInfo);
             unitCard.OnClick.AddListener(() => CallSpawn(unitInfo.UniqueName));
+            unitCard.UpdateCardView(false);
 
             _unitCards.Add(unitCard);
         }

@@ -32,7 +32,7 @@ namespace WOFL.UI
         [SerializeField] private TextMeshProUGUI _manaAmountText;
 
         [Header("Close State Object")]
-        [SerializeField] private GameObject _cardClosedView;
+        [SerializeField] private UIWall _cardClosedWall;
 
         [Header("NoMana State Object")]
         [SerializeField] private UIWall _noManaWall;
@@ -40,6 +40,7 @@ namespace WOFL.UI
         [Header("Variables")]
         private UnitDataForSave _currentUnitData;
         private UnitInfo _currentUnitInfo;
+        private Skin _currentSkin;
         private CardState _state;
 
         #endregion
@@ -62,10 +63,10 @@ namespace WOFL.UI
             _canvasGroup = GetComponent<CanvasGroup>();
 
             _currentUnitData = DataSaveManager.Instance.MyData.GetUnitDataMyName(unitInfo.UniqueName);
-            Skin currentSkin = _currentUnitInfo.SkinsHolder.Skins.First(skin => skin.UniqueName == _currentUnitData.CurrentSkinName);
+            _currentSkin = _currentUnitInfo.SkinsHolder.Skins.First(skin => skin.UniqueName == _currentUnitData.CurrentSkinName);
             CardManaPrice = unitInfo.LevelsHolder.Levels[_currentUnitData.CurrentLevel].ManaPrice;
 
-            _unitView.sprite = currentSkin.SkinSprite;
+            _unitView.sprite = _currentSkin.SkinSprite;
             _unitTypeIcon.sprite = UnitTypeManager.Instance.GetLogoInfoByType(unitInfo.Type);
             _manaAmountText.text = CardManaPrice.ToString();
 
@@ -75,9 +76,14 @@ namespace WOFL.UI
         {
             if (_state == CardState.Closed) return;
 
+            if (_currentUnitData.CurrentLevel == 0)
+            {
+                Close();
+                return;
+            }
+
             if (isEnoughMana && _state != CardState.Ready) Ready();
             else if (!isEnoughMana && _state != CardState.NoMana) NoMana();
-            else if (_currentUnitData.CurrentLevel == 0) Close();
         }
         private void Ready()
         {
@@ -94,7 +100,8 @@ namespace WOFL.UI
         private void Close()
         {
             _button.interactable = false;
-            _cardClosedView.SetActive(true);
+            _unitView.sprite = _currentSkin.BWSkinSprite;
+            _cardClosedWall.Switch(true);
             _state = CardState.Closed;
         }
 

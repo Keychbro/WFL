@@ -167,7 +167,7 @@ namespace Kamen.DataSave
                 {
                      List<string> obtainedUnitList = unitsInfos[i].SkinsHolder.Skins
                         .Where(skin => skin.UnlockStatus != UnlockStatus.Locked)
-                        .Select(skin => skin.name)
+                        .Select(skin => skin.UniqueName)
                         .ToList();
 
                     UnitsDatas.Add(new UnitDataForSave(unitsInfos[i].UniqueName, obtainedUnitList, obtainedUnitList[0]));

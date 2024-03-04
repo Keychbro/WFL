@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ce38556f3c7fb4db9c210666481b76, type: 3}
+  m_Name: Human_Archer_Levels Holder
+  m_EditorClassIdentifier: 
+  _levels:
+  - {fileID: 11400000, guid: 5930a9e6836e046479175549ded82e18, type: 2}
+  - {fileID: 11400000, guid: 8727211760031214d9216339daf23aa4, type: 2}
+  - {fileID: 11400000, guid: afeb7db9789d0004a9c2b42f17207169, type: 2}
+  - {fileID: 11400000, guid: 29c853bd40c83c94db03b9e07c117054, type: 2}
+  - {fileID: 11400000, guid: 2c0ba2f8e88217c42b32ba1088b44197, type: 2}
+  - {fileID: 11400000, guid: e93b8d10a12beb54b833789dd693c9be, type: 2}
+  - {fileID: 11400000, guid: daa73f65e616fbc478ad1e48ea31df2c, type: 2}
+  - {fileID: 11400000, guid: a1471699e9e166c48a760647cab7e2b7, type: 2}
+  - {fileID: 11400000, guid: 7f57de699dd9a364197bdc9db84bc1ce, type: 2}
+  - {fileID: 11400000, guid: 107a1411e94f8c84ca52cd82ea080487, type: 2}

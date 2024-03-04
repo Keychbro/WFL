@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff196f89e6a86554eb81fa78fcfb5e93, type: 3}
+  m_Name: Human_Archer_Info
+  m_EditorClassIdentifier: 
+  _uniqueName: Human_Archer_002
+  _type: 1
+  _levelsHolder: {fileID: 11400000, guid: f6d7413c8478452409d2977038b8ff77, type: 2}
+  _skinsHolder: {fileID: 11400000, guid: 08633158c31247b469b678e56b2f01e9, type: 2}
+  _prefab: {fileID: 0}

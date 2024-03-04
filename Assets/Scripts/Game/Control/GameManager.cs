@@ -18,6 +18,7 @@ namespace WOFL.Control
         [SerializeField] private Castle _enemyCastle;
         [Space]
         [SerializeField] private ManaView _manaView;
+        [SerializeField] private GameCardsPanel _gameCardsPanel;
 
         [Header("Variables")]
         private Fraction _playerfraction;
@@ -43,6 +44,7 @@ namespace WOFL.Control
         {     
             _alliedCastle.Initialize(_playerfraction.CastleSettings, _playerfraction.Units);
             _manaView.Initialize(_alliedCastle);
+            _gameCardsPanel.Initialize(_alliedCastle, _playerfraction.Units);
         }
 
         #endregion
