@@ -22,8 +22,8 @@ namespace WOFL.Settings
 
         #region Properties
 
-        public UnitTypeManager.UnitType Type { get => _type; }
         public string UniqueName { get => _uniqueName; }
+        public UnitTypeManager.UnitType Type { get => _type; }
         public UnitLevelsHolder LevelsHolder { get => _levelsHolder; }
         public SkinsHolder SkinsHolder { get => _skinsHolder; }
         public Unit Prefab { get => _prefab; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Kamen;
 using System;
+using System.Linq;
 
 namespace WOFL.Control
 {
@@ -15,7 +16,8 @@ namespace WOFL.Control
             Warrior,
             Archer,
             King,
-            Barrack
+            Barrack,
+            Mage
         }
 
         #endregion
@@ -45,6 +47,12 @@ namespace WOFL.Control
 
         [Header("Settings")]
         [SerializeField] private UnitTypeInfo[] _typeInfos;
+
+        #endregion
+
+        #region Control Methods
+
+        public Sprite GetLogoInfoByType(UnitType type) => _typeInfos.First(typeInfo => typeInfo.Type == type).Logo;
 
         #endregion
     }

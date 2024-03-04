@@ -174,6 +174,10 @@ namespace Kamen.DataSave
                 }
             }
         }
+        public UnitDataForSave GetUnitDataMyName(string name)
+        {
+            return UnitsDatas.First(unitData => unitData.UniqueName == name);
+        }
 
         #endregion
 

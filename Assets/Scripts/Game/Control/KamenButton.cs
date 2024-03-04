@@ -12,14 +12,14 @@ namespace WOFL.Control
         #region Variables
 
         [Header("Variables")]
-        private Button _button;
-        private CanvasGroup _canvasGroup;
+        protected Button _button;
+        protected CanvasGroup _canvasGroup;
 
         #endregion
 
         #region Unity Methods
 
-        private void Start()
+        protected virtual void Start()
         {
             Initialize();
         }
@@ -28,7 +28,7 @@ namespace WOFL.Control
 
         #region Control Methods
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             _button = GetComponent<Button>();
             _canvasGroup = GetComponent<CanvasGroup>();

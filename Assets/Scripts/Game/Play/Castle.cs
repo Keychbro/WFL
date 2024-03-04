@@ -54,12 +54,12 @@ namespace WOFL.Game
 
             StartCoroutine(Collect());
         }
-        private void CreateUnitForMana(string name)
+        public void CreateUnitForMana(string name)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(name);
             if (CheckUnitForNull(createdUnitInfo)) return;
 
-            UnitDataForSave unitData = DataSaveManager.Instance.MyData.UnitsDatas.First(unitData => unitData.UniqueName == createdUnitInfo.UniqueName);
+            UnitDataForSave unitData = DataSaveManager.Instance.MyData.GetUnitDataMyName(createdUnitInfo.UniqueName);
             if (!CheckUnitForLevel(createdUnitInfo, unitData)) return;
             if (!CheckUnitForMana(createdUnitInfo, unitData)) return;
 

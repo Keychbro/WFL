@@ -15,8 +15,6 @@ namespace WOFL.UI
         [Header("Objects")]
         [SerializeField] private TextMeshProUGUI _currentManaValue;
         [SerializeField] private Slider _manaFiller;
-
-        [Header("Variables")]
         [SerializeField] private Castle _castle;
 
         #endregion
