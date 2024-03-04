@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WOFL.Game;
+using WOFL.Control;
 
 namespace WOFL.Settings
 {
@@ -12,6 +13,7 @@ namespace WOFL.Settings
 
         [Header("Settings")]
         [SerializeField] private string _uniqueName;
+        [SerializeField] private UnitTypeManager.UnitType _type;
         [SerializeField] private UnitLevelsHolder _levelsHolder;
         [SerializeField] private SkinsHolder _skinsHolder;
         [SerializeField] private Unit _prefab;
@@ -20,6 +22,7 @@ namespace WOFL.Settings
 
         #region Properties
 
+        public UnitTypeManager.UnitType Type { get => _type; }
         public string UniqueName { get => _uniqueName; }
         public UnitLevelsHolder LevelsHolder { get => _levelsHolder; }
         public SkinsHolder SkinsHolder { get => _skinsHolder; }

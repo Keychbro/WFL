@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class UnitCardInGame : MonoBehaviour
+namespace WOFL.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(Button))]
+    public class UnitCardInGame : MonoBehaviour
     {
-        
-    }
+        #region Variables
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [Header("Objects")]
+        [SerializeField] private Image _unitView;
+        [SerializeField] private Image _unitTypeIcon;
+        [SerializeField] private TextMeshProUGUI _manaAmountText;
+
+        [Header("Variables")]
+        private Button _button;
+
+        #endregion
+
+        #region Control Merthods
+
+        //private void 
+
+        #endregion
     }
 }
