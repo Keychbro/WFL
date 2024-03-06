@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ce38556f3c7fb4db9c210666481b76, type: 3}
+  m_Name: Human_King_Levels Holder
+  m_EditorClassIdentifier: 
+  _levels:
+  - {fileID: 11400000, guid: abcf8d1f56469b14f922fad80e10acdd, type: 2}
+  - {fileID: 11400000, guid: 8ca23a4bd1463594384698d0e9aa499c, type: 2}
+  - {fileID: 11400000, guid: c8bbc4e944f9f1e449f4f66676bce313, type: 2}
+  - {fileID: 11400000, guid: e530a464c66947b4da9cde5c0fb0f7fb, type: 2}
+  - {fileID: 11400000, guid: 133f3be75ba552f45b2be9f9b30ce676, type: 2}
+  - {fileID: 11400000, guid: be7f7c7758d278048a1f13f6acf00012, type: 2}
+  - {fileID: 11400000, guid: 4c92d9ff9878ece42a69d131b8fad926, type: 2}
+  - {fileID: 11400000, guid: 0ac6edc9ab412f6448457db26659075f, type: 2}
+  - {fileID: 11400000, guid: 33ae7dd111107c349aad3077fc2f3e7c, type: 2}
+  - {fileID: 11400000, guid: 326f4b1973b493c4599bc77d8435cdba, type: 2}

@@ -45,6 +45,12 @@ namespace WOFL.Control
             _alliedCastle.Initialize(_playerfraction.CastleSettings, _playerfraction.Units);
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, _playerfraction.Units);
+
+            if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
+            {
+                DataSaveManager.Instance.MyData.UnitsDatas[0].IncreaseLevel();
+                DataSaveManager.Instance.SaveData();
+            }
         }
 
         #endregion

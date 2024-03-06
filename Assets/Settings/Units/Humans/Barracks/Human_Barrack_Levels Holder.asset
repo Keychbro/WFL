@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ce38556f3c7fb4db9c210666481b76, type: 3}
+  m_Name: Human_Barrack_Levels Holder
+  m_EditorClassIdentifier: 
+  _levels:
+  - {fileID: 11400000, guid: db427025b61b3784b889c5c449a8759e, type: 2}
+  - {fileID: 11400000, guid: 1362e713042ea5e419ddafbd17b80132, type: 2}
+  - {fileID: 11400000, guid: a0fbc717b8731474887cbc14b914adde, type: 2}
+  - {fileID: 11400000, guid: 044ebb57f122dcf47b9cb7b4b44397c8, type: 2}
+  - {fileID: 11400000, guid: 6bbf477e11e303245a2ea641030969f7, type: 2}
+  - {fileID: 11400000, guid: 194c54d4399f13a4cb7142584e2515f0, type: 2}
+  - {fileID: 11400000, guid: b9b4c10a568ee4d4380fd2ae1f5d9afa, type: 2}
+  - {fileID: 11400000, guid: b0eb45666a32d64439909eca4aac0039, type: 2}
+  - {fileID: 11400000, guid: 2322c3b6d9f386b4a9248a8988a4c4e1, type: 2}
+  - {fileID: 11400000, guid: 7741545d35441ba42bdd70818e6bf289, type: 2}

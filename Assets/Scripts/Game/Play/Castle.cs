@@ -54,28 +54,32 @@ namespace WOFL.Game
 
             StartCoroutine(Collect());
         }
-        public void CreateUnitForMana(string name)
+        public void CreateUnitForMana(string uniqueName)
         {
-            UnitInfo createdUnitInfo = GetUnitInfoByName(name);
-            if (CheckUnitForNull(createdUnitInfo)) return;
+            UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
+            if (!CheckUnitForNull(createdUnitInfo)) return;
 
             UnitDataForSave unitData = DataSaveManager.Instance.MyData.GetUnitDataMyName(createdUnitInfo.UniqueName);
-            if (!CheckUnitForLevel(createdUnitInfo, unitData)) return;
+            if (!CheckUnitForLevel(unitData)) return;
             if (!CheckUnitForMana(createdUnitInfo, unitData)) return;
 
-            Unit createdUnit = Instantiate(createdUnitInfo.Prefab, _unitsSpawnPoint.position, transform.rotation, transform);
+            Unit createdUnit = Instantiate(createdUnitInfo.Prefab);
+            createdUnit.transform.position = _unitsSpawnPoint.position;
+            createdUnit.transform.parent = transform;
+
             CurrentMana -= createdUnitInfo.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice;
+            OnManaValueChanged?.Invoke();
         }
-        private void CreateUnitForFree(string name)
+        private void CreateUnitForFree(string uniqueName)
         {
-            UnitInfo createdUnitInfo = GetUnitInfoByName(name);
+            UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
             if (CheckUnitForNull(createdUnitInfo)) return;
 
             Unit createdUnit = Instantiate(createdUnitInfo.Prefab, _unitsSpawnPoint.position, transform.rotation, transform);
         }
-        private UnitInfo GetUnitInfoByName(string name)
+        private UnitInfo GetUnitInfoByName(string uniqueName)
         {
-            return _units.First(unit => unit.UniqueName == name);
+            return _units.First(unit => unit.UniqueName == uniqueName);
         }
 
         #endregion
@@ -121,23 +125,23 @@ namespace WOFL.Game
 
         #region Spawn Unit Checks Methods
 
-        private bool CheckUnitForNull(UnitInfo unit)
+        private bool CheckUnitForNull(UnitInfo unitInfo)
         {
-            if (unit != null)
+            if (unitInfo == null)
             {
-                Debug.LogError($"[Castle] - Unit with name <<{name}>>, doesnt exist!");
+                Debug.LogError($"[Castle] - Unit with uniqueName ''{unitInfo.UniqueName}'', doesnt exist!");
                 return false;
             }
             return true;
         }
-        private bool CheckUnitForLevel(UnitInfo unit, UnitDataForSave unitData)
+        private bool CheckUnitForLevel(UnitDataForSave unitData)
         {
             if (unitData.CurrentLevel == 0) return false;
             return true;
         }
         private bool CheckUnitForMana(UnitInfo unit, UnitDataForSave unitData)
         {
-            if (unit.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice < CurrentMana) return false;
+            if (CurrentMana < unit.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice) return false;
             return true;
         }
 

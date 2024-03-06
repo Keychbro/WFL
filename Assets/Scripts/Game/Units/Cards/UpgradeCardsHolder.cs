@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using WOFL.Game;
 using WOFL.Settings;
+using WOFL.Game;
 
 namespace WOFL.UI
 {
-    public class GameCardsPanel : MonoBehaviour
+    public class UpgradeCardsHolder : MonoBehaviour
     {
         #region Variables
 
         [Header("Prefabs")]
-        [SerializeField] private UnitCardInGame _unitCardPrefab;
+        [SerializeField] private UnitCardForUpgrade _unitCardPrefab;
 
         [Header("Objects")]
         [SerializeField] private RectTransform _cardsHolder;
         [SerializeField] private ScrollRect _cardScroll;
 
         [Header("Variables")]
-        private Castle _currentCastle;
         private UnitInfo[] _units;
         private List<UnitCardInGame> _unitCards = new List<UnitCardInGame>();
 

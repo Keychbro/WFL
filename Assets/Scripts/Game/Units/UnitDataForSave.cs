@@ -15,10 +15,13 @@ namespace WOFL.Save
         [Header("Level Settings")]
         [SerializeField] private int _currentLevel;
         [SerializeField] private int _amountCards;
+        public event Action OnCurrentLevelChanged;
+        public event Action OnAmountCardsChanged;
 
         [Header("Skin Settings")]
         [SerializeField] private List<string> _obtainedSkinsNames;
         [SerializeField] private string _currentSkinName;
+
 
         #endregion
 
@@ -38,6 +41,7 @@ namespace WOFL.Save
                     return;
                 }
                 _amountCards = value;
+                OnAmountCardsChanged?.Invoke();
             }
         }
 
@@ -73,7 +77,11 @@ namespace WOFL.Save
 
         #region Control Methods
 
-        public void IncreaseLevel() => _currentLevel++;
+        public void IncreaseLevel()
+        {
+            _currentLevel++;
+            OnCurrentLevelChanged?.Invoke();
+        }
         public override bool Equals(object? obj)
         {
             if (obj is UnitDataForSave unitData) return UniqueName == unitData.UniqueName;
