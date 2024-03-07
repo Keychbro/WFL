@@ -19,46 +19,30 @@ namespace WOFL.UI
         [SerializeField] private ScrollRect _cardScroll;
 
         [Header("Variables")]
-        private UnitInfo[] _units;
-        private List<UnitCardInGame> _unitCards = new List<UnitCardInGame>();
+        private UnitInfo[] _unitsInfo;
+        private List<UnitCardForUpgrade> _unitCards = new List<UnitCardForUpgrade>();
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize(Castle castle, UnitInfo[] units)
+        public void Initialize(UnitInfo[] units)
         {
-            _currentCastle = castle;
-            _units = units;
+            _unitsInfo = units;
 
-            for (int i = 0; i < _units.Length; i++)
+            for (int i = 0; i < _unitsInfo.Length; i++)
             {
-                CreateUnitCard(_units[i]);
+                CreateUnitCard(_unitsInfo[i]);
             }
-            _currentCastle.OnManaValueChanged += UpdateCards;
 
-            if (_cardsHolder.sizeDelta.x < _cardScroll.GetComponent<RectTransform>().sizeDelta.x) _cardScroll.horizontal = false;
+            if (_cardsHolder.sizeDelta.x < _cardScroll.GetComponent<RectTransform>().sizeDelta.x) _cardScroll.vertical = false;
         }
         private void CreateUnitCard(UnitInfo unitInfo)
         {
-            UnitCardInGame unitCard = Instantiate(_unitCardPrefab, _cardsHolder.transform);
-            unitCard.Adjust(unitInfo);
-            string uniqueName = unitInfo.UniqueName;
-            unitCard.OnClick.AddListener(() => CallSpawn(uniqueName));
-            unitCard.UpdateCardView(false);
+            UnitCardForUpgrade unitCard = Instantiate(_unitCardPrefab, _cardsHolder.transform);
+            unitCard.Initialize(unitInfo);
 
             _unitCards.Add(unitCard);
-        }
-        private void CallSpawn(string uniqueName)
-        {
-            _currentCastle.CreateUnitForMana(uniqueName);
-        }
-        private void UpdateCards()
-        {
-            for (int i = 0; i < _unitCards.Count; i++)
-            {
-                _unitCards[i].UpdateCardView(_currentCastle.CurrentMana >= _unitCards[i].CardManaPrice);
-            }
         }
 
         #endregion

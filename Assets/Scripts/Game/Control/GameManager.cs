@@ -25,9 +25,15 @@ namespace WOFL.Control
 
         #endregion
 
+        #region Properties
+
+        public Fraction PlayerFraction { get => _playerfraction; }
+
+        #endregion
+
         #region Unity Methods
 
-        private void Start()
+        protected override void Awake()
         {
             //_playerfraction = FractionManager.Instance.Fractions
             //    .First(fraction => fraction.Name == DataSaveManager.Instance.MyData.ChoosenFraction);
