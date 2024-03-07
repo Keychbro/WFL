@@ -68,7 +68,7 @@ namespace WOFL.UI
         }
         private void More()
         {
-
+            PopupManager.Instance.Show("UpgradeUnit");
         }
         private void BuyCard()
         {
