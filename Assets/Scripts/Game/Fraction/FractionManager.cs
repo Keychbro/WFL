@@ -4,6 +4,8 @@ using UnityEngine;
 using WOFL.Game;
 using Kamen;
 using Kamen.DataSave;
+using System.Linq;
+
 
 namespace WOFL.Control
 {
@@ -13,6 +15,9 @@ namespace WOFL.Control
 
         [Header("Settings")]
         [SerializeField] private Fraction[] _fractions;
+
+        [Header("Variables")]
+        private Fraction _currentFraction;
 
         #endregion
 
@@ -27,7 +32,9 @@ namespace WOFL.Control
         protected override void Awake()
         {
             base.Awake();
+
             InitializeUnitsInBase();
+            if (DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None) SetCurrentFraction();
         }
 
         #endregion
@@ -41,6 +48,14 @@ namespace WOFL.Control
                 DataSaveManager.Instance.MyData.AdjustUnitsDatas(_fractions[i].Units);
             }
             DataSaveManager.Instance.SaveData();
+        }
+        private void SetCurrentFraction()
+        {
+            _currentFraction = _fractions.First(fraction => (fraction.Name == DataSaveManager.Instance.MyData.ChoosenFraction));
+        }
+        public (string, Color) GetCurrentFractionAtributes()
+        {
+            return (_currentFraction.Name.ToString(), _currentFraction.MainColor);
         }
 
         #endregion

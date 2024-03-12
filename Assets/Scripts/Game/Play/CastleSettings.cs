@@ -14,7 +14,7 @@ namespace WOFL.Settings
         [SerializeField] private int _startHealth;
         [SerializeField] private float _startManaSpeedCollectValue;
 
-        [Header("Upgrade Settings")]
+        [Header("UpgradeUnit Settings")]
         [SerializeField] private int _increaseHealthStep;
         [SerializeField] private float _increaseManaSpeedCollectStep;
 

@@ -9,6 +9,7 @@ using Kamen.DataSave;
 using Kamen.UI;
 using System.Linq;
 using WOFL.Control;
+using System;
 
 namespace WOFL.UI
 {
@@ -33,6 +34,7 @@ namespace WOFL.UI
         private UnitInfo _unitInfo;
         private UnitDataForSave _unitData;
         private Skin _currentSkin;
+        public event Action<UnitDataForSave, UnitLevelsHolder, Skin> OnMoreButtonClicked;
 
         #endregion
 
@@ -68,6 +70,7 @@ namespace WOFL.UI
         }
         private void More()
         {
+            OnMoreButtonClicked?.Invoke(_unitData, _unitInfo.LevelsHolder, _currentSkin);
             PopupManager.Instance.Show("UpgradeUnit");
         }
         private void BuyCard()

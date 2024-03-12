@@ -12,6 +12,7 @@ namespace WOFL.Game
 
         public enum FractionName
         {
+            None,
             Angle,
             Demon,
             Vampire,
@@ -24,6 +25,7 @@ namespace WOFL.Game
 
         [Header("Settings")]
         [SerializeField] private FractionName _name;
+        [SerializeField] private Color32 _mainColor;
         [SerializeField] private CastleSettings _castleSettings;
         [SerializeField] private UnitInfo[] _units;
 
@@ -32,6 +34,7 @@ namespace WOFL.Game
         #region Properties
 
         public FractionName Name { get => _name; }
+        public Color32 MainColor { get => _mainColor; }
         public CastleSettings CastleSettings { get => _castleSettings; }
         public UnitInfo[] Units { get => _units; }
 

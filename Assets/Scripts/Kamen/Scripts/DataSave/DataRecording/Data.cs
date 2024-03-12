@@ -35,7 +35,7 @@ namespace Kamen.DataSave
         [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
 
         [Header("Fraction")]
-        [SerializeField] private Fraction.FractionName _choosenFraction;
+        [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.None;
 
         public Action OnDataChanged;
 

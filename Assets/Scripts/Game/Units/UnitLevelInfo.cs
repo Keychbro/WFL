@@ -15,7 +15,7 @@ namespace WOFL.Settings
         [SerializeField] private int _amountGoldForKill;
         [SerializeField] private int _manePrice;
 
-        [Header("Upgrade Settings")]
+        [Header("UpgradeUnit Settings")]
         [SerializeField] private int _amountCardToUpgrade;
         [SerializeField] private int _amountGoldToUpgrade;
 
