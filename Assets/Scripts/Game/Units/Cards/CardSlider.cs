@@ -18,12 +18,13 @@ namespace WOFL.UI
         [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _cardsAmountText;
         [SerializeField] private Slider _cardsAmountSlider;
-        [SerializeField] private Button _button;
+        [Space]
+        [SerializeField] private Image _buttonBackground;
+        [SerializeField] private TextMeshProUGUI _buttonText;
 
         [Header("Settings")]
         [SerializeField] private string _betweenSign;
         [SerializeField] private string _levelUpText;
-        [SerializeField] private string _cardLevelUpPopupName;
 
         [Header("Variables")]
         private UnitInfo _unitInfo;
@@ -36,7 +37,6 @@ namespace WOFL.UI
         private void OnDestroy()
         {
             _unitData.OnAmountCardsChanged -= UpdateCardAmountView;
-            _button.onClick.RemoveListener(Click);
         }
 
         #endregion
@@ -49,7 +49,6 @@ namespace WOFL.UI
             _unitData = unitData;
 
             _unitData.OnAmountCardsChanged += UpdateCardAmountView;
-            _button.onClick.AddListener(Click);
 
             AdjustSlider(_unitInfo.LevelsHolder.Levels[_unitData.CurrentLevel].AmountCardToUpgrade);
             UpdateCardAmountView();
@@ -71,10 +70,10 @@ namespace WOFL.UI
             if (currentValue < toLevelUpValue) _cardsAmountText.text = $"{currentValue} {_betweenSign} {toLevelUpValue}";
             else _cardsAmountText.text = _levelUpText;
         }
-        private void AdjustButton(bool isButtonActive) => _button.interactable = isButtonActive;
-        private void Click()
+        private void AdjustButton(bool isButtonActive)
         {
-            PopupManager.Instance.Show(_cardLevelUpPopupName);
+            _buttonBackground.gameObject.SetActive(isButtonActive);
+            _buttonText.gameObject.SetActive(isButtonActive);
         }
 
         #endregion

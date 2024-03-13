@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using WOFL.Settings;
 using WOFL.Game;
+using WOFL.Save;
+using System;
 
 namespace WOFL.UI
 {
@@ -24,6 +26,12 @@ namespace WOFL.UI
 
         #endregion
 
+        #region Properties
+
+        public bool IsInitialized { get; private set; }
+
+        #endregion
+
         #region Control Methods
 
         public void Initialize(UnitInfo[] units)
@@ -36,6 +44,8 @@ namespace WOFL.UI
             }
 
             if (_cardsHolder.sizeDelta.x < _cardScroll.GetComponent<RectTransform>().sizeDelta.x) _cardScroll.vertical = false;
+
+            IsInitialized = true;
         }
         private void CreateUnitCard(UnitInfo unitInfo)
         {
@@ -43,6 +53,13 @@ namespace WOFL.UI
             unitCard.Initialize(unitInfo);
 
             _unitCards.Add(unitCard);
+        }
+        public void SubscribeOnCardsMoreButton(Action<UnitDataForSave, UnitLevelsHolder, Skin> callback)
+        {
+            for (int i = 0; i < _unitCards.Count; i++)
+            {
+                _unitCards[i].OnUpgradeButtonClicked += callback;
+            }
         }
 
         #endregion

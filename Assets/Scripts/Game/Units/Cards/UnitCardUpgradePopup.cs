@@ -10,48 +10,17 @@ using WOFL.Game;
 using WOFL.Control;
 using WOFL.Save;
 using Kamen.DataSave;
+using Unity.VisualScripting;
 
 namespace WOFL.UI
 {
     public class UnitCardUpgradePopup : Popup
     {
-        #region Classes
-
-        [Serializable] private class UnitStats
-        {
-            #region UnitStats Variables
-
-            [SerializeField] private TextMeshProUGUI _healthAmount;
-            [SerializeField] private TextMeshProUGUI _damageAmount;
-            [SerializeField] private TextMeshProUGUI _manaPriceAmount;
-
-            #endregion
-
-            #region UnitStats Properties
-
-            public TextMeshProUGUI HealthAmount { get => _healthAmount; }
-            public TextMeshProUGUI DamageAmount { get => _damageAmount; }
-            public TextMeshProUGUI ManaPriceAmount { get => _manaPriceAmount; }
-
-            #endregion
-
-            #region Control Methods
-
-            public void UpdateStats(UnitLevelInfo levelInfo)
-            {
-                _healthAmount.text = $"{levelInfo.MaxHealthValue}";
-                _damageAmount.text = $"{levelInfo.WeaponInfo.Damage}";
-                _manaPriceAmount.text = $"{levelInfo.ManaPrice}";
-            }
-
-            #endregion
-        }
-
-        #endregion
-
         #region Variables
 
         [Header("Objects")]
+        [SerializeField] private UpgradeCardsHolder _upgradeCardHolder;
+        [Space]
         [SerializeField] private TextMeshProUGUI _levelText;
         [Space]
         [SerializeField] private Image _fractionNameBackground;
@@ -62,6 +31,7 @@ namespace WOFL.UI
         [SerializeField] private UnitStats _nextStats;
         [Space]
         [SerializeField] private KamenButton _upgradeButton;
+        [SerializeField] private TextMeshProUGUI _upgradePrice;
 
         [Header("Variables")]
         private UnitDataForSave _unitData;
@@ -70,20 +40,19 @@ namespace WOFL.UI
 
         #endregion
 
-        #region Properties
-
-
-
-
-        #endregion
-
         #region Control Methods
 
         public override void Initialize()
         {
-            base.Initialize();
+            StartCoroutine(WaitToInitialize());
+        }
+        private IEnumerator WaitToInitialize()
+        {
+            yield return new WaitUntil(() => _upgradeCardHolder.IsInitialized);
+            _upgradeCardHolder.SubscribeOnCardsMoreButton(AdjustStats);
             _upgradeButton.Initialize();
             _upgradeButton.OnClick().AddListener(UpgradeUnit);
+            base.Initialize();
         }
         public void AdjustStats(UnitDataForSave unitData, UnitLevelsHolder levelsHolder, Skin currentSkin)
         {
@@ -98,12 +67,24 @@ namespace WOFL.UI
             _currentStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel]);
             _nextStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel + 1]);
 
-            _upgradeButton.ChangeInteractable(_levelsHolder.Levels[unitData.CurrentLevel].AmountGoldToUpgrade <= DataSaveManager.Instance.MyData.Gold &&
-                _levelsHolder.Levels[unitData.CurrentLevel].AmountCardToUpgrade <= _levelsHolder.Levels[_unitData.CurrentLevel].AmountCardToUpgrade);
+            _upgradeButton.ChangeInteractable(CheckOpportunityToBuy());
+            _upgradePrice.text = $"{_levelsHolder.Levels[_unitData.CurrentLevel].AmountGoldToUpgrade}";
         }
         public void UpgradeUnit()
         {
-            
+            if (!CheckOpportunityToBuy()) return;
+
+            DataSaveManager.Instance.MyData.Gold -= _levelsHolder.Levels[_unitData.CurrentLevel].AmountGoldToUpgrade;
+            _unitData.AmountCards -= _levelsHolder.Levels[_unitData.CurrentLevel].AmountCardToUpgrade;
+            _unitData.IncreaseLevel();
+
+            DataSaveManager.Instance.SaveData();
+            AdjustStats(_unitData, _levelsHolder, _currentSkin);
+        }
+        private bool CheckOpportunityToBuy()
+        {
+            return DataSaveManager.Instance.MyData.Gold >= _levelsHolder.Levels[_unitData.CurrentLevel].AmountGoldToUpgrade &&
+                _unitData.AmountCards >= _levelsHolder.Levels[_unitData.CurrentLevel].AmountCardToUpgrade;
         }
 
         #endregion

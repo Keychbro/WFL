@@ -16,11 +16,11 @@ namespace Kamen.DataSave
         [SerializeField] private DateTime _quitTime;
 
         [Header("Currency")]
-        [SerializeField] private int _gold;
+        [SerializeField] private int _gold = 100000000; //Change to none
         public event Action OnGoldAmountChanged;
-        [SerializeField] private int _diamonds;
+        [SerializeField] private int _diamonds = 100000000; //Change to none
         public event Action OnDiamondsAmountChanged;
-        [SerializeField] private int _tools;
+        [SerializeField] private int _tools = 100000000; //Change to none
         public event Action OnToolsAmountChanged;
 
         [Header("City")]
@@ -35,7 +35,7 @@ namespace Kamen.DataSave
         [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
 
         [Header("Fraction")]
-        [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.None;
+        [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.Human; //Change to none
 
         public Action OnDataChanged;
 

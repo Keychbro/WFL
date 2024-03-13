@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 168426918}
   - component: {fileID: 168426917}
   m_Layer: 0
-  m_Name: ItemFrame06_Dark_Group
+  m_Name: CastleCardHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2332,6 +2332,7 @@ MonoBehaviour:
   _isOnlyBackgroundFade: 1
   _container: {fileID: 634841065}
   _background: {fileID: 219575553}
+  _upgradeCardHolder: {fileID: 2080001198}
   _levelText: {fileID: 260581182}
   _fractionNameBackground: {fileID: 944739294}
   _fractionNameText: {fileID: 460846371}
@@ -2345,6 +2346,7 @@ MonoBehaviour:
     _damageAmount: {fileID: 2478499}
     _manaPriceAmount: {fileID: 1107742329}
   _upgradeButton: {fileID: 1348649792}
+  _upgradePrice: {fileID: 1743044430}
 --- !u!1 &294940407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2440,62 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &298985391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298985392}
+  - component: {fileID: 298985393}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &298985392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298985391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298985393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298985391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14c072252a752b4ea1aecaea3410503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newData:
+    data:
+      _timersInfo: []
+      _gold: 100000000
+      _diamonds: 100000000
+      _tools: 100000000
+      _cityLevel: 0
+      _castleManaSpeedCollectLevel: 0
+      _castleHealthIncreaseLevel: 0
+      _unitsDatas: []
+      _choosenFraction: 4
+    created_at: 
 --- !u!1 &338909920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2625,7 +2683,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -40, y: 120}
-  m_SizeDelta: {x: 404.28003, y: 220}
+  m_SizeDelta: {x: 404.28, y: 220}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &388622297
 MonoBehaviour:
@@ -2694,7 +2752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &414471947
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2939,7 +2997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 26.100006, y: -24.58}
+  m_AnchoredPosition: {x: 26.1, y: -24.58}
   m_SizeDelta: {x: 52.2, y: 49.16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442149521
@@ -9240,7 +9298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12.279999, y: -24.58}
+  m_AnchoredPosition: {x: 12.28, y: -24.58}
   m_SizeDelta: {x: 24.56, y: 49.16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1471961615
@@ -13763,8 +13821,8 @@ MonoBehaviour:
   _saveType: 0
   _fileName: Data
   _encryptionType: 0
-  _key: 
-  _iv: 
+  _key: d3EgVCnSkMM/0fxH8Xsl+i8h/aqlIk7qkPdloQVk2Is=
+  _iv: AXuKPw15GyZSJQsnXXXdAQ==
 --- !u!1 &2054367675
 GameObject:
   m_ObjectHideFlags: 0
@@ -18440,3 +18498,4 @@ SceneRoots:
   - {fileID: 965169117}
   - {fileID: 699686851}
   - {fileID: 933271936}
+  - {fileID: 298985392}

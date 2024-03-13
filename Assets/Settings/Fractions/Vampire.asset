@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724e2e398b9f0924da3f961eea2e7e79, type: 3}
   m_Name: Vampire
   m_EditorClassIdentifier: 
-  _name: 2
+  _name: 3
+  _mainColor:
+    serializedVersion: 2
+    rgba: 0
+  _castleSettings: {fileID: 0}
+  _units: []

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724e2e398b9f0924da3f961eea2e7e79, type: 3}
   m_Name: Human
   m_EditorClassIdentifier: 
-  _name: 3
+  _name: 4
+  _mainColor:
+    serializedVersion: 2
+    rgba: 4285835121
   _castleSettings: {fileID: 11400000, guid: 6f6daa7113b83ea45ab33f212f797775, type: 2}
   _units:
   - {fileID: 11400000, guid: 072e5fd56bbeba34cadb1ade5df09f96, type: 2}
