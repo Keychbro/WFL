@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724e2e398b9f0924da3f961eea2e7e79, type: 3}
-  m_Name: Angle
+  m_Script: {fileID: 11500000, guid: 361ff1ad5f6f92842b027480ff2fb2e9, type: 3}
+  m_Name: Human_Profile_Settings
   m_EditorClassIdentifier: 
-  _name: 1
-  _mainColor:
-    serializedVersion: 2
-    rgba: 0
-  _castleSettings: {fileID: 0}
-  _units: []
-  _playerProfileSettings: {fileID: 11400000, guid: 6fc552fc05ccf414f864cfc63be0f14c, type: 2}
+  _iconsList: []

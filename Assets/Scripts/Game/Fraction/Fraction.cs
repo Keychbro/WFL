@@ -28,6 +28,8 @@ namespace WOFL.Game
         [SerializeField] private Color32 _mainColor;
         [SerializeField] private CastleSettings _castleSettings;
         [SerializeField] private UnitInfo[] _units;
+        [Space]
+        [SerializeField] private PlayerProfileSettings _playerProfileSettings;
 
         #endregion
 
@@ -37,6 +39,7 @@ namespace WOFL.Game
         public Color32 MainColor { get => _mainColor; }
         public CastleSettings CastleSettings { get => _castleSettings; }
         public UnitInfo[] Units { get => _units; }
+        public PlayerProfileSettings PlayerProfileSettings { get => _playerProfileSettings; }
 
         #endregion
     }
