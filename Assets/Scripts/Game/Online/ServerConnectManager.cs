@@ -152,7 +152,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.LogError(www.downloadHandler.text);
+                Debug.Log(www.downloadHandler.text);
                 if (www.downloadHandler.text.Contains("email busy"))
                 {
                     _createPlayerFailureInfo = JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text);
