@@ -22,7 +22,7 @@ namespace WOFL.UI
         public override void Initialize()
         {
             base.Initialize();
-            _upgradeCardsHolder.Initialize(GameManager.Instance.PlayerFraction.Units);
+            _upgradeCardsHolder.Initialize(FractionManager.Instance.CurrentFraction.Units);
         }
 
         #endregion

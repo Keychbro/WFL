@@ -23,7 +23,7 @@ namespace WOFL.UI
         [SerializeField] private float _finishSignUpWithSuccessDelay;
 
         [Header("Variables")]
-        private RegistrationStates _state = RegistrationStates.FillingField;
+        private RegistrationStates _registrationState = RegistrationStates.FillingField;
         private string _email;
 
         #endregion
@@ -39,8 +39,8 @@ namespace WOFL.UI
         }
         private async Task FinishSignIn()
         {
-            if (_state != RegistrationStates.FillingField) return;
-            _state = RegistrationStates.CheckingData;
+            if (_registrationState != RegistrationStates.FillingField) return;
+            _registrationState = RegistrationStates.CheckingData;
 
             _email = _emailField.InputField.text;
 
@@ -48,7 +48,7 @@ namespace WOFL.UI
             if (!_email.Contains("@") || !_email.Contains(".") || _email == "")
             {
                 _emailField.RequesResultView.CallResult(RequestResultView.ResultType.Failure);
-                _state = RegistrationStates.FillingField;
+                _registrationState = RegistrationStates.FillingField;
                 return;
             }
             else _emailField.RequesResultView.CallResult(RequestResultView.ResultType.None);
@@ -60,16 +60,16 @@ namespace WOFL.UI
             if (result == null)
             {
                 _emailField.RequesResultView.CallResult(RequestResultView.ResultType.Failure);
-                _state = RegistrationStates.FillingField;
+                _registrationState = RegistrationStates.FillingField;
                 return;
             }
             else
             {
                 //Save uuid in data
-                _state = RegistrationStates.SuccesResult;
+                _registrationState = RegistrationStates.SuccesResult;
                 _emailField.RequesResultView.CallResult(RequestResultView.ResultType.Success);
                 await Task.Delay(Mathf.RoundToInt(_finishSignUpWithSuccessDelay * 1000));
-                _state = RegistrationStates.FinishSignUp;
+                _registrationState = RegistrationStates.FinishSignUp;
             }
 
             //TODO: Hide Registration Screen

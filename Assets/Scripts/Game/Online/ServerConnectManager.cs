@@ -61,7 +61,6 @@ namespace WOFL.Control
         {
             using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_serverListName}/");
             var operation = www.SendWebRequest();
-
             while (!operation.isDone) await Task.Yield();
 
             if (www.result != UnityWebRequest.Result.Success)
@@ -71,7 +70,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.LogError(www.downloadHandler.text);
+                Debug.Log(www.downloadHandler.text);
                 _serverInfos = JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
                 return _serverInfos;
             }

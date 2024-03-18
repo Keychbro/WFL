@@ -24,7 +24,7 @@ namespace WOFL.UI
         [SerializeField] private float _finishSignUpWithSuccessDelay;
 
         [Header("Variables")]
-        private RegistrationStates _state = RegistrationStates.FillingField;
+        private RegistrationStates _registrationState = RegistrationStates.FillingField;
         private string _email;
         private string _name;
 
@@ -41,15 +41,15 @@ namespace WOFL.UI
         }
         private async Task FinishSignUp()
         {
-            if (_state != RegistrationStates.FillingField) return;
-            _state = RegistrationStates.CheckingData;
+            if (_registrationState != RegistrationStates.FillingField) return;
+            _registrationState = RegistrationStates.CheckingData;
 
             _email = _emailField.InputField.text;
             _name = _nameField.InputField.text;
 
             if (!CheckFieldCorrect())
             {
-                _state = RegistrationStates.FillingField;
+                _registrationState = RegistrationStates.FillingField;
                 return;
 
             }
@@ -60,16 +60,16 @@ namespace WOFL.UI
             if (result.Contains("email busy"))
             {
                 UpdateFieldResult(RequestResultView.ResultType.Failure, RequestResultView.ResultType.Success);
-                _state = RegistrationStates.FillingField;
+                _registrationState = RegistrationStates.FillingField;
                 return;
             }
             else
             {
                 //Save uuid in data
-                _state = RegistrationStates.SuccesResult;
+                _registrationState = RegistrationStates.SuccesResult;
                 UpdateFieldResult(RequestResultView.ResultType.Success, RequestResultView.ResultType.Success);
                 await Task.Delay(Mathf.RoundToInt(_finishSignUpWithSuccessDelay * 1000));
-                _state = RegistrationStates.FinishSignUp;
+                _registrationState = RegistrationStates.FinishSignUp;
             }
 
             //TODO: Hide Registration Screen

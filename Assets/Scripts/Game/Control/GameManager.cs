@@ -33,7 +33,7 @@ namespace WOFL.Control
 
         #region Unity Methods
 
-        protected override void Awake()
+        protected void Start()
         {
             //_playerfraction = FractionManager.Instance.Fractions
             //    .First(fraction => fraction.Name == DataSaveManager.Instance.MyData.ChoosenFraction);

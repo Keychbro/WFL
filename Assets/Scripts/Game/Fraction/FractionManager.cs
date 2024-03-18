@@ -24,6 +24,7 @@ namespace WOFL.Control
         #region Properties
 
         public Fraction[] Fractions { get => _fractions; }
+        public Fraction CurrentFraction { get => _currentFraction; }
 
         #endregion
 
