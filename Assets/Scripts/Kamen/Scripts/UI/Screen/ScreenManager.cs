@@ -77,7 +77,9 @@ namespace Kamen.UI
         [SerializeField] private TransitionInfo _transitionInfo;
         [Space]
         [SerializeField] private ScreenInfo[] _screenInfos;
+        [Space]
         [SerializeField] private string _startScreen;
+        [SerializeField] private string _registrationScreenName;
 
         [Header("Variables")]
         private ScreenInfo _currentScreen;
@@ -89,6 +91,7 @@ namespace Kamen.UI
 
         public float TransitionDuration { get => _transitionInfo.Duration; }
         public string StartScreen { get => _startScreen; }
+        public string RegistrationScreenName { get => _registrationScreenName; }
 
         #endregion
 

@@ -26,9 +26,11 @@ namespace WOFL.Control
         [SerializeField] private string _getMessagesName;
         [SerializeField] private string _sendMessageName;
         [SerializeField] private string _createPlayerName;
+        [SerializeField] private string _deletePlayerName;
         [SerializeField] private string _getPlayerUUIDName;
         [SerializeField] private string _getPlayerDataName;
         [SerializeField] private string _updatePlayerDataName;
+        [SerializeField] private string _deletePlayerDataName;
 
         [Header("Variables")]
         [SerializeField] private List<ServerInfo> _serverInfos;
@@ -51,6 +53,8 @@ namespace WOFL.Control
             //GetPlayerUUID("test5@gmail.com");
             //GetPlayerData("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1");
             //UpdatePlayerData(JsonUtility.ToJson(DataSaveManager.Instance.MyData), "dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
+            //DeletePlayer("test4@gmail.com");
+            DeletePlayerData("dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
         }
 
         #endregion
@@ -164,6 +168,37 @@ namespace WOFL.Control
                 }
             }
         }
+        public async void DeletePlayer(string email)
+        {
+            WWWForm form = new WWWForm();
+
+            form.AddField("email", email);
+
+            using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_deletePlayerName}/", form);
+            var operation = www.SendWebRequest();
+
+            while (!operation.isDone) await Task.Yield();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+                //return null;
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                if (www.downloadHandler.text.Contains("email busy"))
+                {
+                    _createPlayerFailureInfo = JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text);
+                   // return _createPlayerFailureInfo.info;
+                }
+                else
+                {
+                    _createPlayerAnswerInfo = JsonConvert.DeserializeObject<CreatePlayerSuccessInfo>(www.downloadHandler.text);
+                   // return _createPlayerAnswerInfo.player_uuid;
+                }
+            }
+        }
         public async Task<string> GetPlayerUUID(string email)
         {
             using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_getPlayerUUIDName}/?email={email}");
@@ -211,6 +246,28 @@ namespace WOFL.Control
             form.AddField("server_uuid", server_uuid);
 
             using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_updatePlayerDataName}/", form);
+            var operation = www.SendWebRequest();
+
+            while (!operation.isDone) await Task.Yield();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+                //return null;
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+            }
+        }
+        public async void DeletePlayerData(string player_uuid, string server_uuid)
+        {
+            WWWForm form = new WWWForm();
+
+            form.AddField("player_uuid", player_uuid);
+            form.AddField("server_uuid", server_uuid);
+
+            using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_deletePlayerDataName}/", form);
             var operation = www.SendWebRequest();
 
             while (!operation.isDone) await Task.Yield();
