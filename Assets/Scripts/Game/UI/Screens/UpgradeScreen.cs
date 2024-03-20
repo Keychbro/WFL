@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Kamen.UI;
 using WOFL.Game;
 using WOFL.Control;
+using Cysharp.Threading.Tasks;
+using Kamen.DataSave;
 
 namespace WOFL.UI
 {
@@ -19,9 +21,12 @@ namespace WOFL.UI
 
         #region Contorl Methods
 
-        public override void Initialize()
+        public async override void Initialize()
         {
             base.Initialize();
+
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+
             _upgradeCardsHolder.Initialize(FractionManager.Instance.CurrentFraction.Units);
         }
 

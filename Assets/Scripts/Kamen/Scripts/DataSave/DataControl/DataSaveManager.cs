@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using WOFL.Online;
 
@@ -23,6 +24,7 @@ namespace Kamen.DataSave
             #region DataBaseInfo Variables
 
             [Header("Save settings")]
+            [SerializeField] private IDataService.DataHandleType _dataHandleType;
             [SerializeField] private SaveType _saveType;
             [SerializeField] private string _fileName;
             private IDataService _dataService;
@@ -38,6 +40,7 @@ namespace Kamen.DataSave
 
             #region DataBaseInfo Properties
 
+            public IDataService.DataHandleType DataHandleType { get => _dataHandleType; }
             public SaveType SaveType { get => _saveType; }
             public string FileName { get => _fileName; }
 
@@ -76,7 +79,10 @@ namespace Kamen.DataSave
         #region Properties
 
         public Data MyData { get; private set; }
+        public bool IsDataLoaded { get; private set; }
+
         public PlayerAuthData MyPlayerAuthData { get; private set; }
+        public bool IsPlayerAuthDataLoaded { get; private set; }
 
         #endregion
 
@@ -86,40 +92,108 @@ namespace Kamen.DataSave
         {
             base.Awake();
 
+            SetUpManager(_myPlayerAuthDataInfo);        
+            GetMyPlayerAuthData();
+            Debug.Log(123);
+        }
+        public void AdjustPlayerDataOnServer()
+        {
             SetUpManager(_myDataInfo);
-            SetUpManager(_myPlayerAuthDataInfo);
+            (_myDataInfo.DataService as IDataWebRequest).ServerUUID = MyPlayerAuthData.ServerUUID;
+            (_myDataInfo.DataService as IDataWebRequest).PlayerUUID = MyPlayerAuthData.PlayerUUID;
+
             GetData();
-        }
-        private void OnEnable()
-        {
-            MyData.OnDataChanged += SaveData;
-        }
-        private void OnDisable()
-        {
-            MyData.OnDataChanged -= SaveData;
         }
 
         #endregion
 
         #region Control Methods
 
-        public void GetData()
+        public async Task GetData()
         {
-            MyData = _myDataInfo.DataService.LoadData<Data>(_myDataInfo.Path, _myDataInfo.EncryptionType);
-            MyData ??= new Data();
-
-            MyPlayerAuthData = _myPlayerAuthDataInfo.DataService.LoadData<PlayerAuthData>(_myPlayerAuthDataInfo.Path, _myPlayerAuthDataInfo.EncryptionType);
-            MyPlayerAuthData ??= new PlayerAuthData();
+            switch (_myDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    MyData = _myDataInfo.DataService.LoadData<Data>(_myDataInfo.Path, _myDataInfo.EncryptionType);
+                    MyData ??= new Data();
+                    IsDataLoaded = true;
+                    break;
+                case IDataService.DataHandleType.Async:
+                    MyData = await _myDataInfo.DataService.LoadDataAsync<Data>(_myDataInfo.Path, _myDataInfo.EncryptionType);
+                    MyData ??= new Data();
+                    IsDataLoaded = true;
+                    break;
+            }            
         }
-        public void SaveData() => _myDataInfo.DataService.SaveData(_myDataInfo.Path, MyData, _myDataInfo.EncryptionType);
-        public void SavePlayerAuthData() => _myPlayerAuthDataInfo.DataService.SaveData(_myPlayerAuthDataInfo.Path, MyData, _myPlayerAuthDataInfo.EncryptionType);
+        public async Task GetMyPlayerAuthData()
+        {
+            Debug.Log(12323);
+            switch (_myPlayerAuthDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    Debug.Log(1);
+                    MyPlayerAuthData = _myPlayerAuthDataInfo.DataService.LoadData<PlayerAuthData>(_myPlayerAuthDataInfo.Path, _myPlayerAuthDataInfo.EncryptionType);
+                    Debug.Log(2);
+                    MyPlayerAuthData ??= new PlayerAuthData();
+                    Debug.Log(3);
+                    IsPlayerAuthDataLoaded = true;
+                    Debug.Log(123123);
+                    break;
+                case IDataService.DataHandleType.Async:
+                    Debug.Log(1223);
+                    MyPlayerAuthData = await _myPlayerAuthDataInfo.DataService.LoadDataAsync<PlayerAuthData>(_myPlayerAuthDataInfo.Path, _myPlayerAuthDataInfo.EncryptionType);
+                    MyPlayerAuthData ??= new PlayerAuthData();
+                    IsPlayerAuthDataLoaded = true;
+                    break;
+            }
+        }
+        public void SaveData()
+        {
+            switch (_myDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    _myDataInfo.DataService.SaveData(_myDataInfo.Path, MyData, _myDataInfo.EncryptionType);
+                    break;
+                case IDataService.DataHandleType.Async:
+                    _myDataInfo.DataService.SaveDataAsync(_myDataInfo.Path, MyData, _myDataInfo.EncryptionType);
+                    break;
+            }
+        }
+        public void SavePlayerAuthData()
+        {
+            switch (_myPlayerAuthDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    _myPlayerAuthDataInfo.DataService.SaveData(_myPlayerAuthDataInfo.Path, MyData, _myPlayerAuthDataInfo.EncryptionType);
+                    break;
+                case IDataService.DataHandleType.Async:
+                    _myPlayerAuthDataInfo.DataService.SaveDataAsync(_myPlayerAuthDataInfo.Path, MyData, _myPlayerAuthDataInfo.EncryptionType);
+                    break;
+            }
+        }
         public void DeleteData()
         {
-            _myDataInfo.DataService.DeleteData(_myDataInfo.Path);
+            switch (_myDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    _myDataInfo.DataService.DeleteData(_myDataInfo.Path);
+                    break;
+                case IDataService.DataHandleType.Async:
+                    _myDataInfo.DataService.DeleteDataAsync(_myDataInfo.Path);
+                    break;
+            }
         }
         public void DeletePlayerAuthData()
         {
-            _myPlayerAuthDataInfo.DataService.DeleteData(_myPlayerAuthDataInfo.Path);
+            switch (_myPlayerAuthDataInfo.DataHandleType)
+            {
+                case IDataService.DataHandleType.MainThread:
+                    _myPlayerAuthDataInfo.DataService.DeleteData(_myPlayerAuthDataInfo.Path);
+                    break;
+                case IDataService.DataHandleType.Async:
+                    _myPlayerAuthDataInfo.DataService.DeleteDataAsync(_myPlayerAuthDataInfo.Path);
+                    break;
+            }
         }
 
         #endregion

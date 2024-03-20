@@ -37,8 +37,6 @@ namespace Kamen.DataSave
         [Header("Fraction")]
         [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.Human; //Change to none
 
-        public Action OnDataChanged;
-
         #endregion
 
         #region Properties
@@ -69,7 +67,6 @@ namespace Kamen.DataSave
 
                 _gold = value;
                 OnGoldAmountChanged?.Invoke();
-                OnDataChanged?.Invoke();
             }
         }
         public int Diamonds
@@ -85,7 +82,6 @@ namespace Kamen.DataSave
 
                 _diamonds = value;
                 OnDiamondsAmountChanged?.Invoke();
-                OnDataChanged?.Invoke();
             }
         }
         public int Tools
@@ -101,7 +97,6 @@ namespace Kamen.DataSave
 
                 _tools = value;
                 OnToolsAmountChanged?.Invoke();
-                OnDataChanged?.Invoke();
             }
         }
 
@@ -122,7 +117,6 @@ namespace Kamen.DataSave
 
                 _cityLevel = value;
                 OnCityLevelChanged?.Invoke();
-                OnDataChanged?.Invoke();
             }
         }
 

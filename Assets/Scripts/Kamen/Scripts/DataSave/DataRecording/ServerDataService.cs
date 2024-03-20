@@ -1,15 +1,19 @@
 using UnityEngine;
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using WOFL.Control;
 
 namespace Kamen.DataSave
 {
-    public class ServerDataService : IDataService, IDataException
+    public class ServerDataService : IDataService, IDataException, IDataWebRequest
     {
         #region Variables
 
         private string _key;
         private string _iv;
+        public string ServerUUID { get; set; }
+        public string PlayerUUID { get; set; }
 
         #endregion
 
@@ -20,28 +24,37 @@ namespace Kamen.DataSave
             _key = key;
             _iv = iv;
         }
+        public void SetServerDataService(string serverUUID, string playerUUID)
+        {
+            ServerUUID = serverUUID;
+            PlayerUUID = playerUUID;
+        }
 
         public bool SaveData<T>(string path, T data, EncryptionType encryptionType)
         {
+            Debug.LogError("This method is not implemented");
+            return false;
+        }
+        public T LoadData<T>(string path, EncryptionType encryptionType)
+        {
+            Debug.LogError("This method is not implemented");
+            return default;
+        }
+        public bool DeleteData(string path)
+        {
+            Debug.LogError("This method is not implemented");
+            return false;
+        }
+
+        #endregion
+
+        #region Async Control Methods
+
+        public async Task<bool> SaveDataAsync<T>(string path, T data, EncryptionType encryptionType)
+        {
             try
             {
-                if (!File.Exists(path))
-                {
-                    using FileStream stream = File.Create(path);
-                }
-
-                switch (encryptionType)
-                {
-                    case EncryptionType.Aes:
-                        using (FileStream stream = File.OpenWrite(path))
-                        {
-                            Encrypter.AesEncrypt(JsonUtility.ToJson(data), stream, _key, _iv);
-                        }
-                        break;
-                    default:
-                        File.WriteAllText(path, JsonUtility.ToJson(data));
-                        break;
-                }
+                await ServerConnectManager.Instance.UpdatePlayerData(JsonUtility.ToJson(data), PlayerUUID, ServerUUID);
                 return true;
             }
             catch (Exception e)
@@ -50,20 +63,12 @@ namespace Kamen.DataSave
                 return false;
             }
         }
-        public T LoadData<T>(string path, EncryptionType encryptionType)
+        public async Task<T> LoadDataAsync<T>(string path, EncryptionType encryptionType)
         {
             try
             {
-                if (File.Exists(path))
-                {
-                    T data = encryptionType switch
-                    {
-                        EncryptionType.Aes => JsonUtility.FromJson<T>(Encrypter.AesDecrypt(path, _key, _iv)),
-                        _ => JsonUtility.FromJson<T>(File.ReadAllText(path)),
-                    };
-                    return data;
-                }
-                else return default;
+                T data = await ServerConnectManager.Instance.GetPlayerData<T>(ServerUUID, PlayerUUID);
+                return data;
             }
             catch (Exception e)
             {
@@ -71,12 +76,11 @@ namespace Kamen.DataSave
                 return default;
             }
         }
-        public bool DeleteData(string path)
+        public async Task<bool> DeleteDataAsync(string path)
         {
             try
             {
-                if (File.Exists(path)) File.Delete(path);
-                else Debug.LogError($"[Kamen - JsonDataService] File with path \"{path}\" does not exist");
+                await ServerConnectManager.Instance.DeletePlayerData(PlayerUUID, ServerUUID);
                 return true;
             }
             catch (Exception e)

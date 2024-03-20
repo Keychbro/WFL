@@ -8,6 +8,7 @@ using Kamen.DataSave;
 using System;
 using TMPro;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.UI
 {
@@ -33,13 +34,14 @@ namespace WOFL.UI
 
         #region Control Methods
 
-        public override void Initialize()
+        public async override void Initialize()
         {
             base.Initialize();
 
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+
             DataSaveManager.Instance.MyData.OnCityLevelChanged += UpdateCity;
             UpdateCity();
-
         }
         private void UpdateCity()
         {

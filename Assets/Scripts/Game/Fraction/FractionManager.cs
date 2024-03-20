@@ -5,6 +5,7 @@ using WOFL.Game;
 using Kamen;
 using Kamen.DataSave;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 
 namespace WOFL.Control
@@ -30,9 +31,11 @@ namespace WOFL.Control
 
         #region Unity Methods
 
-        protected override void Awake()
+        protected async override void Awake()
         {
             base.Awake();
+
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
 
             InitializeUnitsInBase();
             if (DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None) SetCurrentFraction();

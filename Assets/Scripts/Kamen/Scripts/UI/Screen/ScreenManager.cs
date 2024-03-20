@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using Kamen.DataSave;
+using Cysharp.Threading.Tasks;
 
 namespace Kamen.UI
 {
@@ -97,7 +99,7 @@ namespace Kamen.UI
 
         #region Unity Methods
 
-        protected override void Awake()
+        protected async override void Awake()
         {
             base.Awake();
 
@@ -106,7 +108,10 @@ namespace Kamen.UI
                 _screenInfos[i].ThisScreen.Initialize();
             }
             _state = State.Standing;
-            FastTransitionTo(_startScreen);
+
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsPlayerAuthDataLoaded);
+
+            FastTransitionTo(DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID == "" ? _registrationScreenName : _startScreen);
         }
 
         #endregion

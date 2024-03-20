@@ -9,6 +9,7 @@ namespace WOFL.Online
     {
         #region Variables
 
+        [SerializeField] private string _email;
         [SerializeField] private string _serverUUID;
         [SerializeField] private string _playerUUID;
 
@@ -16,12 +17,26 @@ namespace WOFL.Online
 
         #region Properties
 
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (value == null)
+                {
+                    Debug.LogError("[PlayerAuthData] - Attempt to assign the null email");
+                    return;
+                }
+
+                _email = value;
+            }
+        }
         public string ServerUUID
         {
             get => _serverUUID;
             set
             {
-                if (_serverUUID != null)
+                if (value == null)
                 {
                     Debug.LogError("[PlayerAuthData] - Attempt to assign the wrong uuid to the server");
                     return;
@@ -35,7 +50,7 @@ namespace WOFL.Online
             get => _playerUUID;
             set
             {
-                if (_playerUUID != null)
+                if (value == null)
                 {
                     Debug.LogError("[PlayerAuthData] - Attempt to assign the wrong uuid to the player");
                     return;

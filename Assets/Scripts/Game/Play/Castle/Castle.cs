@@ -7,6 +7,7 @@ using WOFL.Settings;
 using Kamen.DataSave;
 using System.Linq;
 using WOFL.Save;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.Game
 {
@@ -42,9 +43,11 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize(CastleSettings castleSettings, UnitInfo[] units)
+        public async void Initialize(CastleSettings castleSettings, UnitInfo[] units)
         {
             _castleSettings = castleSettings;
+
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
 
             _castleView.sprite = _castleSettings.CastleView;
             MaxHealth = _castleSettings.StartHealth + _castleSettings.IncreaseHealthStep * DataSaveManager.Instance.MyData.CastleHealthIncreaseLevel;

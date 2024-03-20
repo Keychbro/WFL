@@ -37,6 +37,7 @@ namespace Kamen.DataSave
             EditorGUILayout.Space(10);
             DataSaveManager dataSaveManager = (DataSaveManager)target;
             if (GUILayout.Button("Delete Data")) dataSaveManager.DeleteData();
+            if (GUILayout.Button("Delete Player Auth Data")) dataSaveManager.DeletePlayerAuthData();
         }
         // public override void OnInspectorGUI()
         // {

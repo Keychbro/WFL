@@ -218,7 +218,7 @@ namespace WOFL.Control
                 return _getPlayerUUIDInfo.player_uuid;
             }
         }
-        public async void GetPlayerData(string server_uuid, string player_uuid)
+        public async Task<T> GetPlayerData<T>(string server_uuid, string player_uuid)
         {
             using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_getPlayerDataName}/?server_uuid={server_uuid}&player_uuid={player_uuid}");
             var operation = www.SendWebRequest();
@@ -228,16 +228,16 @@ namespace WOFL.Control
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError(www.error);
-                //return null;
+                return default;
             }
             else
             {
                 Debug.Log(www.downloadHandler.text.Trim('"').Replace("\\", ""));
-                _data = JsonUtility.FromJson<Data>(www.downloadHandler.text.Trim('"').Replace("\\", ""));
-                //return _getPlayerUUIDInfo.player_uuid;
+                T loadedData = JsonUtility.FromJson<T>(www.downloadHandler.text.Trim('"').Replace("\\", ""));
+                return loadedData;
             }
         }
-        public async void UpdatePlayerData(string new_data, string player_uuid, string server_uuid)
+        public async Task UpdatePlayerData(string new_data, string player_uuid, string server_uuid)
         {
             WWWForm form = new WWWForm();
 
@@ -260,7 +260,7 @@ namespace WOFL.Control
                 Debug.Log(www.downloadHandler.text);
             }
         }
-        public async void DeletePlayerData(string player_uuid, string server_uuid)
+        public async Task DeletePlayerData(string player_uuid, string server_uuid)
         {
             WWWForm form = new WWWForm();
 
