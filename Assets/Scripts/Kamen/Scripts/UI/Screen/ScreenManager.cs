@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Kamen.DataSave;
 using Cysharp.Threading.Tasks;
+using WOFL.Control;
 
 namespace Kamen.UI
 {
@@ -110,8 +111,16 @@ namespace Kamen.UI
             _state = State.Standing;
 
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsPlayerAuthDataLoaded);
+            string uuidFromServer = await ServerConnectManager.Instance.GetPlayerUUID(DataSaveManager.Instance.MyPlayerAuthData.Email); 
+            string playerUUID = DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID;
 
-            FastTransitionTo(DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID == "" ? _registrationScreenName : _startScreen);
+            if (uuidFromServer != playerUUID)
+            {
+                DataSaveManager.Instance.DeletePlayerAuthData();
+                playerUUID = null;
+            }
+
+            FastTransitionTo((playerUUID == "" || playerUUID == null )? _registrationScreenName : _startScreen);
         }
 
         #endregion

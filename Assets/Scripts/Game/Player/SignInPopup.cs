@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Kamen.UI;
 using System.Threading.Tasks;
 using WOFL.Control;
+using Kamen.DataSave;
 
 namespace WOFL.UI
 {
@@ -18,6 +19,8 @@ namespace WOFL.UI
         [Space]
         [SerializeField] private Button _signInButton;
         [SerializeField] private Button _openSignInPopupButton;
+        [Space]
+        [SerializeField] private RegistrationScreen _registrationScreen;
 
         [Header("Settings")]
         [SerializeField] private float _finishSignUpWithSuccessDelay;
@@ -65,14 +68,17 @@ namespace WOFL.UI
             }
             else
             {
-                //Save uuid in data
+                DataSaveManager.Instance.MyPlayerAuthData.Email = _email;
+                DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID = result;
+                DataSaveManager.Instance.SavePlayerAuthData();
+
                 _registrationState = RegistrationStates.SuccesResult;
                 _emailField.RequesResultView.CallResult(RequestResultView.ResultType.Success);
                 await Task.Delay(Mathf.RoundToInt(_finishSignUpWithSuccessDelay * 1000));
                 _registrationState = RegistrationStates.FinishSignUp;
             }
 
-            //TODO: Hide Registration Screen
+            _registrationScreen.FinishRegistration();
         }
 
         #endregion

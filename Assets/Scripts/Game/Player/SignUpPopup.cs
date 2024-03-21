@@ -6,6 +6,7 @@ using Kamen.UI;
 using TMPro;
 using WOFL.Control;
 using System.Threading.Tasks;
+using Kamen.DataSave;
 
 namespace WOFL.UI
 {
@@ -19,6 +20,8 @@ namespace WOFL.UI
         [Space]
         [SerializeField] private Button _signUpButton;
         [SerializeField] private Button _openSignInPopupButton;
+        [Space]
+        [SerializeField] private RegistrationScreen _registrationScreen;
 
         [Header("Settings")]
         [SerializeField] private float _finishSignUpWithSuccessDelay;
@@ -55,7 +58,7 @@ namespace WOFL.UI
             }
 
             UpdateFieldResult(RequestResultView.ResultType.Loading, RequestResultView.ResultType.Loading);
-            string result = await ServerConnectManager.Instance.CreatePlayer(_name, _email, 0);
+            string result = await ServerConnectManager.Instance.CreatePlayer(_name, _email);
 
             if (result.Contains("email busy"))
             {
@@ -65,14 +68,18 @@ namespace WOFL.UI
             }
             else
             {
-                //Save uuid in data
+                DataSaveManager.Instance.MyPlayerAuthData.StartUsername = _name;
+                DataSaveManager.Instance.MyPlayerAuthData.Email = _email;
+                DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID = result;
+                DataSaveManager.Instance.SavePlayerAuthData();
+
                 _registrationState = RegistrationStates.SuccesResult;
                 UpdateFieldResult(RequestResultView.ResultType.Success, RequestResultView.ResultType.Success);
                 await Task.Delay(Mathf.RoundToInt(_finishSignUpWithSuccessDelay * 1000));
                 _registrationState = RegistrationStates.FinishSignUp;
             }
 
-            //TODO: Hide Registration Screen
+            _registrationScreen.FinishRegistration();
         }
         private void OpenSignInPopup()
         {

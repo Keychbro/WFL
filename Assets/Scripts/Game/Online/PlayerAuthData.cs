@@ -9,14 +9,29 @@ namespace WOFL.Online
     {
         #region Variables
 
-        [SerializeField] private string _email;
-        [SerializeField] private string _serverUUID;
-        [SerializeField] private string _playerUUID;
+        [SerializeField] private string _startUsername;
+        [SerializeField] private string _email = "";
+        [SerializeField] private string _serverUUID = "";
+        [SerializeField] private string _playerUUID = "";
 
         #endregion
 
         #region Properties
 
+        public string StartUsername
+        {
+            get => _startUsername;
+            set
+            {
+                if (value == null || value.Length == 0)
+                {
+                    Debug.LogError("[PlayerAuthData] - Attempting to assign an incorrect name!");
+                    return;
+                }
+
+                _startUsername = value;
+            }
+        }
         public string Email
         {
             get => _email;

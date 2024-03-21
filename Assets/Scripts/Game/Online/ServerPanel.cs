@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using WOFL.Online;
 using Kamen.UI;
+using Kamen.DataSave;
 
 namespace WOFL.UI
 {
@@ -32,7 +33,9 @@ namespace WOFL.UI
         }
         private void ClickOnPlayButton()
         {
-            //TODO: Save server_uuid
+            DataSaveManager.Instance.MyPlayerAuthData.ServerUUID = _currentServerInfo.uuid;
+            DataSaveManager.Instance.AdjustPlayerDataOnServer();
+
             ScreenManager.Instance.TransitionTo("Fight");
         }
 

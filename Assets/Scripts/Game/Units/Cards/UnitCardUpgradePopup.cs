@@ -11,6 +11,7 @@ using WOFL.Control;
 using WOFL.Save;
 using Kamen.DataSave;
 using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.UI
 {
@@ -42,17 +43,15 @@ namespace WOFL.UI
 
         #region Control Methods
 
-        public override void Initialize()
+        public async override void Initialize()
         {
-            StartCoroutine(WaitToInitialize());
-        }
-        private IEnumerator WaitToInitialize()
-        {
-            yield return new WaitUntil(() => _upgradeCardHolder.IsInitialized);
+            base.Initialize();
+
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+
             _upgradeCardHolder.SubscribeOnCardsMoreButton(AdjustStats);
             _upgradeButton.Initialize();
             _upgradeButton.OnClick().AddListener(UpgradeUnit);
-            base.Initialize();
         }
         public void AdjustStats(UnitDataForSave unitData, UnitLevelsHolder levelsHolder, Skin currentSkin)
         {

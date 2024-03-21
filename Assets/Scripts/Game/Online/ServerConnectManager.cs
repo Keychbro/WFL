@@ -54,7 +54,7 @@ namespace WOFL.Control
             //GetPlayerData("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1");
             //UpdatePlayerData(JsonUtility.ToJson(DataSaveManager.Instance.MyData), "dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
             //DeletePlayer("test4@gmail.com");
-            DeletePlayerData("dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
+            //DeletePlayerData("dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
         }
 
         #endregion
@@ -65,6 +65,7 @@ namespace WOFL.Control
         {
             using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_serverListName}/");
             var operation = www.SendWebRequest();
+            Debug.Log(4);
             while (!operation.isDone) await Task.Yield();
 
             if (www.result != UnityWebRequest.Result.Success)
@@ -135,13 +136,12 @@ namespace WOFL.Control
 
         #region Player Methods
 
-        public async Task<string> CreatePlayer(string name, string email, int iconIndex)
+        public async Task<string> CreatePlayer(string name, string email)
         {
             WWWForm form = new WWWForm();
 
             form.AddField("name", name);
             form.AddField("email", email);
-            form.AddField("icon", iconIndex.ToString());
 
             using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_createPlayerName}/", form);
             var operation = www.SendWebRequest();

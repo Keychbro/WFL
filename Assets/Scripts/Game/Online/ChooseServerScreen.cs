@@ -1,3 +1,7 @@
+using DG.Tweening;
+using Kamen;
+using Kamen.DataSave;
+using Kamen.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,11 +42,12 @@ namespace WOFL.UI
         }
         private async Task CreateServerList()
         {
-            await Task.Delay(100);
-
+            Debug.Log(1);
             _loadingIcon.CallAppear();
-            List<ServerInfo> serverInfos = await ServerConnectManager.Instance.GetServersList();
 
+            Debug.Log(2);
+            List<ServerInfo> serverInfos = await ServerConnectManager.Instance.GetServersList();
+            Debug.Log(3);
             _loadingIcon.CallDissapear();
             Debug.Log(serverInfos.Count);
             for (int i = 0; i < serverInfos.Count; i++)

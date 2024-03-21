@@ -23,8 +23,8 @@ namespace Kamen.UI
 
             gameObject.SetActive(false);
         }
-        public void HideCanvasGroup() => _canvasGroup.alpha = 0f;
-        public void ShowCanvasGroup() => _canvasGroup.alpha = 1f;
+        public virtual void HideCanvasGroup() => _canvasGroup.alpha = 0f;
+        public virtual void ShowCanvasGroup() => _canvasGroup.alpha = 1f;
         public virtual void Transit(bool isShow, bool isForth, ScreenManager.TransitionType type, float duration, Ease curve, MyCurve myCurve)
         {
             gameObject.SetActive(true);

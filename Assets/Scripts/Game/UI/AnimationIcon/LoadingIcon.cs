@@ -20,7 +20,7 @@ namespace WOFL.UI
 
         public override void CallAppear()
         {
-            _iconView.transform.rotation = Quaternion.identity;
+            if (_iconView != null) _iconView.transform.rotation = Quaternion.identity;
             base.CallAppear();
         }
         private void Update()

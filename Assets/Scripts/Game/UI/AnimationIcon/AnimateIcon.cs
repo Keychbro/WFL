@@ -42,6 +42,8 @@ namespace WOFL.UI
 
         public virtual void CallAppear()
         {
+            if (_iconView == null) _iconView = GetComponent<Image>();
+
             _isAppearing = true;
             _iconView.DOKill();
             _iconView.gameObject.SetActive(true);

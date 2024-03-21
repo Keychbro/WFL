@@ -15,12 +15,16 @@ namespace Kamen.DataSave
         [SerializeField] private List<TimerInfo> _timersInfo = new List<TimerInfo>();
         [SerializeField] private DateTime _quitTime;
 
+        [Header("Player Data")]
+        [SerializeField] private string _username;
+        [SerializeField] private int _iconNumber;
+
         [Header("Currency")]
-        [SerializeField] private int _gold = 100000000; //Change to none
+        [SerializeField] private int _gold = 100000000; //Change to 0
         public event Action OnGoldAmountChanged;
-        [SerializeField] private int _diamonds = 100000000; //Change to none
+        [SerializeField] private int _diamonds = 100000000; //Change to 0
         public event Action OnDiamondsAmountChanged;
-        [SerializeField] private int _tools = 100000000; //Change to none
+        [SerializeField] private int _tools = 100000000; //Change to 0
         public event Action OnToolsAmountChanged;
 
         [Header("City")]
@@ -36,6 +40,39 @@ namespace Kamen.DataSave
 
         [Header("Fraction")]
         [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.Human; //Change to none
+
+        #endregion
+
+        #region PlayerData
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                if (value == null || value.Length == 0)
+                {
+                    Debug.LogError("[Data] - Attempting to assign an incorrect name!");
+                    return;
+                }
+
+                _username = value;
+            }
+        }
+        public int IconNumber
+        {
+            get => _iconNumber;
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError($"[Data] - Attempt to assign variable ''_iconNumber'' minus value");
+                    return;
+                }
+
+                _iconNumber = value;
+            }
+        }
 
         #endregion
 

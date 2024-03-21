@@ -92,17 +92,15 @@ namespace Kamen.DataSave
         {
             base.Awake();
 
-            SetUpManager(_myPlayerAuthDataInfo);        
-            GetMyPlayerAuthData();
-            Debug.Log(123);
+            SetUpManager(_myPlayerAuthDataInfo);
+            _ = GetMyPlayerAuthData();
         }
         public void AdjustPlayerDataOnServer()
         {
             SetUpManager(_myDataInfo);
-            (_myDataInfo.DataService as IDataWebRequest).ServerUUID = MyPlayerAuthData.ServerUUID;
-            (_myDataInfo.DataService as IDataWebRequest).PlayerUUID = MyPlayerAuthData.PlayerUUID;
+            (_myDataInfo.DataService as ServerDataService).SetServerDataService(MyPlayerAuthData.ServerUUID, MyPlayerAuthData.PlayerUUID);
 
-            GetData();
+            _ = GetData();
         }
 
         #endregion
@@ -123,24 +121,20 @@ namespace Kamen.DataSave
                     MyData ??= new Data();
                     IsDataLoaded = true;
                     break;
-            }            
+            }
+
+            if (MyData.Username == null || MyData.Username == "") MyData.Username = MyPlayerAuthData.StartUsername;
         }
         public async Task GetMyPlayerAuthData()
         {
-            Debug.Log(12323);
             switch (_myPlayerAuthDataInfo.DataHandleType)
             {
                 case IDataService.DataHandleType.MainThread:
-                    Debug.Log(1);
                     MyPlayerAuthData = _myPlayerAuthDataInfo.DataService.LoadData<PlayerAuthData>(_myPlayerAuthDataInfo.Path, _myPlayerAuthDataInfo.EncryptionType);
-                    Debug.Log(2);
                     MyPlayerAuthData ??= new PlayerAuthData();
-                    Debug.Log(3);
                     IsPlayerAuthDataLoaded = true;
-                    Debug.Log(123123);
                     break;
                 case IDataService.DataHandleType.Async:
-                    Debug.Log(1223);
                     MyPlayerAuthData = await _myPlayerAuthDataInfo.DataService.LoadDataAsync<PlayerAuthData>(_myPlayerAuthDataInfo.Path, _myPlayerAuthDataInfo.EncryptionType);
                     MyPlayerAuthData ??= new PlayerAuthData();
                     IsPlayerAuthDataLoaded = true;
@@ -164,10 +158,10 @@ namespace Kamen.DataSave
             switch (_myPlayerAuthDataInfo.DataHandleType)
             {
                 case IDataService.DataHandleType.MainThread:
-                    _myPlayerAuthDataInfo.DataService.SaveData(_myPlayerAuthDataInfo.Path, MyData, _myPlayerAuthDataInfo.EncryptionType);
+                    _myPlayerAuthDataInfo.DataService.SaveData(_myPlayerAuthDataInfo.Path, MyPlayerAuthData, _myPlayerAuthDataInfo.EncryptionType);
                     break;
                 case IDataService.DataHandleType.Async:
-                    _myPlayerAuthDataInfo.DataService.SaveDataAsync(_myPlayerAuthDataInfo.Path, MyData, _myPlayerAuthDataInfo.EncryptionType);
+                    _myPlayerAuthDataInfo.DataService.SaveDataAsync(_myPlayerAuthDataInfo.Path, MyPlayerAuthData, _myPlayerAuthDataInfo.EncryptionType);
                     break;
             }
         }
@@ -229,6 +223,8 @@ namespace Kamen.DataSave
             }
             dataService.SetEncryptionData(dataBaseInfo.Key, dataBaseInfo.IV);
             path = Application.persistentDataPath + "/" + dataBaseInfo.FileName + extension;
+
+            dataBaseInfo.UpdateSaveSettings(dataService, path, extension);
         }
         //public void GenerateNewKeyAndIV() => Encrypter.GenerateAesKeyAndIV(ref _key, ref _iv);
 
