@@ -5,6 +5,8 @@ using WOFL.Save;
 using WOFL.Settings;
 using System.Linq;
 using WOFL.Game;
+using WOFL.DataSave;
+using WOFL.Stats;
 
 namespace Kamen.DataSave
 {
@@ -18,6 +20,8 @@ namespace Kamen.DataSave
         [Header("Player Data")]
         [SerializeField] private string _username;
         [SerializeField] private int _iconNumber;
+        [Space]
+        [SerializeField] private List<UserStatsData> _userStatsDatas = new List<UserStatsData>();
 
         [Header("Currency")]
         [SerializeField] private int _gold = 100000000; //Change to 0
@@ -72,6 +76,26 @@ namespace Kamen.DataSave
 
                 _iconNumber = value;
             }
+        }
+        public List<UserStatsData> UserStatsDatas { get => _userStatsDatas; }
+
+        #endregion
+
+        #region PlayerData Methods
+
+        public void AdjustUserStatsDatas(UserStatsInfo[] userStatsInfos)
+        {
+            for (int i = 0; i < userStatsInfos.Length; i++)
+            {
+                if (!_userStatsDatas.Any(userStatsData => userStatsData.StatsName == userStatsInfos[i].StatsName))
+                {
+                    _userStatsDatas.Add(new UserStatsData(userStatsInfos[i].StatsName, userStatsInfos[i].StartValue));
+                }
+            }
+        }
+        public UserStatsData GetUserStatsDataMyName(string name)
+        {
+            return _userStatsDatas.First(userStatsData => userStatsData.StatsName == name);
         }
 
         #endregion
@@ -194,20 +218,20 @@ namespace Kamen.DataSave
         {
             for (int i = 0; i < unitsInfos.Length; i++)
             {
-                if (!UnitsDatas.Any(unitData => unitData.UniqueName == unitsInfos[i].UniqueName))
+                if (!_unitsDatas.Any(unitData => unitData.UniqueName == unitsInfos[i].UniqueName))
                 {
                      List<string> obtainedUnitList = unitsInfos[i].SkinsHolder.Skins
                         .Where(skin => skin.UnlockStatus != UnlockStatus.Locked)
                         .Select(skin => skin.UniqueName)
                         .ToList();
 
-                    UnitsDatas.Add(new UnitDataForSave(unitsInfos[i].UniqueName, obtainedUnitList, obtainedUnitList[0]));
+                    _unitsDatas.Add(new UnitDataForSave(unitsInfos[i].UniqueName, obtainedUnitList, obtainedUnitList[0]));
                 }
             }
         }
         public UnitDataForSave GetUnitDataMyName(string name)
         {
-            return UnitsDatas.First(unitData => unitData.UniqueName == name);
+            return _unitsDatas.First(unitData => unitData.UniqueName == name);
         }
 
         #endregion
