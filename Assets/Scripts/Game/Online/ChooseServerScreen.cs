@@ -42,14 +42,10 @@ namespace WOFL.UI
         }
         private async Task CreateServerList()
         {
-            Debug.Log(1);
             _loadingIcon.CallAppear();
 
-            Debug.Log(2);
             List<ServerInfo> serverInfos = await ServerConnectManager.Instance.GetServersList();
-            Debug.Log(3);
             _loadingIcon.CallDissapear();
-            Debug.Log(serverInfos.Count);
             for (int i = 0; i < serverInfos.Count; i++)
             {
                 ServerPanel newPanel = Instantiate(_serverPanelPrefab, _serverHolder);

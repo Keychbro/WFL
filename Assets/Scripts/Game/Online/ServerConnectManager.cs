@@ -232,8 +232,18 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text.Trim('"').Replace("\\", ""));
-                T loadedData = JsonUtility.FromJson<T>(www.downloadHandler.text.Trim('"').Replace("\\", ""));
+                string finish = www.downloadHandler.text.Trim('"').Replace("\\", "");
+                Debug.Log(finish);
+
+                T loadedData;
+                if (finish == "" || finish == null)
+                {
+                    loadedData = default;
+                }
+                else
+                {
+                    loadedData = JsonUtility.FromJson<T>(www.downloadHandler.text.Trim('"').Replace("\\", ""));
+                }
                 return loadedData;
             }
         }
