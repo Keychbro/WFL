@@ -30,7 +30,7 @@ namespace WOFL.UI
         [Header("Variables")]
         private KamenButton _button;
         private Fraction _currentFraction;
-        public event Action OnFractionPanelClicked;
+        public event Action<FractionPanel> OnFractionPanelClicked;
 
         #endregion
 
@@ -40,6 +40,7 @@ namespace WOFL.UI
         {
             _currentFraction = fraction;
             _button = GetComponent<KamenButton>();
+            _button.Initialize();
             _button.OnClick().AddListener(Click);
 
             _background.color = _inactiveColor;
@@ -52,7 +53,7 @@ namespace WOFL.UI
         }
         private void Click()
         {
-            OnFractionPanelClicked?.Invoke();
+            OnFractionPanelClicked?.Invoke(this);
         }
         public void SwitchActive(bool isActive)
         {

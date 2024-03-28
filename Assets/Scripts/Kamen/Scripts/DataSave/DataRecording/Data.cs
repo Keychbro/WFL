@@ -43,7 +43,7 @@ namespace Kamen.DataSave
         [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
 
         [Header("Fraction")]
-        [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.Human; //Change to none
+        [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.None; //Change to none
 
         #endregion
 
@@ -238,7 +238,20 @@ namespace Kamen.DataSave
 
         #region Fraction Methods
 
-        public Fraction.FractionName ChoosenFraction { get => _choosenFraction; }
+        public Fraction.FractionName ChoosenFraction 
+        { 
+            get => _choosenFraction; 
+            set
+            {
+                if (value == Fraction.FractionName.None)
+                {
+                    Debug.LogError("[Data] - Attempt to assign variable ''_choosenFraction'' None type");
+                    return;
+                }
+
+                _choosenFraction = value;
+            }
+        }
 
         #endregion
     }

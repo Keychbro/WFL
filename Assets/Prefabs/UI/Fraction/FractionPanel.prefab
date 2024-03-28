@@ -417,17 +417,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _background: {fileID: 1280298393249936166}
-  _fractionLogo: {fileID: 0}
-  _nameBackground: {fileID: 0}
-  _nameText: {fileID: 0}
+  _fractionLogo: {fileID: 5380235450811656837}
+  _nameBackground: {fileID: 963629918217419302}
+  _nameText: {fileID: 6212604904937230642}
   _inactiveColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4284432170
   _activeColor:
     serializedVersion: 2
-    rgba: 0
-  _switchDuration: 0
-  _switchEase: 0
+    rgba: 4286593066
+  _switchDuration: 0.2
+  _switchEase: 9
 --- !u!1 &8320640570265647078
 GameObject:
   m_ObjectHideFlags: 0
