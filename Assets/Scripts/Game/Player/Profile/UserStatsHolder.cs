@@ -3,11 +3,34 @@ using UnityEngine;
 using WOFL.Stats;
 using Kamen.DataSave;
 using Cysharp.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace WOFL.UI
 {
     public class UserStatsHolder : MonoBehaviour
     {
+        #region Classes
+
+        [Serializable] private class MainStatsInfo
+        {
+            #region Variables
+
+            [SerializeField] private UserStatsView _view;
+            [SerializeField] private string _name;
+
+            #endregion
+
+            #region Properties
+
+            public UserStatsView View { get => _view; }
+            public string Name { get => _name; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
         [Header("Prefabs")]
@@ -18,6 +41,7 @@ namespace WOFL.UI
 
         [Header("Settings")]
         [SerializeField] private UserStatsInfo[] _statsInfo;
+        [SerializeField] private MainStatsInfo[] _mainStatsInfo;
 
         [Header("Variables")]
         private List<UserStatsView> _statsViews = new List<UserStatsView>();
@@ -41,10 +65,21 @@ namespace WOFL.UI
 
         private void Initialize()
         {
-            for (int i = 0; i < _statsInfo.Length; i++)
+            List<UserStatsInfo> usedStatsInfos = new List<UserStatsInfo>();
+            usedStatsInfos.AddRange(_statsInfo);
+            
+            for (int i = 0; i < _mainStatsInfo.Length; i++)
+            {
+                UserStatsInfo currentStatsInfo = usedStatsInfos.First(info => info.StatsName == _mainStatsInfo[i].Name);
+                usedStatsInfos.Remove(currentStatsInfo);
+
+                _mainStatsInfo[i].View.Initialize(currentStatsInfo, DataSaveManager.Instance.MyData.GetUserStatsDataMyName(currentStatsInfo.StatsName));
+            }
+
+            for (int i = 0; i < usedStatsInfos.Count; i++)
             {
                 UserStatsView statsView = Instantiate(_statsViewPrefab, _statsHolder);
-                statsView.Initialize(_statsInfo[i], DataSaveManager.Instance.MyData.GetUserStatsDataMyName(_statsInfo[i].StatsName));
+                statsView.Initialize(usedStatsInfos[i], DataSaveManager.Instance.MyData.GetUserStatsDataMyName(usedStatsInfos[i].StatsName));
 
                 _statsViews.Add(statsView);
             }

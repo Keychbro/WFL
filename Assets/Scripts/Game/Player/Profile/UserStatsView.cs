@@ -31,7 +31,7 @@ namespace WOFL.UI
 
             _data.OnValueChanged += UpdateValue;
 
-            _iconBackground.sprite = _info.StatsIconBackground;
+            if (_iconBackground != null) _iconBackground.sprite = _info.StatsIconBackground;
             _icon.sprite = _info.StatsIcon;
             _statsName.text = _info.StatsName;
             UpdateValue();

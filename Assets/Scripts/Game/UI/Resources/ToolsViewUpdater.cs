@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Kamen.DataSave;
 using WOFL.Control;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.UI
 {
@@ -10,9 +11,11 @@ namespace WOFL.UI
     {
         #region Control Methods
 
-        protected override void Initialize()
+        protected async override void Initialize()
         {
             base.Initialize();
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+
             DataSaveManager.Instance.MyData.OnToolsAmountChanged += UpdateText;
             UpdateText();
         }

@@ -4,6 +4,7 @@ using TMPro;
 
 namespace WOFL.Stats
 {
+    [CreateAssetMenu(fileName = "User Stats Info", menuName = "WOFL/Settings/Stats/User Stats Info", order = 1)]
     public class UserStatsInfo : ScriptableObject
     {
         #region Variables
