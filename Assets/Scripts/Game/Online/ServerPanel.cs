@@ -17,6 +17,9 @@ namespace WOFL.UI
         [SerializeField] private TextMeshProUGUI _serverNameText;
         [SerializeField] private Button _playButton;
 
+        [Header("Settings")]
+        [SerializeField] private float _starPlayDuration;
+
         [Header("Variables")]
         private ServerInfo _currentServerInfo;
 
@@ -36,7 +39,7 @@ namespace WOFL.UI
             DataSaveManager.Instance.MyPlayerAuthData.ServerUUID = _currentServerInfo.uuid;
             DataSaveManager.Instance.AdjustPlayerDataOnServer();
 
-            ScreenManager.Instance.TransitionTo("Fight");
+            ScreenManager.Instance.TransitionWithOwnDuration("LoadingScreen", _starPlayDuration);
         }
 
         #endregion
