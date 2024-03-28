@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Vampire
   m_EditorClassIdentifier: 
   _name: 3
+  _logo: {fileID: 21300000, guid: 8e8b0718a3a5a174cb5ff05502b0b4df, type: 3}
   _mainColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4281800177
+  _mainTextColor:
+    serializedVersion: 2
+    rgba: 4279637537
   _castleSettings: {fileID: 0}
   _units: []
   _playerProfileSettings: {fileID: 11400000, guid: ad4cd80e289be2c4c97e9a5b899bbb0f, type: 2}

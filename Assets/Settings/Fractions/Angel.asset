@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 724e2e398b9f0924da3f961eea2e7e79, type: 3}
-  m_Name: Angle
+  m_Name: Angel
   m_EditorClassIdentifier: 
   _name: 1
+  _logo: {fileID: 21300000, guid: 33642073b3662464586079e19b3a2f84, type: 3}
   _mainColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4294965746
+  _mainTextColor:
+    serializedVersion: 2
+    rgba: 4291596047
   _castleSettings: {fileID: 0}
   _units: []
   _playerProfileSettings: {fileID: 11400000, guid: 6fc552fc05ccf414f864cfc63be0f14c, type: 2}

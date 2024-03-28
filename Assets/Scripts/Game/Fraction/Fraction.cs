@@ -25,7 +25,10 @@ namespace WOFL.Game
 
         [Header("Settings")]
         [SerializeField] private FractionName _name;
+        [SerializeField] private Sprite _logo;
         [SerializeField] private Color32 _mainColor;
+        [SerializeField] private Color32 _mainTextColor;
+
         [SerializeField] private CastleSettings _castleSettings;
         [SerializeField] private UnitInfo[] _units;
         [Space]
@@ -36,7 +39,9 @@ namespace WOFL.Game
         #region Properties
 
         public FractionName Name { get => _name; }
+        public Sprite Logo { get => _logo; }
         public Color32 MainColor { get => _mainColor; }
+        public Color32 MainTextColor { get => _mainTextColor; }
         public CastleSettings CastleSettings { get => _castleSettings; }
         public UnitInfo[] Units { get => _units; }
         public PlayerProfileSettings PlayerProfileSettings { get => _playerProfileSettings; }

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Human
   m_EditorClassIdentifier: 
   _name: 4
+  _logo: {fileID: 21300000, guid: faae7c30693977040b36df0882959598, type: 3}
   _mainColor:
     serializedVersion: 2
     rgba: 4285835121
+  _mainTextColor:
+    serializedVersion: 2
+    rgba: 4294967295
   _castleSettings: {fileID: 11400000, guid: 6f6daa7113b83ea45ab33f212f797775, type: 2}
   _units:
   - {fileID: 11400000, guid: 072e5fd56bbeba34cadb1ade5df09f96, type: 2}
