@@ -56,6 +56,7 @@ namespace WOFL.UI
         public void SwitchActive(bool isActive)
         {
             _background.DOColor(isActive ? _activeColor : _inactiveColor, _switchDuration).SetEase(_switchEase);
+
         }
 
         #endregion
