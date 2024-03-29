@@ -205,6 +205,7 @@ namespace Kamen.UI
             }
             return null;
         }
+        public Screen GetScreenByID(string id) => GetScreenInfoByID(id).ThisScreen;
 
         #endregion
     }

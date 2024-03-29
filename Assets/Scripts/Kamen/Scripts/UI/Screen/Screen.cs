@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 namespace Kamen.UI
 {
@@ -11,6 +12,9 @@ namespace Kamen.UI
 
         [Header("Variables")]
         private CanvasGroup _canvasGroup;
+
+        public event Action OnShowed;
+        public event Action OnHided;
 
         #endregion
 
@@ -55,6 +59,9 @@ namespace Kamen.UI
             }
 
             if (isShow && type != ScreenManager.TransitionType.Fade) _canvasGroup.alpha = 1f;
+
+            if (isShow) OnShowed?.Invoke();
+            else OnHided?.Invoke();
         }
 
         #endregion

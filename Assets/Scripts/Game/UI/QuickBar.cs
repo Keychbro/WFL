@@ -51,10 +51,11 @@ namespace WOFL.UI
                 _buttonsList[i].Button.CallChangeButtonState(QuickBarButtonInfo.ButtonState.Enabling, true);
                 _buttonsList[i].Button.Initialize();
                 _buttonsList[i].Button.OnClicked += SwitchButtons;
+
             }
 
-            _currentSelectedButton = _buttonsList.First(buttonInfo => buttonInfo.LinkedScreenName == ScreenManager.Instance.StartScreen);
-            _currentSelectedButton.Button.CallChangeButtonState(QuickBarButtonInfo.ButtonState.Selecting);
+            //_currentSelectedButton = _buttonsList.First(buttonInfo => buttonInfo.LinkedScreenName == ScreenManager.Instance.StartScreen);
+            //_currentSelectedButton.Button.CallChangeButtonState(QuickBarButtonInfo.ButtonState.Selecting);
         }
 
         #endregion
