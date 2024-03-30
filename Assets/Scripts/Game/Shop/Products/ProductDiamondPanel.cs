@@ -6,6 +6,10 @@ namespace WOFL.UI
 {
     public class ProductDiamondPanel : ProductPanel
     {
-        
+        #region Variables
+
+
+
+        #endregion
     }
 }
