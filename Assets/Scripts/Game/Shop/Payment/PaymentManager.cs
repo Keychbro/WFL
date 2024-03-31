@@ -1,10 +1,12 @@
+using Kamen;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace WOFL.Payment
 {
-    public class PaymentManager : MonoBehaviour
+    public class PaymentManager : SingletonComponent<PaymentManager>
     {
         #region Enums
 
@@ -22,6 +24,16 @@ namespace WOFL.Payment
 
         [Header("Settings")]
         [SerializeField] private PaymentInfo[] _paymentInfos;
+
+        #endregion
+
+        #region Control Methods
+
+        public PaymentInfo GetPaymentInfoByType(PaymentType type) => _paymentInfos.First(paymentInfo => paymentInfo.PaymentType == type);
+        public void TestClick()
+        {
+
+        }
 
         #endregion
     }

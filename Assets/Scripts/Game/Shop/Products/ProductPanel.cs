@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using WOFL.Control;
+using WOFL.Settings;
+using WOFL.Payment;
 
 namespace WOFL.UI
 {
@@ -15,34 +17,28 @@ namespace WOFL.UI
         [SerializeField] protected Image _background;
         [SerializeField] protected TextMeshProUGUI _title;
         [SerializeField] protected Image _productIcon;
+        [SerializeField] protected ProductGoodOfferView _goodOfferView;
         [Space]
-        [SerializeField] protected KamenButton _button;
-        [SerializeField] protected LoadingIcon _loadingIcon;
-        [SerializeField] protected Image _priceIcon;
-        [SerializeField] protected TextMeshProUGUI _priceText;
+        [SerializeField] protected PaymentView _paymentView;
 
-        //[Header("Variables")]
-
-        #endregion
-
-        #region Unity Methods
-
-        private void OnDestroy()
-        {
-            _button.OnClick().RemoveListener(ClickOnButton);
-        }
+        [Header("Variables")]
+        protected ProductPanelInfo _currentProductPanelInfo;
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize()
+        public void Initialize(ProductPanelInfo productPanelInfo)
         {
-            _button.OnClick().AddListener(ClickOnButton);
-        }
-        private void ClickOnButton()
-        {
+            _currentProductPanelInfo = productPanelInfo;
 
+            _title.text = _currentProductPanelInfo.Name;
+            _productIcon.sprite = _currentProductPanelInfo.Icon;
+            _productIcon.rectTransform.sizeDelta = _currentProductPanelInfo.IconSize;
+            _productIcon.rectTransform.anchoredPosition = _currentProductPanelInfo.IconPosition;
+
+            _paymentView.Initialize(PaymentManager.Instance.GetPaymentInfoByType(_paymentView.ChoosenType), 10.ToString(), PaymentManager.Instance.TestClick); //TODO Fix price and callback
+            _goodOfferView.AdjustView(_currentProductPanelInfo.OfferType);
         }
 
         #endregion
