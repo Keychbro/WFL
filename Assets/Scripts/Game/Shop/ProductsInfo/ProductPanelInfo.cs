@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using WOFL.UI;
+using WOFL.Payment;
 
 namespace WOFL.Settings
 {
@@ -12,21 +13,26 @@ namespace WOFL.Settings
         #region Variables
 
         [Header("Main Settings")]
-        [SerializeField] private string _name;
+        [SerializeField] protected string _name;
+        [Space]
+        [SerializeField] protected int _price;
+        [SerializeField] protected PaymentManager.PaymentType _paymentType;
 
         [Header("Icon Settings")]
-        [SerializeField] private Sprite _icon;
-        [SerializeField] private Vector2 _iconSize;
-        [SerializeField] private Vector3 _iconPosition;
+        [SerializeField] protected Sprite _icon;
+        [SerializeField] protected Vector2 _iconSize;
+        [SerializeField] protected Vector3 _iconPosition;
 
         [Header("Additional Settings")]
-        [SerializeField] private ProductGoodOfferView.OfferType _offerType;
+        [SerializeField] protected ProductGoodOfferView.OfferType _offerType;
 
         #endregion
 
         #region Properties
 
         public string Name { get => _name; }
+        public int Price { get => _price; }
+        public PaymentManager.PaymentType PaymentType { get => _paymentType; }
         public Sprite Icon { get => _icon; }
         public Vector2 IconSize { get => _iconSize; }
         public Vector3 IconPosition { get => _iconPosition; }

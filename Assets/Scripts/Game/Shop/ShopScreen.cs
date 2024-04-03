@@ -20,14 +20,30 @@ namespace WOFL.UI
 
             [Header("Objects")]
             [SerializeField] private ShopViewButton _shopViewButton;
-            [SerializeField] private GameObject _shopView;
+            [SerializeField] private ShopView _shopView;
 
             #endregion
 
             #region ShopViewInfo Methods
 
             public ShopViewButton ShopViewButton { get => _shopViewButton; }
-            public GameObject ShopView { get => _shopView; }
+            public ShopView ShopView { get => _shopView; }
+
+            #endregion
+        }
+        [Serializable] private struct ProductPrefabInfo
+        {
+            #region ProductPrefabInfo Variables
+
+            [SerializeField] private string _name;
+            [SerializeField] private ProductPanel _productPanel;
+
+            #endregion
+
+            #region ProductPrefabInfo Propeties
+
+            public string Name { get => _name; }
+            public ProductPanel ProductPanel { get => _productPanel; }
 
             #endregion
         }
@@ -38,6 +54,7 @@ namespace WOFL.UI
 
         [Header("Settings")]
         [SerializeField] private ShopViewInfo[] _shopViewsInfo;
+        [SerializeField] private ProductPrefabInfo[] _productPrefabInfos;
 
         [Header("Variables")]
         private ShopViewButton _activeButton;
@@ -73,13 +90,14 @@ namespace WOFL.UI
             if (_activeButton != null)
             {
                 _activeButton.SwitchActive(false);
-                _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == _activeButton).ShopView.SetActive(false);
+                _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == _activeButton).ShopView.gameObject.SetActive(false);
             }
             button.SwitchActive(true);
-            _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == button).ShopView.SetActive(true);
+            _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == button).ShopView.gameObject.SetActive(true);
 
             _activeButton = button;
         }
+        public ProductPanel GetProductPanelByName(string name) => _productPrefabInfos.First(productPrefabInfo => productPrefabInfo.Name == name).ProductPanel;
 
         #endregion
     }
