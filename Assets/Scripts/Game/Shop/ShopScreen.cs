@@ -19,15 +19,15 @@ namespace WOFL.UI
             #region ShopViewInfo Variables
 
             [Header("Objects")]
-            [SerializeField] private ShopViewButton _shopViewButton;
-            [SerializeField] private ShopView _shopView;
+            [SerializeField] private ShopViewButton _button;
+            [SerializeField] private ShopView _view;
 
             #endregion
 
             #region ShopViewInfo Methods
 
-            public ShopViewButton ShopViewButton { get => _shopViewButton; }
-            public ShopView ShopView { get => _shopView; }
+            public ShopViewButton Button { get => _button; }
+            public ShopView View { get => _view; }
 
             #endregion
         }
@@ -69,17 +69,21 @@ namespace WOFL.UI
             
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
-
+            
+            Debug.LogError(12323412);
+            
             AdjustShopViews();
         }
         private void AdjustShopViews()
         {
             for (int i = 0; i < _shopViewsInfo.Length; i++)
             {
-                _shopViewsInfo[i].ShopViewButton.Initialize();
-                _shopViewsInfo[i].ShopViewButton.OnButtonClicked += ChangeShopView;
+                _shopViewsInfo[i].Button.Initialize();
+                _shopViewsInfo[i].Button.OnButtonClicked += ChangeShopView;
 
-                if (i == 0) ChangeShopView(_shopViewsInfo[i].ShopViewButton);
+                _shopViewsInfo[i].View.Initialize(this);
+
+                if (i == 0) ChangeShopView(_shopViewsInfo[i].Button);
             }
 
         }
@@ -90,10 +94,10 @@ namespace WOFL.UI
             if (_activeButton != null)
             {
                 _activeButton.SwitchActive(false);
-                _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == _activeButton).ShopView.gameObject.SetActive(false);
+                _shopViewsInfo.First(shopViewInfo => shopViewInfo.Button == _activeButton).View.gameObject.SetActive(false);
             }
             button.SwitchActive(true);
-            _shopViewsInfo.First(shopViewInfo => shopViewInfo.ShopViewButton == button).ShopView.gameObject.SetActive(true);
+            _shopViewsInfo.First(shopViewInfo => shopViewInfo.Button == button).View.gameObject.SetActive(true);
 
             _activeButton = button;
         }

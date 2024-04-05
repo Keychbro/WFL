@@ -8,7 +8,7 @@ using WOFL.Control;
 
 namespace WOFL.Payment
 {
-    public class PaymentView
+    public class PaymentView : MonoBehaviour
     {
         #region Variables
 
@@ -25,7 +25,6 @@ namespace WOFL.Payment
 
         [Header("Variables")]
         private PaymentInfo _currentPaymentInfo;
-        private UnityAction _payCallback;
 
         #endregion
 
@@ -40,24 +39,23 @@ namespace WOFL.Payment
 
         private void OnDestroy()
         {
-            _button.OnClick().RemoveListener(_payCallback);
+            _button.Initialize();
+            _button.OnClick().RemoveAllListeners();
         }
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize(PaymentInfo paymentInfo, string price, UnityAction callback)
+        public void Initialize(PaymentInfo paymentInfo, string price)
         {
             _currentPaymentInfo = paymentInfo;
-            _payCallback = callback;
 
             _icon.sprite = _currentPaymentInfo.CurrencyIcon;
             _price.text = price;
             _price.color = _isUseCurrencyColor ? _currentPaymentInfo.CurrencyMainColor : _newPriceColor;
 
             _button.Initialize();
-            _button.OnClick().AddListener(callback);
         }
 
 

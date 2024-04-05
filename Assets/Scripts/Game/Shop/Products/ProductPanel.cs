@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using WOFL.Control;
 using WOFL.Settings;
 using WOFL.Payment;
+using WOFL.IAP;
+using System;
 
 namespace WOFL.UI
 {
@@ -23,12 +26,13 @@ namespace WOFL.UI
 
         [Header("Variables")]
         protected ProductPanelInfo _currentProductPanelInfo;
+        protected event UnityAction<int, Action> PaymentMethod;
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize(ProductPanelInfo productPanelInfo)
+        public virtual void Initialize(ProductPanelInfo productPanelInfo)
         {
             _currentProductPanelInfo = productPanelInfo;
 
@@ -37,8 +41,23 @@ namespace WOFL.UI
             _productIcon.rectTransform.sizeDelta = _currentProductPanelInfo.IconSize;
             _productIcon.rectTransform.anchoredPosition = _currentProductPanelInfo.IconPosition;
 
-            _paymentView.Initialize(PaymentManager.Instance.GetPaymentInfoByType(_paymentView.ChoosenType), 10.ToString(), PaymentManager.Instance.TestClick); //TODO Fix price and callback
+            PaymentMethod = PaymentManager.Instance.GetBuyMethodByType(_currentProductPanelInfo.PaymentType);
+
+            _paymentView.Initialize(
+                PaymentManager.Instance.GetPaymentInfoByType(_currentProductPanelInfo.PaymentType),
+                _currentProductPanelInfo.PaymentType == PaymentManager.PaymentType.RealMoney ? IAPManager.Instance.GetPriceByName(_currentProductPanelInfo.PriceName) : _currentProductPanelInfo.Price.ToString());
+
+            _paymentView.OnTryPay.AddListener(() =>
+            {
+                PaymentMethod?.Invoke(_currentProductPanelInfo.Price, GetReward); 
+            });
+
             _goodOfferView.AdjustView(_currentProductPanelInfo.OfferType);
+        }
+        public virtual void GetReward()
+        {
+            //DO Nothing
+            Debug.Log("Get rewarded!");
         }
 
         #endregion

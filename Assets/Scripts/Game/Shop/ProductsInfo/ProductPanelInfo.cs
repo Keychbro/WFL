@@ -16,6 +16,7 @@ namespace WOFL.Settings
         [SerializeField] protected string _name;
         [Space]
         [SerializeField] protected int _price;
+        [SerializeField] protected string _priceName;
         [SerializeField] protected PaymentManager.PaymentType _paymentType;
 
         [Header("Icon Settings")]
@@ -32,6 +33,7 @@ namespace WOFL.Settings
 
         public string Name { get => _name; }
         public int Price { get => _price; }
+        public string PriceName { get => _priceName; }
         public PaymentManager.PaymentType PaymentType { get => _paymentType; }
         public Sprite Icon { get => _icon; }
         public Vector2 IconSize { get => _iconSize; }
