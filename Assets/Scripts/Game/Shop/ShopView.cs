@@ -69,7 +69,7 @@ namespace WOFL.UI
         private void CreateProductPanel(ProductPanelInfo[] productPanelInfos, Transform panelsHolder, out List<ProductPanel> createdProductPanels)
         {
             createdProductPanels = new List<ProductPanel>();
-            for (int i = 0; i <= productPanelInfos.Length; i++)
+            for (int i = 0; i < productPanelInfos.Length; i++)
             {
                 ProductPanel productPanel = Instantiate(_shopScreen.GetProductPanelByName(GetProductNameByInfo(productPanelInfos[i])), panelsHolder);
                 productPanel.Initialize(productPanelInfos[i]);
@@ -91,6 +91,7 @@ namespace WOFL.UI
             if (productPanelInfo is ProductDiamondPanelInfo) return "Diamonds";
             else if (productPanelInfo is ProductGoldPanelInfo) return "Gold";
             else if (productPanelInfo is ProductToolsPanelInfo) return "Tools";
+            else if (productPanelInfo is ProductChestPanelInfo) return "Chest";
             else return "Classic";
         }
 

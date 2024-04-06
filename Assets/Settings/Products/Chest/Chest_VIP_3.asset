@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007f428065de185418c66d72fb70d361, type: 3}
-  m_Name: Gold_1M
+  m_Script: {fileID: 11500000, guid: 0222b7ba6f678664980a5af8f11f81a5, type: 3}
+  m_Name: Chest_VIP_3
   m_EditorClassIdentifier: 
-  _name: Fistful of Gold
+  _name: VIP Chest 3
   _price: 0
   _priceName: 
   _paymentType: 3
-  _icon: {fileID: 21300000, guid: 9261608666e23df4f9d1c364c8ffc8bc, type: 3}
-  _iconSize: {x: 185, y: 185}
-  _iconPosition: {x: 0, y: -14, z: 0}
+  _icon: {fileID: 21300000, guid: a157e24d2494b8643973c16457530c20, type: 3}
+  _iconSize: {x: 210, y: 210}
+  _iconPosition: {x: 0, y: 9, z: 0}
   _offerType: 0
-  _amountGoldReceive: 1000000
+  _chestType: 4

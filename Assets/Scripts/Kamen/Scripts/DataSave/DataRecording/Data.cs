@@ -7,6 +7,7 @@ using System.Linq;
 using WOFL.Game;
 using WOFL.DataSave;
 using WOFL.Stats;
+using WOFL.Control;
 
 namespace Kamen.DataSave
 {
@@ -44,6 +45,10 @@ namespace Kamen.DataSave
 
         [Header("Fraction")]
         [SerializeField] private Fraction.FractionName _choosenFraction = Fraction.FractionName.None; //Change to none
+
+        [Header("Shop")]
+        [SerializeField] private List<ChestManager.ChestType> _chests = new List<ChestManager.ChestType>();
+        public event Action OnChestsAmountChanged;
 
         #endregion
 
@@ -251,6 +256,26 @@ namespace Kamen.DataSave
 
                 _choosenFraction = value;
             }
+        }
+
+        #endregion
+
+        #region Shop Methods
+
+        public void AddChest(ChestManager.ChestType chestType)
+        {
+            _chests.Add(chestType);
+            OnChestsAmountChanged?.Invoke();
+        }
+        public void RemoveChest(ChestManager.ChestType chestType)
+        {
+            _chests.Remove(chestType);
+            OnChestsAmountChanged?.Invoke();
+        }
+        public void RemoveAtChest(int index)
+        {
+            _chests.RemoveAt(index);
+            OnChestsAmountChanged?.Invoke();
         }
 
         #endregion

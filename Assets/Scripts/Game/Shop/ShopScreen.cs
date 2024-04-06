@@ -70,8 +70,6 @@ namespace WOFL.UI
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
             
-            Debug.LogError(12323412);
-            
             AdjustShopViews();
         }
         private void AdjustShopViews()

@@ -60,7 +60,6 @@ namespace WOFL.Payment
             _button.Initialize();
         }
 
-
         #endregion
     }
 }

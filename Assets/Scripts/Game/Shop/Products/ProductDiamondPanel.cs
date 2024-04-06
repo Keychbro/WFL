@@ -10,7 +10,7 @@ namespace WOFL.UI
     {
         #region Variables
 
-        [Header("Gold Variables")]
+        [Header("Diamond Settings")]
         [SerializeField] private TextMeshProUGUI _amountDiamondsReceiveText;
 
         [Header("Diamond Variables")]
