@@ -71,17 +71,27 @@ namespace WOFL.UI
             createdProductPanels = new List<ProductPanel>();
             for (int i = 0; i <= productPanelInfos.Length; i++)
             {
-                if (productPanelInfos[i] is ProductDiamondPanelInfo)
-                {
-                    ProductDiamondPanel diamondPanel = Instantiate((ProductDiamondPanel)_shopScreen.GetProductPanelByName("Diamonds"), panelsHolder);
-                    diamondPanel.Initialize(productPanelInfos[i]);
-                    //diamondPanel.
-                }
-                else
-                {
+                ProductPanel productPanel = Instantiate(_shopScreen.GetProductPanelByName(GetProductNameByInfo(productPanelInfos[i])), panelsHolder);
+                productPanel.Initialize(productPanelInfos[i]);
 
-                }
+                //if (productPanelInfos[i] is ProductDiamondPanelInfo)
+                //{
+                //    ProductDiamondPanel diamondPanel = Instantiate((ProductDiamondPanel)_shopScreen.GetProductPanelByName("Diamonds"), panelsHolder);
+                //    diamondPanel.Initialize(productPanelInfos[i]);
+                //}
+                //
+                //else
+                //{
+                //
+                //}
             }
+        }
+        private string GetProductNameByInfo(ProductPanelInfo productPanelInfo)
+        {
+            if (productPanelInfo is ProductDiamondPanelInfo) return "Diamonds";
+            else if (productPanelInfo is ProductGoldPanelInfo) return "Gold";
+            else if (productPanelInfo is ProductToolsPanelInfo) return "Tools";
+            else return "Classic";
         }
 
         #endregion

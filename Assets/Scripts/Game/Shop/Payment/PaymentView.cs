@@ -47,12 +47,14 @@ namespace WOFL.Payment
 
         #region Control Methods
 
-        public void Initialize(PaymentInfo paymentInfo, string price)
+        public void Initialize(PaymentInfo paymentInfo, string priceText)
         {
             _currentPaymentInfo = paymentInfo;
 
             _icon.sprite = _currentPaymentInfo.CurrencyIcon;
-            _price.text = price;
+
+            if (int.TryParse(priceText, out int priceInValue)) _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
+            else _price.text = priceText;
             _price.color = _isUseCurrencyColor ? _currentPaymentInfo.CurrencyMainColor : _newPriceColor;
 
             _button.Initialize();

@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23b718ee15d19de479c6d72de31a2db6, type: 3}
-  m_Name: Diamonds_1000
+  m_Script: {fileID: 11500000, guid: 007f428065de185418c66d72fb70d361, type: 3}
+  m_Name: Gold_100K
   m_EditorClassIdentifier: 
-  _name: Tiny of Diamond
+  _name: Tiny of Gold
   _price: 0
   _priceName: 
   _paymentType: 3
-  _icon: {fileID: 21300000, guid: d875e5abcff964b4e879fc6430f9636b, type: 3}
-  _iconSize: {x: 160, y: 155}
+  _icon: {fileID: 21300000, guid: 62f1523e28102304f824ed22d7c16ff3, type: 3}
+  _iconSize: {x: 160, y: 160}
   _iconPosition: {x: 0, y: -8, z: 0}
   _offerType: 0
-  _amountDiamondsReceive: 1000
+  _amountGoldReceive: 100000
