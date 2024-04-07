@@ -11,7 +11,7 @@ namespace Kamen
 
         [SerializeField] private string _id;
         [SerializeField] private Timer _timer;
-        [SerializeField] private TimerViewer _viewer;
+        [SerializeField] private TimerViewer[] _viewers;
         [SerializeField] private Coroutine _coroutine;
 
         #endregion
@@ -20,10 +20,10 @@ namespace Kamen
 
         public string ID { get => _id; }
         public Timer Timer { get => _timer; }
-        public TimerViewer Viewer { get => _viewer; }
-        public Coroutine Coroutine 
+        public TimerViewer[] Viewers { get => _viewers; }
+        public Coroutine Coroutine
         {
-            get => _coroutine; 
+            get => _coroutine;
             set
             {
                 if (value != null) _coroutine = value;
@@ -34,13 +34,13 @@ namespace Kamen
 
         #region Constructors
 
-        public TimerInfo(Timer timer) : this("Default Timer", timer, null) {}
-        public TimerInfo(string id, Timer timer) : this(id, timer, null) {}
-        public TimerInfo(string id, Timer timer, TimerViewer viewer)
+        public TimerInfo(Timer timer) : this("Default Time", timer, null) { }
+        public TimerInfo(string id, Timer timer) : this(id, timer, null) { }
+        public TimerInfo(string id, Timer timer, TimerViewer[] viewers)
         {
             _id = id;
             _timer = timer;
-            _viewer = viewer;
+            _viewers = viewers;
             InitiliazeViewer();
         }
 
@@ -48,7 +48,14 @@ namespace Kamen
 
         #region Control Methods
 
-        public void InitiliazeViewer() => _viewer.Initialize(_timer);
+        public void InitiliazeViewer()
+        {
+            for (int i = 0; i < _viewers.Length; i++)
+            {
+                _viewers[i].Initialize(_timer);
+            }
+        }
+        public void UpdateViewers(TimerViewer[] newViewers) => _viewers = newViewers;
 
         #endregion
     }

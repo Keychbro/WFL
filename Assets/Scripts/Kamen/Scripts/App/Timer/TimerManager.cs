@@ -15,14 +15,14 @@ namespace Kamen
             #region TimerEditInfo Variables
 
             [SerializeField] private string _id;
-            [SerializeField] private TimerViewer _viewer;
+            [SerializeField] private TimerViewer[] _viewers;
 
             #endregion
 
             #region TimerEditInfo Properties
 
             public string ID { get => _id; }
-            public TimerViewer Viewer { get => _viewer; }
+            public TimerViewer[] Viewers { get => _viewers; }
 
             #endregion
         }
@@ -32,7 +32,20 @@ namespace Kamen
         #region Variables
 
         [Header("Settings")]
+        [SerializeField] private string _saveTimerDataName;
         [SerializeField] private TimerEditInfo[] _timersEditInfo;
+
+        [Header("Variables")]
+        [SerializeField] private TimerData _timerData;
+        private bool _isFirst = true;
+        private int _timerUpdateDelay = 1;
+        private float _currentTimerDelay = 0;
+
+        #endregion
+
+        #region Properties
+
+
 
         #endregion
 
@@ -43,23 +56,49 @@ namespace Kamen
             base.Awake();
             Initialize();
         }
+        private void Update()
+        {
+            _currentTimerDelay += UnityEngine.Time.deltaTime;
+            if (_currentTimerDelay >= _timerUpdateDelay)
+            {
+                _currentTimerDelay = 0;
+
+                if (!_isFirst && !CheckQuitTimeRight(_timerUpdateDelay + 1))
+                {
+                    StopAllCounters();
+                    StartAllCounters();
+                    ConpenseteTime();
+                    SetQuitTime();
+                    PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
+                }
+                else
+                {
+                    SetQuitTime();
+                }
+                _isFirst = false;
+            }
+        }
         private void OnApplicationPause(bool pauseStatus)
         {
-            if (pauseStatus)
-            {
-                SetQuitTime();
-                StopAllCounters();
-                DataSaveManager.Instance.SaveData();
-            }
-            else 
-            {
-                StartAllCounters();
-                ConpenseteTime();
-            }
+            //if (pauseStatus)
+            //{
+            //    SetQuitTime();
+            //    StopAllCounters();
+            //    PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
+            //}
+            //else 
+            //{
+            //    StartAllCounters();
+            //    ConpenseteTime();
+            //}
         }
         private void OnApplicationQuit()
         {
             SetQuitTime();
+        }
+        private void OnApplicationFocus(bool focus)
+        {
+            // SetQuitTime();
         }
 
         #endregion
@@ -68,28 +107,34 @@ namespace Kamen
 
         private void Initialize()
         {
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            _timerData = JsonUtility.FromJson<TimerData>(PlayerPrefs.GetString(_saveTimerDataName, JsonUtility.ToJson(new TimerData())));
+
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                if (!DataSaveManager.Instance.MyData.TimersInfo[i].Timer.IsSavedToData)
+                TimerEditInfo timerEditInfo = GetTimerEditInfoByID(_timerData.TimersInfo[i].ID);
+
+                if (!_timerData.TimersInfo[i].Timer.IsSavedToData)
                 {
-                    DataSaveManager.Instance.MyData.TimersInfo.RemoveAt(i);
+                    _timerData.TimersInfo.RemoveAt(i);
                     i--;
                 }
                 else
                 {
-                    DataSaveManager.Instance.MyData.TimersInfo[i].InitiliazeViewer();
-                    SubscribeOnTimer(DataSaveManager.Instance.MyData.TimersInfo[i]);
+                    _timerData.TimersInfo[i].UpdateViewers(timerEditInfo.Viewers);
+                    _timerData.TimersInfo[i].InitiliazeViewer();
+                    SubscribeOnTimer(_timerData.TimersInfo[i]);
                 }
             }
+            ConpenseteTime();
         }
         public void RecordNewTimer(string id, Timer newTimer)
         {
             if (CheckToAlreadyUsedByID(id)) return;
             TimerEditInfo timerEditInfo = GetTimerEditInfoByID(id);
 
-            TimerInfo newTimerInfo = new TimerInfo(timerEditInfo.ID, newTimer, timerEditInfo.Viewer);
-            DataSaveManager.Instance.MyData.TimersInfo.Add(newTimerInfo);
-            DataSaveManager.Instance.SaveData();
+            TimerInfo newTimerInfo = new TimerInfo(timerEditInfo.ID, newTimer, timerEditInfo.Viewers);
+            _timerData.TimersInfo.Add(newTimerInfo);
+            PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
 
             SubscribeOnTimer(newTimerInfo);
         }
@@ -105,46 +150,44 @@ namespace Kamen
         }
         public void DestroyTimer(string id)
         {
-            if(!CheckToAlreadyUsedByID(id)) return;
+            if (!CheckToAlreadyUsedByID(id)) return;
             TimerInfo info = GetTimerInfoByID(id);
             info.Timer.Destroy();
         }
-        public Timer SubscribeOnTimeOver(string id) => GetTimerInfoByID(id).Timer;
-        public Action SubscribeOnTimeOver2(string id) => GetTimerInfoByID(id).Timer.OnTimeIsOver;
-        public Action UnsubscribeOnTimeOver(string id) => GetTimerInfoByID(id).Timer.OnTimeIsOver;
+        public Timer GetSubscribeOnTimeOver(string id) => GetTimerInfoByID(id).Timer;
+        public TimerInfo GetTimerInfo(string id) => GetTimerInfoByID(id);
 
         #endregion
 
         #region Counter Methods
 
-   
         private void StartAllCounters()
         {
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                TimerInfo info = DataSaveManager.Instance.MyData.TimersInfo[i];
+                TimerInfo info = _timerData.TimersInfo[i];
                 if (info.Timer.CurrentState != Timer.State.Activated) continue;
                 info.Coroutine = StartCoroutine(Counter(info));
             }
         }
         private void StopAllCounters()
         {
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                if (DataSaveManager.Instance.MyData.TimersInfo[i].Timer.CurrentState != Timer.State.Activated) continue;   
-                StopCoroutine(DataSaveManager.Instance.MyData.TimersInfo[i].Coroutine);
+                if (_timerData.TimersInfo[i].Timer.CurrentState != Timer.State.Activated || _timerData.TimersInfo[i].Coroutine == null) continue;
+                StopCoroutine(_timerData.TimersInfo[i].Coroutine);
             }
         }
         private void ConpenseteTime()
         {
             int conpenseteSeconds = CalculateConpenseteTime();
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                TimerInfo info = DataSaveManager.Instance.MyData.TimersInfo[i];
+                TimerInfo info = _timerData.TimersInfo[i];
                 if (info.Timer.CurrentState != Timer.State.Activated || info.Timer.CurrentMode != Timer.Mode.Always) continue;
                 info.Timer.UpdateTimer(-conpenseteSeconds);
             }
-            DataSaveManager.Instance.SaveData();
+            PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
         }
         private IEnumerator Counter(TimerInfo timerInfo)
         {
@@ -156,8 +199,16 @@ namespace Kamen
         }
         private void SetQuitTime()
         {
-            DataSaveManager.Instance.MyData.QuitTime = DateTime.Now;
-            DataSaveManager.Instance.SaveData();
+            _timerData.QuitTime = DateTime.Now;
+            _timerData.QuitTimeInTicks = DateTime.Now.Ticks;
+            PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
+        }
+        private bool CheckQuitTimeRight(int goalValue)
+        {
+            TimeSpan timeDifference = DateTime.Now - new DateTime(_timerData.QuitTimeInTicks);
+
+            if (timeDifference.TotalSeconds > goalValue) return false;
+            else return false;
         }
 
         #endregion
@@ -176,7 +227,7 @@ namespace Kamen
         {
             TimerInfo info = GetTimerInfoByID(timerID);
 
-            switch(state)
+            switch (state)
             {
                 case Timer.State.Created:
                     break;
@@ -187,14 +238,14 @@ namespace Kamen
                     StopCoroutine(info.Coroutine);
                     break;
                 case Timer.State.IsOver:
-                    StopCoroutine(info.Coroutine);
+                    if (info.Coroutine != null) StopCoroutine(info.Coroutine);
                     UnsubscribeFromTimer(info);
-                    DataSaveManager.Instance.MyData.TimersInfo.Remove(info);
+                    _timerData.TimersInfo.Remove(info);
                     break;
             }
 
-            DataSaveManager.Instance.SaveData();
-        }   
+            PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
+        }
 
         #endregion
 
@@ -206,26 +257,26 @@ namespace Kamen
             {
                 if (id == _timersEditInfo[i].ID) return _timersEditInfo[i];
             }
-            
-            Debug.LogError($"[TimerManager] - Timer Edit Info with id {id} doesn't exist!");
+
+            Debug.LogError($"[TimerManager] - Time Edit Info with id {id} doesn't exist!");
             return null;
         }
         private TimerInfo GetTimerInfoByID(string id)
         {
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                if (id == DataSaveManager.Instance.MyData.TimersInfo[i].ID) return DataSaveManager.Instance.MyData.TimersInfo[i];
+                if (id == _timerData.TimersInfo[i].ID) return _timerData.TimersInfo[i];
             }
-            Debug.LogError($"[TimerManager] - Timer Info with id {id} doesn't exist!");
+            //Debug.LogError($"[TimerManager] - Time Info with id {id} doesn't exist!");
             return null;
         }
         private bool CheckToAlreadyUsedByID(string id)
         {
-            for (int i = 0; i < DataSaveManager.Instance.MyData.TimersInfo.Count; i++)
+            for (int i = 0; i < _timerData.TimersInfo.Count; i++)
             {
-                if (id == DataSaveManager.Instance.MyData.TimersInfo[i].ID) 
+                if (id == _timerData.TimersInfo[i].ID)
                 {
-                    Debug.Log($"[TimerManager] - Timer with id {id} already used!");
+                    Debug.Log($"[TimerManager] - Time with id {id} already used!");
                     return true;
                 }
             }
@@ -234,10 +285,36 @@ namespace Kamen
         }
         private int CalculateConpenseteTime()
         {
-            TimeSpan timeDifference = DateTime.Now - DataSaveManager.Instance.MyData.QuitTime; // Вычисляем разницу времени
+            TimeSpan timeDifference = DateTime.Now - new DateTime(_timerData.QuitTimeInTicks); // Вычисляем разницу времени
             return (int)Math.Round(timeDifference.TotalSeconds, 0); // Получаем разницу в секундах
         }
 
         #endregion
-    }   
+    }
+
+    [Serializable]
+    public class TimerData
+    {
+        #region Variables
+
+        [SerializeField] private List<TimerInfo> _timersInfo = new List<TimerInfo>();
+        [SerializeField] private DateTime _quitTime;
+
+        #endregion
+
+        #region Properties
+
+        public List<TimerInfo> TimersInfo { get => _timersInfo; }
+        public long QuitTimeInTicks = DateTime.Now.Ticks;
+        public DateTime QuitTime
+        {
+            get => _quitTime;
+            set
+            {
+                if (value != null) _quitTime = value;
+            }
+        }
+
+        #endregion
+    }
 }

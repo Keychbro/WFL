@@ -11,7 +11,7 @@ namespace Kamen
         #region Variables
 
         [Header("Objects")]
-        [SerializeField] protected KamenText _timerText;
+        [SerializeField] protected TextMeshProUGUI _timerText;
         protected Timer _timer;
 
         [Header("Settings")]

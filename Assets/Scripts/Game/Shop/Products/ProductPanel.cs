@@ -21,6 +21,7 @@ namespace WOFL.UI
         [SerializeField] protected TextMeshProUGUI _title;
         [SerializeField] protected Image _productIcon;
         [SerializeField] protected ProductGoodOfferView _goodOfferView;
+        [SerializeField] protected SoonView _soonView;
         [Space]
         [SerializeField] protected PaymentView _paymentView;
 
@@ -52,7 +53,12 @@ namespace WOFL.UI
                 PaymentMethod?.Invoke(_currentProductPanelInfo.Price, GetReward); 
             });
 
-            _goodOfferView.AdjustView(_currentProductPanelInfo.OfferType);
+            if (!productPanelInfo.IsSoonViewActive) _goodOfferView.AdjustView(_currentProductPanelInfo.OfferType);
+            else
+            {
+                _paymentView.gameObject.SetActive(false);
+                _soonView.gameObject.SetActive(true);
+            }
         }
         public virtual void GetReward()
         {

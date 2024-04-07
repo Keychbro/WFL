@@ -26,6 +26,7 @@ namespace WOFL.Settings
 
         [Header("Additional Settings")]
         [SerializeField] protected ProductGoodOfferView.OfferType _offerType;
+        [SerializeField] protected bool _isSoonViewActive;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace WOFL.Settings
         public Vector2 IconSize { get => _iconSize; }
         public Vector3 IconPosition { get => _iconPosition; }
         public ProductGoodOfferView.OfferType OfferType { get => _offerType; }
+        public bool IsSoonViewActive { get => _isSoonViewActive; }
 
         #endregion
     }

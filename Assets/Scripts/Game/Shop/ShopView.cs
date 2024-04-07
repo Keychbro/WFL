@@ -9,27 +9,6 @@ namespace WOFL.UI
 {
     public class ShopView : MonoBehaviour
     {
-        #region Classes
-
-        [Serializable] private class ShopPackInfo
-        {
-            #region ShopPackInfo Variables
-
-            [SerializeField] private string _name;
-            [SerializeField] private ProductPanelInfo[] _productPanelInfos;
-
-            #endregion
-
-            #region ShopPackInfo Properties
-
-            public string Name { get => _name; }
-            public ProductPanelInfo[] ProductPanelInfos { get => _productPanelInfos; }
-
-            #endregion
-        }
-
-        #endregion
-
         #region Variables
 
         [Header("Prefabs")]
@@ -94,6 +73,7 @@ namespace WOFL.UI
             else if (productPanelInfo is ProductChestPanelInfo) return "Chest";
             else if (productPanelInfo is ProductDailyBonusPanelInfo) return "DailyBonus";
             else if (productPanelInfo is ProductRemoveAdsPanelInfo) return "RemoveAds";
+            else if (productPanelInfo is ProductUnitPanelInfo) return "Unit";
             else return "Classic";
         }
 

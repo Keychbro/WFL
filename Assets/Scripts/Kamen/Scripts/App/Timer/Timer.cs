@@ -8,7 +8,7 @@ namespace Kamen
     [Serializable] public class Timer
     {
         #region Enums
-        
+
         public enum State
         {
             Created,
@@ -33,9 +33,9 @@ namespace Kamen
         [SerializeField] private bool _isSavedToData;
         [SerializeField] private int _stepInSeconds;
 
-        public Action<State> OnStateChanged;
-        public Action<KamenTime> OnTimeChanged;
-        public Action OnTimeIsOver;
+        public event Action<State> OnStateChanged;
+        public event Action<KamenTime> OnTimeChanged;
+        public event Action OnTimeIsOver;
 
         #endregion
 
@@ -50,10 +50,10 @@ namespace Kamen
 
         #region Constructors
 
-        public Timer() : this(new KamenTime(0), Mode.InGame, false, 1) {}
-        public Timer(KamenTime time) : this(time, Mode.InGame, false, 1) {}
-        public Timer(KamenTime time, Mode mode) : this(time, mode, false, 1) {}
-        public Timer(KamenTime time, Mode mode, bool isSavedToData) : this(time, mode, isSavedToData, 1) {}
+        public Timer() : this(new KamenTime(0), Mode.InGame, false, 1) { }
+        public Timer(KamenTime time) : this(time, Mode.InGame, false, 1) { }
+        public Timer(KamenTime time, Mode mode) : this(time, mode, false, 1) { }
+        public Timer(KamenTime time, Mode mode, bool isSavedToData) : this(time, mode, isSavedToData, 1) { }
         public Timer(KamenTime time, Mode mode, bool isSavedToData, int stepInSeconds)
         {
             _time = time;
@@ -93,7 +93,7 @@ namespace Kamen
 
             CheckingEnd();
         }
-        private void CheckingEnd()
+        public void CheckingEnd()
         {
             if (_time.AllInSeconds > 0) return;
             Destroy();

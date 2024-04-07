@@ -9,6 +9,7 @@ namespace Kamen
     {
         #region Variables
 
+        [SerializeField] private string _daysExtraText;
         [SerializeField] private string _hoursExtraText;
         [SerializeField] private string _minutesExtraText;
         [SerializeField] private string _secondsExtraText;
@@ -18,6 +19,7 @@ namespace Kamen
 
         #region Properties
 
+        public string DaysExtraText { get => _daysExtraText; }
         public string HoursExtraText { get => _hoursExtraText; }
         public string MinutesExtraText { get => _minutesExtraText; }
         public string SecondsExtraText { get => _secondsExtraText; }
@@ -27,9 +29,10 @@ namespace Kamen
 
         #region Constructor
 
-        public TimeFormatInfo(string separatorMark) : this("", "", "", separatorMark) {}
-        public TimeFormatInfo(string hoursExtraText, string minutesExtraText, string secondsExtraText, string separatorMark)
+        public TimeFormatInfo(string separatorMark) : this("", "", "", "", separatorMark) { }
+        public TimeFormatInfo(string daysExtraText, string hoursExtraText, string minutesExtraText, string secondsExtraText, string separatorMark)
         {
+            _daysExtraText = daysExtraText;
             _hoursExtraText = hoursExtraText;
             _minutesExtraText = minutesExtraText;
             _secondsExtraText = secondsExtraText;
