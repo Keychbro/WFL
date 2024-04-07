@@ -10,6 +10,7 @@ namespace WOFL.BattlePass
 
         [Header("Objects")]
         [SerializeField] private BattlePassTopBar _topBar;
+        [SerializeField] private BattlePassBottomBar _bottomBar;
 
         #endregion
     }
