@@ -92,6 +92,7 @@ namespace WOFL.UI
             else if (productPanelInfo is ProductGoldPanelInfo) return "Gold";
             else if (productPanelInfo is ProductToolsPanelInfo) return "Tools";
             else if (productPanelInfo is ProductChestPanelInfo) return "Chest";
+            else if (productPanelInfo is ProductDailyBonusPanelInfo) return "DailyBonus";
             else return "Classic";
         }
 

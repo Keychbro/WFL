@@ -50,6 +50,9 @@ namespace Kamen.DataSave
         [SerializeField] private List<ChestManager.ChestType> _chests = new List<ChestManager.ChestType>();
         public event Action OnChestsAmountChanged;
 
+        [Header("DailyBonus")]
+        [SerializeField] private int _dailyBonusFactor = 1;
+
         #endregion
 
         #region PlayerData
@@ -276,6 +279,24 @@ namespace Kamen.DataSave
         {
             _chests.RemoveAt(index);
             OnChestsAmountChanged?.Invoke();
+        }
+
+        #endregion
+
+        #region Daily Factor Properties
+
+        public int DailyBonusFactor
+        {
+            get => _dailyBonusFactor;
+            set
+            {
+                if (value < _dailyBonusFactor)
+                {
+                    Debug.LogError("An attempt was made to assign a value less than the current one");
+                    return;
+                }
+                _dailyBonusFactor = value;
+            }
         }
 
         #endregion
