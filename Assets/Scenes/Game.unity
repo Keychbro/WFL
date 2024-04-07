@@ -9279,6 +9279,7 @@ MonoBehaviour:
   - _name: OTHER
     _productPanelInfos:
     - {fileID: 11400000, guid: 3375f21a10195db47b992efea00be281, type: 2}
+    - {fileID: 11400000, guid: 3d4bca5ccefaf534aa229830dd637130, type: 2}
 --- !u!1 &319477203
 GameObject:
   m_ObjectHideFlags: 0
@@ -29613,6 +29614,7 @@ MonoBehaviour:
     _choosenFraction: 4
     _chests: 
     _dailyBonusFactor: 1
+    _isAdsRemoved: 0
 --- !u!4 &944637287
 Transform:
   m_ObjectHideFlags: 0
@@ -49987,6 +49989,8 @@ MonoBehaviour:
     _productPanel: {fileID: -6011783207572224392, guid: 14bc6d2476590724ba3271d3e8b624b0, type: 3}
   - _name: DailyBonus
     _productPanel: {fileID: 5690945815644301434, guid: 81248eb360f74174d9c1ca32934779a1, type: 3}
+  - _name: RemoveAds
+    _productPanel: {fileID: 1599876218847476203, guid: c1f90d08751671144afdbe5988264f8c, type: 3}
 --- !u!1 &1535556660
 GameObject:
   m_ObjectHideFlags: 0

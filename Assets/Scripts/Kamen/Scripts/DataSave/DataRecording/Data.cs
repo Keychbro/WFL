@@ -53,6 +53,9 @@ namespace Kamen.DataSave
         [Header("DailyBonus")]
         [SerializeField] private int _dailyBonusFactor = 1;
 
+        [Header("Ads")]
+        [SerializeField] private bool _isAdsRemoved;
+
         #endregion
 
         #region PlayerData
@@ -296,6 +299,24 @@ namespace Kamen.DataSave
                     return;
                 }
                 _dailyBonusFactor = value;
+            }
+        }
+
+        #endregion
+
+        #region Ads Properties
+
+        public bool IsAdsRemoved
+        {
+            get => _isAdsRemoved;
+            set
+            {
+                if (!value)
+                {
+                    Debug.LogError("Trying to assign a negative meaning");
+                    return;
+                }
+                _isAdsRemoved = value;
             }
         }
 

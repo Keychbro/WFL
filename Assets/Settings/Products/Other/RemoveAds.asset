@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015bc75f479b58e4dac6765b40849d29, type: 3}
+  m_Name: RemoveAds
+  m_EditorClassIdentifier: 
+  _name: Remove Ads
+  _price: 0
+  _priceName: 
+  _paymentType: 3
+  _icon: {fileID: 21300000, guid: 152333def7fb04fefaac91d426ff1535, type: 3}
+  _iconSize: {x: 195, y: 230}
+  _iconPosition: {x: 12, y: 5, z: 0}
+  _offerType: 1

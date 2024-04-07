@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Kamen.DataSave;
 using WOFL.Settings;
-using WOFL.Control;
 using TMPro;
 
 namespace WOFL.UI
