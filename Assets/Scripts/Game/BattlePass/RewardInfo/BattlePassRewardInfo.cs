@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace WOFL.UI
+namespace WOFL.Settings
 {
     [CreateAssetMenu(fileName = "Battle Pass Reward info", menuName = "WOFL/BattlePass/Battle Pass Reward info", order = 1)]
     public abstract class BattlePassRewardInfo : ScriptableObject

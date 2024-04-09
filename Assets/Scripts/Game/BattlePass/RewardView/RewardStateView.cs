@@ -58,7 +58,7 @@ namespace WOFL.UI
             if (_currentViewInfo != null) _currentViewInfo.Icon.CallDissapear();
 
             _currentViewInfo = _stateViewInfos.First(stateViewInfo => stateViewInfo.State == rewardState);
-            _currentViewInfo.Icon.CallAppear();
+            if (_currentViewInfo.Icon != null) _currentViewInfo.Icon.CallAppear();
         }
 
         #endregion

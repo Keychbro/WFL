@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System;
 using WOFL.Game;
 
-namespace WOFL.UI
+namespace WOFL.Settings
 {
     [CreateAssetMenu(fileName = "Battle Pass Reward Cards info", menuName = "WOFL/BattlePass/Battle Pass Reward Cards info", order = 1)]
     public abstract class BattlePassRewardCardsInfo : BattlePassRewardInfo
