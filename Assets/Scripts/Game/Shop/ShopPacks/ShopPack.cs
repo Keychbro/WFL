@@ -8,9 +8,9 @@ namespace WOFL.UI
     {
         #region Variables
 
-        [Header("Obejcts")]
-        [SerializeField] private ProductPackBar _productPackBar;
-        [SerializeField] private GameObject _productsHolder;
+        [Header("Objects")]
+        [SerializeField] protected ProductPackBar _productPackBar;
+        [SerializeField] protected GameObject _productsHolder;
 
         [Header("Variables")]
         private List<ProductPanel> _productsPanel = new List<ProductPanel>();
@@ -20,6 +20,7 @@ namespace WOFL.UI
         #region Properties
 
         public GameObject ProductsHolder { get => _productsHolder; }
+
 
         #endregion
 

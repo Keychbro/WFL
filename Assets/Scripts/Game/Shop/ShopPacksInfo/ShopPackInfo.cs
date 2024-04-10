@@ -7,8 +7,8 @@ namespace WOFL.Settings
     {
         #region ShopPackInfo Variables
 
-        [SerializeField] private string _name;
-        [SerializeField] private ProductPanelInfo[] _productPanelInfos;
+        [SerializeField] protected string _name;
+        [SerializeField] protected ProductPanelInfo[] _productPanelInfos;
 
         #endregion
 
@@ -16,7 +16,6 @@ namespace WOFL.Settings
 
         public string Name { get => _name; }
         public ProductPanelInfo[] ProductPanelInfos { get => _productPanelInfos; }
-
 
         #endregion
     }
