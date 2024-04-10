@@ -6,7 +6,7 @@ using WOFL.Game;
 namespace WOFL.Settings
 {
     [CreateAssetMenu(fileName = "Battle Pass Reward Cards info", menuName = "WOFL/BattlePass/Battle Pass Reward Cards info", order = 1)]
-    public abstract class BattlePassRewardCardsInfo : BattlePassRewardInfo
+    public class BattlePassRewardCardsInfo : BattlePassRewardInfo
     {
         #region Classes
 
