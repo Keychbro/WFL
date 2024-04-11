@@ -14,10 +14,10 @@ namespace WOFL.BattlePass
         [SerializeField] private string _seasonName;
         [SerializeField] private List<RewardStateView.RewardState> _classicRewardStates;
         [SerializeField] private List<RewardStateView.RewardState> _forPaidRewardStates;
-        [SerializeField] private readonly int _totalLevels;
-
-        [SerializeField] private readonly int _maxScore;
+        [SerializeField] private int _totalLevels;
+        [SerializeField] private int _maxScore;
         [SerializeField] private int _score;
+        [SerializeField] private bool _isPassPurchased;
         public event Action OnScoreChanged;
 
         #endregion
@@ -30,6 +30,7 @@ namespace WOFL.BattlePass
         public int TotalLevels { get => _totalLevels; }
         public int MaxScore { get => _maxScore; }
         public int Score { get => _score; }
+        public bool IsPassPurchased { get => _isPassPurchased; }
 
         #endregion
 
@@ -61,6 +62,10 @@ namespace WOFL.BattlePass
 
             _score += value;
             OnScoreChanged?.Invoke();
+        }
+        public void PurchasePass()
+        {
+            _isPassPurchased = true;
         }
 
         #endregion

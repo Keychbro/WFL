@@ -41,9 +41,7 @@ namespace WOFL.BattlePass
 
             _amountCompletedPoints.text = $"{battlePassDataSave.Score/seasonInfo.BattlePassLine.ScoreForOneLevel}/{battlePassDataSave.TotalLevels}";
 
-            _button = GetComponent<Button>();
-            _button.onClick.AddListener(Click);
-
+            AdjustButton();
             AdjustTimer(new DateTime(seasonInfo.FinishSeasonDate.Year, seasonInfo.FinishSeasonDate.Month, seasonInfo.FinishSeasonDate.Day));
         }
         private void AdjustTimer(DateTime finishTime)
@@ -53,9 +51,25 @@ namespace WOFL.BattlePass
             TimerManager.Instance.ActivateTimer(_battlePassTimerName);
             TimerManager.Instance.GetSubscribeOnTimeOver(_battlePassTimerName).OnTimeIsOver += CallClosePass;
         }
+        private void AdjustButton()
+        {
+            _button = GetComponent<Button>();
+
+            if (!_currentBattlePassDataSave.IsPassPurchased)
+            {
+                _button.onClick.AddListener(Click);
+                _button.interactable = true;
+            }
+            else
+            {
+                _button.interactable = false;
+            }
+        }
         private void Click()
         {
+            if (_currentBattlePassDataSave.IsPassPurchased) return;
 
+            //TODO: Call buy
         }
         private void CallClosePass()
         {
