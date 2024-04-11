@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4501672635308146049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70598692327778935}
+  - component: {fileID: 7195113749886046126}
+  - component: {fileID: 4034056897164449649}
+  m_Layer: 0
+  m_Name: ProductHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &70598692327778935
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501672635308146049}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1316551525405923965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 500, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &7195113749886046126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501672635308146049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 315, y: 450}
+  m_Spacing: {x: 27.5, y: 40}
+  m_Constraint: 1
+  m_ConstraintCount: 3
+--- !u!114 &4034056897164449649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501672635308146049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1001 &1438819957642474358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88,6 +163,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 210364291109103437, guid: f059c74df16b62d4994303b54443f141, type: 3}
+      propertyPath: m_Name
+      value: PassHolder
+      objectReference: {fileID: 0}
     - target: {fileID: 1436781262705280661, guid: f059c74df16b62d4994303b54443f141, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -136,7 +215,10 @@ PrefabInstance:
     - {fileID: 7416552005675140900, guid: f059c74df16b62d4994303b54443f141, type: 3}
     - {fileID: 6865833881910891874, guid: f059c74df16b62d4994303b54443f141, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 122410295016827147, guid: f059c74df16b62d4994303b54443f141, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 70598692327778935}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4759588113598870378, guid: f059c74df16b62d4994303b54443f141, type: 3}
       insertIndex: -1
@@ -176,6 +258,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!224 &1316551525405923965 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 122410295016827147, guid: f059c74df16b62d4994303b54443f141, type: 3}
+  m_PrefabInstance: {fileID: 1438819957642474358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5907248321100955676 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4759588113598870378, guid: f059c74df16b62d4994303b54443f141, type: 3}
@@ -194,7 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _productPackBar: {fileID: 6882805368781225944}
-  _productsHolder: {fileID: 1233117776524710971}
+  _productsHolder: {fileID: 4501672635308146049}
+  _passHolder: {fileID: 1233117776524710971}
 --- !u!114 &6882805368781225944 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5508768918340013230, guid: f059c74df16b62d4994303b54443f141, type: 3}

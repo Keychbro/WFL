@@ -15,14 +15,14 @@ namespace Kamen
             #region TimerEditInfo Variables
 
             [SerializeField] private string _id;
-            [SerializeField] private TimerViewer[] _viewers;
+            [SerializeField] private List<TimerViewer> _viewers = new List<TimerViewer>();
 
             #endregion
 
             #region TimerEditInfo Properties
 
             public string ID { get => _id; }
-            public TimerViewer[] Viewers { get => _viewers; }
+            public List<TimerViewer> Viewers { get => _viewers; }
 
             #endregion
         }
@@ -120,19 +120,24 @@ namespace Kamen
                 }
                 else
                 {
-                    _timerData.TimersInfo[i].UpdateViewers(timerEditInfo.Viewers);
-                    _timerData.TimersInfo[i].InitiliazeViewer();
+                    _timerData.TimersInfo[i].UpdateViewers(timerEditInfo.Viewers.ToArray());
+                    _timerData.TimersInfo[i].InitializeViewer();
                     SubscribeOnTimer(_timerData.TimersInfo[i]);
                 }
             }
             ConpenseteTime();
+        }
+        public void AddNewTimerViewByName(string name, TimerViewer viewer)
+        {
+            TimerEditInfo timerEditInfo = GetTimerEditInfoByID(name);
+            timerEditInfo.Viewers.Add(viewer);
         }
         public void RecordNewTimer(string id, Timer newTimer)
         {
             if (CheckToAlreadyUsedByID(id)) return;
             TimerEditInfo timerEditInfo = GetTimerEditInfoByID(id);
 
-            TimerInfo newTimerInfo = new TimerInfo(timerEditInfo.ID, newTimer, timerEditInfo.Viewers);
+            TimerInfo newTimerInfo = new TimerInfo(timerEditInfo.ID, newTimer, timerEditInfo.Viewers.ToArray());
             _timerData.TimersInfo.Add(newTimerInfo);
             PlayerPrefs.SetString(_saveTimerDataName, JsonUtility.ToJson(_timerData));
 

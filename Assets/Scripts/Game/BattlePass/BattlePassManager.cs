@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using Kamen;
+using Kamen.DataSave;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,9 +50,13 @@ namespace WOFL.Control
 
         #region Unity Methods
 
-        protected override void Awake()
+        protected async override void Awake()
         {
             base.Awake();
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+
+            DataSaveManager.Instance.MyData.AdjustBattlePassDatas(_seasonInfos);
+            DataSaveManager.Instance.SaveData();
 
             CurrentSeasonInfo = null;
             CalculateCurrentBattlePassSeason();
@@ -67,7 +73,7 @@ namespace WOFL.Control
                 if (CheckSeasonActive(_seasonInfos[i].StartSeasonDate, _seasonInfos[i].FinishSeasonDate))
                 {
                     CurrentSeasonInfo = _seasonInfos[i];
-                    CurrentSeasonNumber = i;
+                    CurrentSeasonNumber = i + 1;
                     break;
                 }
             }

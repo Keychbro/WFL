@@ -13,7 +13,7 @@ namespace WOFL.UI
         [SerializeField] protected GameObject _productsHolder;
 
         [Header("Variables")]
-        private List<ProductPanel> _productsPanel = new List<ProductPanel>();
+        protected List<ProductPanel> _productsPanel = new List<ProductPanel>();
 
         #endregion
 

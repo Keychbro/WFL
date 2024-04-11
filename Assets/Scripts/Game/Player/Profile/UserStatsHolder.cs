@@ -73,13 +73,13 @@ namespace WOFL.UI
                 UserStatsInfo currentStatsInfo = usedStatsInfos.First(info => info.StatsName == _mainStatsInfo[i].Name);
                 usedStatsInfos.Remove(currentStatsInfo);
 
-                _mainStatsInfo[i].View.Initialize(currentStatsInfo, DataSaveManager.Instance.MyData.GetUserStatsDataMyName(currentStatsInfo.StatsName));
+                _mainStatsInfo[i].View.Initialize(currentStatsInfo, DataSaveManager.Instance.MyData.GetUserStatsDataByName(currentStatsInfo.StatsName));
             }
 
             for (int i = 0; i < usedStatsInfos.Count; i++)
             {
                 UserStatsView statsView = Instantiate(_statsViewPrefab, _statsHolder);
-                statsView.Initialize(usedStatsInfos[i], DataSaveManager.Instance.MyData.GetUserStatsDataMyName(usedStatsInfos[i].StatsName));
+                statsView.Initialize(usedStatsInfos[i], DataSaveManager.Instance.MyData.GetUserStatsDataByName(usedStatsInfos[i].StatsName));
 
                 _statsViews.Add(statsView);
             }

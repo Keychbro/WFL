@@ -8,6 +8,7 @@ using WOFL.Game;
 using WOFL.DataSave;
 using WOFL.Stats;
 using WOFL.Control;
+using WOFL.BattlePass;
 
 namespace Kamen.DataSave
 {
@@ -56,6 +57,9 @@ namespace Kamen.DataSave
         [Header("Ads")]
         [SerializeField] private bool _isAdsRemoved;
 
+        [Header("BattlePass")]
+        [SerializeField] private List<BattlePassDataSave> _battlePassesDataSave = new List<BattlePassDataSave>();
+
         #endregion
 
         #region PlayerData
@@ -67,7 +71,7 @@ namespace Kamen.DataSave
             {
                 if (value == null || value.Length == 0)
                 {
-                    Debug.LogError("[Data] - Attempting to assign an incorrect name!");
+                    Debug.LogError("[Data] - Attempting to assign an incorrect seasonName!");
                     return;
                 }
 
@@ -104,7 +108,7 @@ namespace Kamen.DataSave
                 }
             }
         }
-        public UserStatsData GetUserStatsDataMyName(string name)
+        public UserStatsData GetUserStatsDataByName(string name)
         {
             return _userStatsDatas.First(userStatsData => userStatsData.StatsName == name);
         }
@@ -318,6 +322,25 @@ namespace Kamen.DataSave
                 }
                 _isAdsRemoved = value;
             }
+        }
+
+        #endregion
+
+        #region BattlePass Methods
+
+        public void AdjustBattlePassDatas(BattlePassManager.SeasonInfo[] seasonInfos)
+        {
+            for (int i = 0; i < seasonInfos.Length; i++)
+            {
+                if (!_battlePassesDataSave.Any(battlePassDataSave => battlePassDataSave.SeasonName == seasonInfos[i].BattlePassLine.SeasonName))
+                {
+                    _battlePassesDataSave.Add(new BattlePassDataSave(seasonInfos[i].BattlePassLine));
+                }
+            }
+        }
+        public BattlePassDataSave GetBattlePassDataByName(string seasonName)
+        {
+            return _battlePassesDataSave.First(battlePassDataSave => battlePassDataSave.SeasonName == seasonName);
         }
 
         #endregion

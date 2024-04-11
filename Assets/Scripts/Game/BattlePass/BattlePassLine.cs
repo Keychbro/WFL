@@ -9,6 +9,10 @@ namespace WOFL.BattlePass
 {
     public class BattlePassLine : MonoBehaviour
     {
-        
+        #region Variables
+
+
+
+        #endregion
     }
 }

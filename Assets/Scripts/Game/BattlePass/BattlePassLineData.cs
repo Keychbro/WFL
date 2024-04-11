@@ -20,8 +20,7 @@ namespace WOFL.Settings
 
         #region Classes
 
-        [Serializable]
-        private class RewardLineInfo
+        [Serializable] public class RewardLineInfo
         {
             #region RewardLineInfo Variables
 
@@ -44,14 +43,19 @@ namespace WOFL.Settings
         #region Variables
 
         [Header("Settings")]
+        [SerializeField] private string _seasonName;
         [SerializeField] private RewardLineInfo _classicRewardLineInfo;
         [SerializeField] private RewardLineInfo _forPaidRewardLineInfo;
+        [SerializeField] private int _scoreForOneLevel;
 
         #endregion
 
-        #region Control Methods
+        #region Properties
 
-
+        public string SeasonName { get => _seasonName; }
+        public BattlePassRewardInfo[] ClassicRewardInfos { get => _classicRewardLineInfo.RewardInfos; }
+        public BattlePassRewardInfo[] ForPaidRewardInfos { get => _forPaidRewardLineInfo.RewardInfos; }
+        public int ScoreForOneLevel { get => _scoreForOneLevel; }
 
         #endregion
     }

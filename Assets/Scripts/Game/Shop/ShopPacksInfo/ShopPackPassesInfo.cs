@@ -7,7 +7,13 @@ namespace WOFL.Settings
     {
         #region Variables
 
+        [SerializeField] private bool _isCreateBattlePass;
 
+        #endregion
+
+        #region Properties
+
+        public bool IsCreateBattlePass { get => _isCreateBattlePass; }
 
         #endregion
     }

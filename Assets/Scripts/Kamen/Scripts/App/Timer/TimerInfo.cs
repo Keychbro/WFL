@@ -41,14 +41,14 @@ namespace Kamen
             _id = id;
             _timer = timer;
             _viewers = viewers;
-            InitiliazeViewer();
+            InitializeViewer();
         }
 
         #endregion
 
         #region Control Methods
 
-        public void InitiliazeViewer()
+        public void InitializeViewer()
         {
             for (int i = 0; i < _viewers.Length; i++)
             {

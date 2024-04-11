@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Kamen.DataSave;
 using WOFL.Game;
 using System.Linq;
+using WOFL.BattlePass;
 
 namespace WOFL.UI
 {
@@ -55,6 +56,7 @@ namespace WOFL.UI
         [Header("Settings")]
         [SerializeField] private ShopViewInfo[] _shopViewsInfo;
         [SerializeField] private ProductPrefabInfo[] _productPrefabInfos;
+        [SerializeField] private BattlePassView _battlePassViewPrefab;
 
         [Header("Variables")]
         private ShopViewButton _activeButton;
@@ -100,6 +102,7 @@ namespace WOFL.UI
             _activeButton = button;
         }
         public ProductPanel GetProductPanelByName(string name) => _productPrefabInfos.First(productPrefabInfo => productPrefabInfo.Name == name).ProductPanel;
+        public BattlePassView GetBattlePass() => _battlePassViewPrefab;
 
         #endregion
     }

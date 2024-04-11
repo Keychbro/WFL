@@ -8,16 +8,24 @@ namespace WOFL.UI
     {
         #region Variables
 
+        [Header("Pass Variables")]
+        [SerializeField] private GameObject _passHolder;
+
         [Header("Variables")]
         private List<GameObject> _passes = new List<GameObject>();
 
         #endregion
 
+        #region Properties
+
+        public GameObject PassHolder { get => _passHolder; }
+
+        #endregion
+
         #region Control Methods
 
-        public void InitializePass(string name, List<GameObject> passes)
+        public void AddPasses(List<GameObject> passes)
         {
-            _productPackBar.Initialize(name);
             _passes = passes;
         }
 

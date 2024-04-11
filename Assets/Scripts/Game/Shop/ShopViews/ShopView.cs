@@ -1,3 +1,4 @@
+using Kamen.DataSave;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +17,6 @@ namespace WOFL.UI
         [Header("Prefabs")]
         [SerializeField] protected ShopPack _shopPackPrefab;
         [SerializeField] protected PassShopPack _passShopPackPrefab;
-        [Space]
-        [SerializeField] protected BattlePassView _battlePassViewPrefab;
 
         [Header("Objects")]
         [SerializeField] protected GameObject _packsScrollHolder;
@@ -39,7 +38,9 @@ namespace WOFL.UI
 
             for (int i = 0; i < _shopPackInfos.Length; i++)
             {
-                CreateNewShopPack(_shopPackInfos[i], out ShopPack newShopPack);
+                ShopPack newShopPack = null;
+                if (_shopPackInfos[i] is ShopPackPassesInfo) CreateNewPassShopPack((ShopPackPassesInfo)_shopPackInfos[i], out newShopPack);
+                else CreateNewShopPack(_shopPackInfos[i], out newShopPack);
                 _usedShopPacks.Add(newShopPack);
             }
         }
@@ -50,15 +51,20 @@ namespace WOFL.UI
 
             newShopPack.Initialize(shopPackInfo.Name, createdProductPanels);
         }
-        protected virtual void CreateNewPassShopPack(ShopPackInfo shopPackInfo, out ShopPack newShopPack)
+        protected virtual void CreateNewPassShopPack(ShopPackPassesInfo shopPackInfo, out ShopPack newShopPack)
         {
-            newShopPack = Instantiate(_passShopPackPrefab, _packsScrollHolder.transform);
-            CreateProductPanel(shopPackInfo.ProductPanelInfos, newShopPack.ProductsHolder.transform, out List<ProductPanel> createdProductPanels);
+            PassShopPack newPassShopPack = Instantiate(_passShopPackPrefab, _packsScrollHolder.transform);
+            CreateProductPanel(shopPackInfo.ProductPanelInfos, newPassShopPack.ProductsHolder.transform, out List<ProductPanel> createdProductPanels);
+
+            newPassShopPack.Initialize(shopPackInfo.Name, createdProductPanels);
 
             if (BattlePassManager.Instance.CurrentSeasonInfo != null)
             {
-                
+                CreatePass(newPassShopPack.PassHolder.transform, out List<GameObject> createdPasses);
+                newPassShopPack.AddPasses(createdPasses);
             }
+
+            newShopPack = newPassShopPack;
         }
 
         protected virtual void CreateProductPanel(ProductPanelInfo[] productPanelInfos, Transform panelsHolder, out List<ProductPanel> createdProductPanels)
@@ -69,6 +75,21 @@ namespace WOFL.UI
                 ProductPanel productPanel = Instantiate(_shopScreen.GetProductPanelByName(GetProductNameByInfo(productPanelInfos[i])), panelsHolder);
                 productPanel.Initialize(productPanelInfos[i]);
             }
+        }
+        protected virtual void CreatePass(Transform passHolder, out List<GameObject> createdPasses)
+        {
+            createdPasses = new List<GameObject>();
+            BattlePassView battlePassView = Instantiate(_shopScreen.GetBattlePass(), passHolder);
+            battlePassView.Initialize(
+                BattlePassManager.Instance.CurrentSeasonNumber,
+                BattlePassManager.Instance.CurrentSeasonInfo,
+                DataSaveManager.Instance.MyData.GetBattlePassDataByName(BattlePassManager.Instance.CurrentSeasonInfo.BattlePassLine.SeasonName));
+           //for (int i = 0; i < productPanelInfos.Length; i++)
+           //{
+           //    Bat
+           //    ProductPanel productPanel = Instantiate(_shopScreen.GetProductPanelByName(GetProductNameByInfo(productPanelInfos[i])), panelsHolder);
+           //    productPanel.Initialize(productPanelInfos[i]);
+           //}
         }
         protected virtual string GetProductNameByInfo(ProductPanelInfo productPanelInfo)
         {
