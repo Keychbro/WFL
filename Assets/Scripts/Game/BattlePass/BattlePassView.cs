@@ -31,7 +31,13 @@ namespace WOFL.BattlePass
             _currentBattlePassDataSave = battlePassDataSave;
 
             _topBar.Initialize(_currentSeasonNumber, _currentSeasonInfo, _currentBattlePassDataSave);
+
+            _line.OnLineFilled += CallFillBottomBar;
             _line.Initialize(seasonInfo.BattlePassLine, battlePassDataSave);
+        }
+        private void CallFillBottomBar()
+        {
+            _bottomBar.Fill();
         }
         
         #endregion

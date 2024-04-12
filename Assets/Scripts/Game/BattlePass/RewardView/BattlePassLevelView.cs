@@ -22,20 +22,14 @@ namespace WOFL.BattlePass
 
         #region Control Methods
 
-        public void Initialize(
-            int levelNumber, 
-            bool isOn, 
-            BattlePassRewardInfo rewardInfo, 
-            BattlePassRewardViewSettings battlePassRewardViewSettings,
-            BattlePassDataSave.RewardStateData rewardStateData, 
-            BattlePassRewardInfo forPaidRewardInfo, 
-            BattlePassRewardViewSettings forPaidBattlePassRewardViewSettings,
-            BattlePassDataSave.RewardStateData forPaidRewardStateData)
+        public void Initialize(int levelNumber, bool isOn)
         {
             _levelPoint.Initialize(levelNumber, isOn);
-
-            _classicRewardView.Initialize(rewardInfo, battlePassRewardViewSettings, rewardStateData);
-            _forPaidRewardView.Initialize(forPaidRewardInfo, forPaidBattlePassRewardViewSettings, forPaidRewardStateData);
+        }
+        public void AdjustRewardView(bool isClassic, BattlePassRewardInfo rewardInfo, BattlePassRewardViewSettings battlePassRewardViewSettings, BattlePassDataSave.RewardStateData rewardStateData)
+        {
+            if (isClassic) _classicRewardView.Initialize(rewardInfo, battlePassRewardViewSettings, rewardStateData);
+            else _forPaidRewardView.Initialize(rewardInfo, battlePassRewardViewSettings, rewardStateData);
         }
 
         #endregion

@@ -7,11 +7,35 @@ using WOFL.UI;
 using WOFL.Settings;
 using System.Linq;
 using Kamen.DataSave;
+using System;
 
 namespace WOFL.BattlePass
 {
     public class BattlePassRewardView : MonoBehaviour
     {
+        #region Classes
+
+        [Serializable] protected class RewardButtonInfo
+        {
+            #region RewardButtonInfo Variables
+
+            [SerializeField] private Button _button;
+            [SerializeField] private Image _background;
+            [SerializeField] private Image _icon;
+
+            #endregion
+
+            #region RewardButtonInfo Properties
+
+            public Button Button { get => _button; }
+            public Image Background { get => _background; }
+            public Image Icon { get => _icon; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
         [Header("Objects")]
@@ -20,14 +44,14 @@ namespace WOFL.BattlePass
         [SerializeField] protected TextMeshProUGUI _amountText;
         [SerializeField] protected RewardStateView _rewardState;
         [Space]
-        [SerializeField] protected Button _classicClaimButton;
-        [SerializeField] protected Button _paidClaimButton;
+        [SerializeField] protected RewardButtonInfo _classicClaimButton;
+        [SerializeField] protected RewardButtonInfo _paidClaimButton;
 
         [Header("Variables")]
         protected BattlePassRewardInfo _rewardInfo;
         protected BattlePassRewardViewSettings _rewardViewSettings;
         protected BattlePassDataSave.RewardStateData _rewardStateData;
-        protected Button _currentUsedButton;
+        protected RewardButtonInfo _currentUsedButton;
 
         #endregion
 
@@ -44,7 +68,8 @@ namespace WOFL.BattlePass
 
             if (battlePassRewardViewSettings.Type == BattlePassRewardViewSettings.RewardType.Classic) _currentUsedButton = _classicClaimButton;
             else _currentUsedButton = _paidClaimButton;
-            _currentUsedButton.onClick.AddListener(ClaimReward);
+            _currentUsedButton.Button.onClick.AddListener(ClaimReward);
+            _currentUsedButton.Background.color = _rewardViewSettings.ViewSettingsInfos.First(viewSettingsInfo => viewSettingsInfo.State == RewardStateView.RewardState.Ready).Color;
 
             DataSaveManager.Instance.MyData.OnAdsRemoved += SetViewByState;
             _rewardStateData.OnRewardStateChanged += SetViewByState;
@@ -65,13 +90,13 @@ namespace WOFL.BattlePass
             switch (_rewardStateData.RewardState)
             {
                 case RewardStateView.RewardState.Closed:
-                    _currentUsedButton.gameObject.SetActive(false);
+                    _currentUsedButton.Button.gameObject.SetActive(false);
                     break;
                 case RewardStateView.RewardState.Ready:
-                    _currentUsedButton.gameObject.SetActive(true);
+                    _currentUsedButton.Button.gameObject.SetActive(true);
                     break;
                 case RewardStateView.RewardState.Accepted:
-                    _currentUsedButton.gameObject.SetActive(false);
+                    _currentUsedButton.Button.gameObject.SetActive(false);
                     break;
             }
         }

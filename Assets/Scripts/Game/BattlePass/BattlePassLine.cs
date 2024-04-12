@@ -22,7 +22,10 @@ namespace WOFL.BattlePass
 
         [Header("Variables")]
         private List<BattlePassLevelView> _battlePassLevels = new List<BattlePassLevelView>();
-        //private 
+        private BattlePassLineData _battlePassLineData;
+        private BattlePassDataSave _battlePassDataSave;
+
+        public event Action OnLineFilled;
 
         #endregion
 
@@ -30,24 +33,33 @@ namespace WOFL.BattlePass
 
         public void Initialize(BattlePassLineData battlePassLineData, BattlePassDataSave battlePassDataSave)
         {
+            _battlePassLineData = battlePassLineData;
+            _battlePassDataSave = battlePassDataSave;
+
             int currentLevel = battlePassDataSave.Score / battlePassLineData.ScoreForOneLevel;
 
             _scoreLine.maxValue = (battlePassDataSave.TotalLevels + 1) * battlePassLineData.ScoreForOneLevel;
-            _scoreLine.value = battlePassDataSave.Score;
+            _battlePassDataSave.OnScoreChanged += UpdateScoreView;
+            UpdateScoreView();
 
             for (int i = 0; i < battlePassDataSave.TotalLevels; i++)
             {
                 BattlePassLevelView newBattlePassLevel = Instantiate(_battlePassLevelViewPrefab, _levelHolder.transform);
-                newBattlePassLevel.Initialize(
-                    i + 1, 
-                    i + 1 <= currentLevel,
-                    battlePassLineData.ClassicRewardLineInfo.RewardInfos[i],
-                    battlePassLineData.ClassicRewardLineInfo.RewardViewSettings,
-                    battlePassDataSave.ClassicRewardStates[i],
-                    battlePassLineData.ForPaidRewardLineInfo.RewardInfos[i],
-                    battlePassLineData.ForPaidRewardLineInfo.RewardViewSettings,
-                    battlePassDataSave.ForPaidRewardStates[i]);
+                newBattlePassLevel.Initialize(i + 1, i + 1 <= currentLevel);
+
+                newBattlePassLevel.AdjustRewardView(true, battlePassLineData.ClassicRewardLineInfo.RewardInfos[i], battlePassLineData.ClassicRewardLineInfo.RewardViewSettings, battlePassDataSave.ClassicRewardStates[i]);
+                newBattlePassLevel.AdjustRewardView(false, battlePassLineData.ForPaidRewardLineInfo.RewardInfos[i], battlePassLineData.ForPaidRewardLineInfo.RewardViewSettings, battlePassDataSave.ForPaidRewardStates[i]);
+
                 _battlePassLevels.Add(newBattlePassLevel);
+            }
+        }
+        public void UpdateScoreView()
+        {
+            _scoreLine.value = _battlePassDataSave.Score;
+            if (_scoreLine.value >= _scoreLine.maxValue - _battlePassLineData.ScoreForOneLevel)
+            {
+                _scoreLine.value = _scoreLine.maxValue;
+                OnLineFilled?.Invoke();
             }
         }
 

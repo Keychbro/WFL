@@ -12,6 +12,19 @@ namespace WOFL.BattlePass
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _title;
 
+        [Header("Settings")]
+        [SerializeField] private Color32 _emptyColor;
+        [SerializeField] private Color32 _fillColor;
+
+        #endregion
+
+        #region Properties
+
+        public void Fill()
+        {
+            _background.color = _fillColor;
+        }
+
         #endregion
     }
 }
