@@ -55,7 +55,10 @@ namespace WOFL.UI
 
         public void SwitchState(RewardState rewardState)
         {
-            if (_currentViewInfo != null) _currentViewInfo.Icon.CallDissapear();
+            if (_currentViewInfo != null)
+            {
+                if (_currentViewInfo.Icon != null) _currentViewInfo.Icon.CallDissapear();
+            }
 
             _currentViewInfo = _stateViewInfos.First(stateViewInfo => stateViewInfo.State == rewardState);
             if (_currentViewInfo.Icon != null) _currentViewInfo.Icon.CallAppear();

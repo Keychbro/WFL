@@ -9,24 +9,79 @@ namespace WOFL.BattlePass
 {
     [Serializable] public class BattlePassDataSave
     {
+        #region Classes
+
+        [Serializable] public class RewardStateData
+        {
+            #region RewardStateData Variables
+
+            [SerializeField] private RewardStateView.RewardState _rewardState;
+            public event Action OnRewardStateChanged;
+
+            #endregion
+
+            #region RewardStateData Properties
+
+            public RewardStateView.RewardState RewardState { get => _rewardState; }
+
+            #endregion
+
+            #region Constructors
+
+            public RewardStateData()
+            {
+                _rewardState = RewardStateView.RewardState.Closed;
+            }
+
+            #endregion
+
+            #region RewardStateData Control Methods
+
+            public void NextRewardState()
+            {
+                switch (_rewardState)
+                {
+                    case RewardStateView.RewardState.Closed:
+                        _rewardState = RewardStateView.RewardState.Ready;
+                        break;
+                    case RewardStateView.RewardState.Ready:
+                        _rewardState = RewardStateView.RewardState.Accepted;
+                        break;
+                    case RewardStateView.RewardState.Accepted:
+                        _rewardState = RewardStateView.RewardState.Accepted;
+                        break;
+                }
+
+                OnRewardStateChanged?.Invoke();
+            }
+
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
         [SerializeField] private string _seasonName;
-        [SerializeField] private List<RewardStateView.RewardState> _classicRewardStates;
-        [SerializeField] private List<RewardStateView.RewardState> _forPaidRewardStates;
+        [SerializeField] private List<RewardStateData> _classicRewardStates;
+        [SerializeField] private List<RewardStateData> _forPaidRewardStates;
         [SerializeField] private int _totalLevels;
         [SerializeField] private int _maxScore;
         [SerializeField] private int _score;
         [SerializeField] private bool _isPassPurchased;
         public event Action OnScoreChanged;
 
+        [Header("Additional Variables")]
+        [SerializeField] private int _scoreForOneLevel;
+
         #endregion
 
         #region Properties
 
         public string SeasonName { get => _seasonName; }
-        public List<RewardStateView.RewardState> ClassicRewardStatas { get => _classicRewardStates; }
-        public List<RewardStateView.RewardState> ForPaidRewardStates { get => _forPaidRewardStates; }
+        public List<RewardStateData> ClassicRewardStates { get => _classicRewardStates; }
+        public List<RewardStateData> ForPaidRewardStates { get => _forPaidRewardStates; }
         public int TotalLevels { get => _totalLevels; }
         public int MaxScore { get => _maxScore; }
         public int Score { get => _score; }
@@ -40,12 +95,13 @@ namespace WOFL.BattlePass
         {
             _seasonName = battlePassLineData.SeasonName;
 
-            _totalLevels = GetTotalLevels(battlePassLineData.ClassicRewardInfos, battlePassLineData.ForPaidRewardInfos);
+            _totalLevels = GetTotalLevels(battlePassLineData.ClassicRewardLineInfo.RewardInfos, battlePassLineData.ForPaidRewardLineInfo.RewardInfos);
             _maxScore = _totalLevels * battlePassLineData.ScoreForOneLevel;
             _score = 0;
+            _scoreForOneLevel = battlePassLineData.ScoreForOneLevel;
 
-            AdjustRewardStates(battlePassLineData.ClassicRewardInfos, out _classicRewardStates);
-            AdjustRewardStates(battlePassLineData.ForPaidRewardInfos, out _forPaidRewardStates);
+            AdjustRewardStates(battlePassLineData.ClassicRewardLineInfo.RewardInfos, out _classicRewardStates);
+            AdjustRewardStates(battlePassLineData.ForPaidRewardLineInfo.RewardInfos, out _forPaidRewardStates);
         }
 
         #endregion
@@ -62,6 +118,22 @@ namespace WOFL.BattlePass
 
             _score += value;
             OnScoreChanged?.Invoke();
+            UpdateAllRewardStates();
+        }
+        public void UpdateAllRewardStates()
+        {
+            int currentLevel = _score / _scoreForOneLevel;
+            UpdateRewardList(currentLevel, _classicRewardStates);
+            UpdateRewardList(currentLevel, _forPaidRewardStates);
+        }
+        private void UpdateRewardList(int currentLevel, List<RewardStateData> rewardStates)
+        {
+            for (int i = 0; i < rewardStates.Count; i++)
+            {
+                if (currentLevel < i + 1 || rewardStates[i].RewardState != RewardStateView.RewardState.Closed) continue;
+
+                rewardStates[i].NextRewardState();
+            }
         }
         public void PurchasePass()
         {
@@ -77,13 +149,13 @@ namespace WOFL.BattlePass
             if (classicRewardInfos.Length >= forPaidRewardInfos.Length) return classicRewardInfos.Length;
             else return forPaidRewardInfos.Length;
         }
-        private void AdjustRewardStates(BattlePassRewardInfo[] rewardInfos, out List<RewardStateView.RewardState> rewardStatas)
+        private void AdjustRewardStates(BattlePassRewardInfo[] rewardInfos, out List<RewardStateData> rewardStatas)
         {
-            rewardStatas = new List<RewardStateView.RewardState>();
+            rewardStatas = new List<RewardStateData>();
 
             for (int i = 0; i < rewardInfos.Length; i++)
             {
-                rewardStatas.Add(RewardStateView.RewardState.Closed);
+                rewardStatas.Add(new RewardStateData());
             }
         }
 

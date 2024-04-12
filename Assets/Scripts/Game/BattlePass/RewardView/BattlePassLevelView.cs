@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WOFL.Control;
+using WOFL.Settings;
 
 namespace WOFL.BattlePass
 {
@@ -21,9 +22,20 @@ namespace WOFL.BattlePass
 
         #region Control Methods
 
-        public void Initialize(int levelNumber)
+        public void Initialize(
+            int levelNumber, 
+            bool isOn, 
+            BattlePassRewardInfo rewardInfo, 
+            BattlePassRewardViewSettings battlePassRewardViewSettings,
+            BattlePassDataSave.RewardStateData rewardStateData, 
+            BattlePassRewardInfo forPaidRewardInfo, 
+            BattlePassRewardViewSettings forPaidBattlePassRewardViewSettings,
+            BattlePassDataSave.RewardStateData forPaidRewardStateData)
         {
-            _levelPoint.Initialize(levelNumber, true);
+            _levelPoint.Initialize(levelNumber, isOn);
+
+            _classicRewardView.Initialize(rewardInfo, battlePassRewardViewSettings, rewardStateData);
+            _forPaidRewardView.Initialize(forPaidRewardInfo, forPaidBattlePassRewardViewSettings, forPaidRewardStateData);
         }
 
         #endregion

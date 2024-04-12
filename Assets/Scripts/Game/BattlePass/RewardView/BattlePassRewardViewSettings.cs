@@ -9,6 +9,16 @@ namespace WOFL.Settings
     [CreateAssetMenu(fileName = "Battle Pass Reward View Settings", menuName = "WOFL/BattlePass/View/Battle Pass Reward View Settings", order = 1)]
     public class BattlePassRewardViewSettings : ScriptableObject
     {
+        #region Enums
+
+        public enum RewardType
+        {
+            Classic,
+            ForPaid
+        }
+
+        #endregion
+
         #region Classes
 
         [Serializable] public class ViewSettingsInfo
@@ -32,12 +42,15 @@ namespace WOFL.Settings
 
         #region Variables
 
+        [Header("Settings")]
+        [SerializeField] private RewardType _type;
         [SerializeField] private ViewSettingsInfo[] _viewSettingsInfos;
 
         #endregion
 
         #region Properties
 
+        public RewardType Type { get => _type; }
         public ViewSettingsInfo[] ViewSettingsInfos { get => _viewSettingsInfos;  }
 
         #endregion

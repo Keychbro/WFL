@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using WOFL.Control;
 using WOFL.Settings;
 using WOFL.UI;
 
@@ -21,18 +22,31 @@ namespace WOFL.BattlePass
 
         [Header("Variables")]
         private List<BattlePassLevelView> _battlePassLevels = new List<BattlePassLevelView>();
+        //private 
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize(BattlePassRewardInfo[] classicLineDatas, BattlePassRewardInfo[] forPaidLineDatas)
+        public void Initialize(BattlePassLineData battlePassLineData, BattlePassDataSave battlePassDataSave)
         {
-            BattlePassRewardInfo[] greatestLength = classicLineDatas.Length >= forPaidLineDatas.Length ? classicLineDatas : forPaidLineDatas;
-            for (int i = 0; i < greatestLength.Length; i++)
+            int currentLevel = battlePassDataSave.Score / battlePassLineData.ScoreForOneLevel;
+
+            _scoreLine.maxValue = (battlePassDataSave.TotalLevels + 1) * battlePassLineData.ScoreForOneLevel;
+            _scoreLine.value = battlePassDataSave.Score;
+
+            for (int i = 0; i < battlePassDataSave.TotalLevels; i++)
             {
                 BattlePassLevelView newBattlePassLevel = Instantiate(_battlePassLevelViewPrefab, _levelHolder.transform);
-                newBattlePassLevel.Initialize(i + 1);
+                newBattlePassLevel.Initialize(
+                    i + 1, 
+                    i + 1 <= currentLevel,
+                    battlePassLineData.ClassicRewardLineInfo.RewardInfos[i],
+                    battlePassLineData.ClassicRewardLineInfo.RewardViewSettings,
+                    battlePassDataSave.ClassicRewardStates[i],
+                    battlePassLineData.ForPaidRewardLineInfo.RewardInfos[i],
+                    battlePassLineData.ForPaidRewardLineInfo.RewardViewSettings,
+                    battlePassDataSave.ForPaidRewardStates[i]);
                 _battlePassLevels.Add(newBattlePassLevel);
             }
         }

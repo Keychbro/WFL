@@ -8,16 +8,6 @@ namespace WOFL.Settings
     [CreateAssetMenu(fileName = "Battle Pass Line Data", menuName = "WOFL/BattlePass/Pass/Battle Pass Line Data", order = 1)]
     public class BattlePassLineData : ScriptableObject
     {
-        #region Enums
-
-        public enum RewardType
-        {
-            Classic,
-            ForPaid
-        }
-
-        #endregion
-
         #region Classes
 
         [Serializable] public class RewardLineInfo
@@ -53,8 +43,8 @@ namespace WOFL.Settings
         #region Properties
 
         public string SeasonName { get => _seasonName; }
-        public BattlePassRewardInfo[] ClassicRewardInfos { get => _classicRewardLineInfo.RewardInfos; }
-        public BattlePassRewardInfo[] ForPaidRewardInfos { get => _forPaidRewardLineInfo.RewardInfos; }
+        public RewardLineInfo ClassicRewardLineInfo { get => _classicRewardLineInfo; }
+        public RewardLineInfo ForPaidRewardLineInfo { get => _forPaidRewardLineInfo; }
         public int ScoreForOneLevel { get => _scoreForOneLevel; }
 
         #endregion

@@ -56,6 +56,7 @@ namespace Kamen.DataSave
 
         [Header("Ads")]
         [SerializeField] private bool _isAdsRemoved;
+        public event Action OnAdsRemoved;
 
         [Header("BattlePass")]
         [SerializeField] private List<BattlePassDataSave> _battlePassesDataSave = new List<BattlePassDataSave>();
@@ -244,9 +245,9 @@ namespace Kamen.DataSave
                 }
             }
         }
-        public UnitDataForSave GetUnitDataMyName(string name)
+        public UnitDataForSave GetUnitDataMyName(string uniqueName)
         {
-            return _unitsDatas.First(unitData => unitData.UniqueName == name);
+            return _unitsDatas.First(unitData => unitData.UniqueName == uniqueName);
         }
 
         #endregion
@@ -321,6 +322,7 @@ namespace Kamen.DataSave
                     return;
                 }
                 _isAdsRemoved = value;
+                OnAdsRemoved?.Invoke();
             }
         }
 
@@ -337,6 +339,11 @@ namespace Kamen.DataSave
                     _battlePassesDataSave.Add(new BattlePassDataSave(seasonInfos[i].BattlePassLine));
                 }
             }
+
+            for (int i = 0; i < _battlePassesDataSave.Count; i++)
+            {
+                _battlePassesDataSave[i].UpdateAllRewardStates();
+            } 
         }
         public BattlePassDataSave GetBattlePassDataByName(string seasonName)
         {
