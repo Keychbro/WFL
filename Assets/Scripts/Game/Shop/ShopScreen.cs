@@ -8,6 +8,8 @@ using Kamen.DataSave;
 using WOFL.Game;
 using System.Linq;
 using WOFL.BattlePass;
+using System.Threading.Tasks;
+using WOFL.DiamondPass;
 
 namespace WOFL.UI
 {
@@ -57,6 +59,7 @@ namespace WOFL.UI
         [SerializeField] private ShopViewInfo[] _shopViewsInfo;
         [SerializeField] private ProductPrefabInfo[] _productPrefabInfos;
         [SerializeField] private BattlePassView _battlePassViewPrefab;
+        [SerializeField] private DiamondPassView _diamondPassViewPrefab;
 
         [Header("Variables")]
         private ShopViewButton _activeButton;
@@ -71,6 +74,7 @@ namespace WOFL.UI
             
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
+            await Task.Delay(100);
             
             AdjustShopViews();
         }
@@ -103,6 +107,7 @@ namespace WOFL.UI
         }
         public ProductPanel GetProductPanelByName(string name) => _productPrefabInfos.First(productPrefabInfo => productPrefabInfo.Name == name).ProductPanel;
         public BattlePassView GetBattlePass() => _battlePassViewPrefab;
+        public DiamondPassView GetDiamondPass() => _diamondPassViewPrefab;
 
         #endregion
     }

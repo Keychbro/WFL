@@ -58,7 +58,12 @@ namespace WOFL.UI
 
             newPassShopPack.Initialize(shopPackInfo.Name, createdProductPanels);
 
-            if (BattlePassManager.Instance.CurrentSeasonInfo != null)
+            if (shopPackInfo.IsCreateDiamondPass)
+            {
+
+            }
+
+            if (BattlePassManager.Instance.CurrentSeasonInfo != null && shopPackInfo.IsCreateBattlePass)
             {
                 CreatePass(newPassShopPack.PassHolder.transform, out List<GameObject> createdPasses);
                 newPassShopPack.AddPasses(createdPasses);
@@ -84,12 +89,7 @@ namespace WOFL.UI
                 BattlePassManager.Instance.CurrentSeasonNumber,
                 BattlePassManager.Instance.CurrentSeasonInfo,
                 DataSaveManager.Instance.MyData.GetBattlePassDataByName(BattlePassManager.Instance.CurrentSeasonInfo.BattlePassLine.SeasonName));
-           //for (int i = 0; i < productPanelInfos.Length; i++)
-           //{
-           //    Bat
-           //    ProductPanel productPanel = Instantiate(_shopScreen.GetProductPanelByName(GetProductNameByInfo(productPanelInfos[i])), panelsHolder);
-           //    productPanel.Initialize(productPanelInfos[i]);
-           //}
+
         }
         protected virtual string GetProductNameByInfo(ProductPanelInfo productPanelInfo)
         {

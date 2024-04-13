@@ -9,6 +9,7 @@ using WOFL.DataSave;
 using WOFL.Stats;
 using WOFL.Control;
 using WOFL.BattlePass;
+using WOFL.DiamondPass;
 
 namespace Kamen.DataSave
 {
@@ -32,6 +33,10 @@ namespace Kamen.DataSave
         public event Action OnDiamondsAmountChanged;
         [SerializeField] private int _tools = 100000000; //Change to 0
         public event Action OnToolsAmountChanged;
+
+        [Header("Main Game")]
+        [SerializeField] private int _gameLevel;
+        public event Action OnGameLevelChanged;
 
         [Header("City")]
         [SerializeField] private int _cityLevel;
@@ -61,9 +66,12 @@ namespace Kamen.DataSave
         [Header("BattlePass")]
         [SerializeField] private List<BattlePassDataSave> _battlePassesDataSave = new List<BattlePassDataSave>();
 
+        [Header("Diamond Pass")]
+        [SerializeField] private DiamondPassDataSave _diamondPassDataSave;
+
         #endregion
 
-        #region PlayerData
+        #region PlayerData Properties
 
         public string Username
         {
@@ -116,7 +124,7 @@ namespace Kamen.DataSave
 
         #endregion
 
-        #region Properties
+        #region Timer Properties
 
         public List<TimerInfo> TimersInfo { get => _timersInfo; }
         public DateTime QuitTime 
@@ -174,6 +182,26 @@ namespace Kamen.DataSave
 
                 _tools = value;
                 OnToolsAmountChanged?.Invoke();
+            }
+        }
+
+        #endregion
+
+        #region MainGame Properties
+
+        public int GameLevel
+        {
+            get => _gameLevel;
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError($"[Data] - Attempt to assign variable ''_gameLevel'' minus value");
+                    return;
+                }
+
+                _gameLevel = value;
+                OnGameLevelChanged?.Invoke();
             }
         }
 
@@ -349,6 +377,12 @@ namespace Kamen.DataSave
         {
             return _battlePassesDataSave.First(battlePassDataSave => battlePassDataSave.SeasonName == seasonName);
         }
+
+        #endregion
+
+        #region DiamondPass Methods
+
+        public DiamondPassDataSave DiamondPassDataSave { get => _diamondPassDataSave; }
 
         #endregion
     }
