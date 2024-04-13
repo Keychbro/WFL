@@ -100,7 +100,12 @@ namespace WOFL.DiamondPass
                     _stageInfos[i].CallReceive();
                 }
             }
-        } 
+        }
+        public void PurchasePass()
+        {
+            _isPassPurchased = true;
+            OnPurchased?.Invoke();
+        }
 
         #endregion
     }

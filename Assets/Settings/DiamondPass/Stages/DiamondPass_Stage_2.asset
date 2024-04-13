@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08591004a4d8599459a6667bae41cd63, type: 3}
-  m_Name: TicketSettings
+  m_Script: {fileID: 11500000, guid: e3343775d78f10f4ba7666180aa2fa2c, type: 3}
+  m_Name: DiamondPass_Stage_2
   m_EditorClassIdentifier: 
-  _onTicket: {fileID: 21300000, guid: 63f25ad4cadd7434ca5e31453ab6e543, type: 3}
-  _offTicket: {fileID: 21300000, guid: 63f25ad4cadd7434ca5e31453ab6e543, type: 3}
+  _targetLevel: 20
+  _amountDiamondsReward: 20

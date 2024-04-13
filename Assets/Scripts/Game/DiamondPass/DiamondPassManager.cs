@@ -16,6 +16,12 @@ namespace WOFL.DiamondPass
 
         #endregion
 
+        #region Properties
+
+        public DiamondPassStageInfo[] StageInfos { get => _stageInfos; }
+        
+        #endregion
+
         #region Control Methods
 
         protected async override void Awake()

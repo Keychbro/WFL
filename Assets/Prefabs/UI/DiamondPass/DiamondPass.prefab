@@ -618,6 +618,7 @@ MonoBehaviour:
   _levelsBar: {fileID: 4471132723731165886}
   _stageText: {fileID: 1841356957548592899}
   _progressText: {fileID: 3047772463663474869}
+  _priceName: 
   _diamondPassTicketSettings: {fileID: 11400000, guid: 85c7b30de51ac854393f9a3a0af60532, type: 2}
 --- !u!114 &6905074864668956879
 MonoBehaviour:
@@ -1066,7 +1067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 410, y: -140}
+  m_AnchoredPosition: {x: 430, y: -135}
   m_SizeDelta: {x: 215, y: 215}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6228923537730522117

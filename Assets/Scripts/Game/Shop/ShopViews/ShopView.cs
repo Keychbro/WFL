@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AdaptivePerformance;
 using WOFL.BattlePass;
 using WOFL.Control;
+using WOFL.DiamondPass;
 using WOFL.Settings;
 
 namespace WOFL.UI
@@ -58,16 +59,8 @@ namespace WOFL.UI
 
             newPassShopPack.Initialize(shopPackInfo.Name, createdProductPanels);
 
-            if (shopPackInfo.IsCreateDiamondPass)
-            {
-
-            }
-
-            if (BattlePassManager.Instance.CurrentSeasonInfo != null && shopPackInfo.IsCreateBattlePass)
-            {
-                CreatePass(newPassShopPack.PassHolder.transform, out List<GameObject> createdPasses);
-                newPassShopPack.AddPasses(createdPasses);
-            }
+            CreatePass(newPassShopPack.PassHolder.transform, out List<GameObject> createdPasses, shopPackInfo);
+            newPassShopPack.AddPasses(createdPasses);
 
             newShopPack = newPassShopPack;
         }
@@ -81,15 +74,24 @@ namespace WOFL.UI
                 productPanel.Initialize(productPanelInfos[i]);
             }
         }
-        protected virtual void CreatePass(Transform passHolder, out List<GameObject> createdPasses)
+        protected virtual void CreatePass(Transform passHolder, out List<GameObject> createdPasses, ShopPackPassesInfo shopPackInfo)
         {
             createdPasses = new List<GameObject>();
-            BattlePassView battlePassView = Instantiate(_shopScreen.GetBattlePass(), passHolder);
-            battlePassView.Initialize(
-                BattlePassManager.Instance.CurrentSeasonNumber,
-                BattlePassManager.Instance.CurrentSeasonInfo,
-                DataSaveManager.Instance.MyData.GetBattlePassDataByName(BattlePassManager.Instance.CurrentSeasonInfo.BattlePassLine.SeasonName));
-
+            if (shopPackInfo.IsCreateDiamondPass)
+            {
+                DiamondPassView diamondPassView = Instantiate(_shopScreen.GetDiamondPass(), passHolder);
+                diamondPassView.Initialize(DiamondPassManager.Instance.StageInfos, DataSaveManager.Instance.MyData.DiamondPassDataSave);
+                createdPasses.Add(diamondPassView.gameObject);
+            }
+            if (BattlePassManager.Instance.CurrentSeasonInfo != null && shopPackInfo.IsCreateBattlePass)
+            {
+                BattlePassView battlePassView = Instantiate(_shopScreen.GetBattlePass(), passHolder);
+                battlePassView.Initialize(
+                    BattlePassManager.Instance.CurrentSeasonNumber,
+                    BattlePassManager.Instance.CurrentSeasonInfo,
+                    DataSaveManager.Instance.MyData.GetBattlePassDataByName(BattlePassManager.Instance.CurrentSeasonInfo.BattlePassLine.SeasonName));
+                createdPasses.Add(battlePassView.gameObject);
+            }
         }
         protected virtual string GetProductNameByInfo(ProductPanelInfo productPanelInfo)
         {

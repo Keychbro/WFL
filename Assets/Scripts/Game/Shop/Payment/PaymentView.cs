@@ -51,7 +51,7 @@ namespace WOFL.Payment
         {
             _currentPaymentInfo = paymentInfo;
 
-            _icon.sprite = _currentPaymentInfo.CurrencyIcon;
+            if (_icon != null) _icon.sprite = _currentPaymentInfo.CurrencyIcon;
 
             if (int.TryParse(priceText, out int priceInValue)) _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
             else _price.text = priceText;
