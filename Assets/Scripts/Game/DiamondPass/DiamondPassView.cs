@@ -1,3 +1,4 @@
+using CatTranslator.UI;
 using Kamen.DataSave;
 using System;
 using System.Collections;
@@ -35,9 +36,9 @@ namespace WOFL.DiamondPass
         [Header("Variables")]
         private DiamondPassStageInfo[] _stageInfos;
         private DiamondPassDataSave _passDataSave;
-
         private DiamondPassDataSave.StageData _currentStageData;
         private DiamondPassStageInfo _currentStageInfo;
+        private ContentSizeFitterFixer _uiFixer;
 
         protected event UnityAction<int, Action> PaymentMethod;
 
@@ -45,8 +46,10 @@ namespace WOFL.DiamondPass
 
         #region Control Methods
 
-        public void Initialize(DiamondPassStageInfo[] stageInfos, DiamondPassDataSave passDataSave)
+        public void Initialize(DiamondPassStageInfo[] stageInfos, DiamondPassDataSave passDataSave, ContentSizeFitterFixer uiFixer)
         {
+            _uiFixer = uiFixer;
+
             _stageInfos = stageInfos;
             _passDataSave = passDataSave;
 
@@ -104,6 +107,8 @@ namespace WOFL.DiamondPass
                 _levelsBar.gameObject.SetActive(false);
                 _icon.gameObject.SetActive(false);
             }
+
+            StartCoroutine(_uiFixer.WaitToUpdate2());
         }
         public void ReceivePass()
         {

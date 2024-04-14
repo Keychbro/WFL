@@ -618,6 +618,7 @@ MonoBehaviour:
   _levelsBar: {fileID: 4471132723731165886}
   _stageText: {fileID: 1841356957548592899}
   _progressText: {fileID: 3047772463663474869}
+  _uiFixer: {fileID: 650929698342593746}
   _priceName: 
   _diamondPassTicketSettings: {fileID: 11400000, guid: 85c7b30de51ac854393f9a3a0af60532, type: 2}
 --- !u!114 &6905074864668956879
@@ -1552,7 +1553,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2253819961469702271}
   m_FillRect: {fileID: 1553527884787002342}
   m_HandleRect: {fileID: 0}

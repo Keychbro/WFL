@@ -108,7 +108,7 @@ namespace WOFL.Control
                 //_serverInfos = JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
             }
         }
-        public async void SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, string message)
+        public async Task<bool> SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, string message)
         {
             WWWForm form = new WWWForm();
 
@@ -125,10 +125,12 @@ namespace WOFL.Control
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError(www.error);
+                return false;
             }
             else
             {
                 Debug.Log(www.downloadHandler.text);
+                return true;
             }
         }
 

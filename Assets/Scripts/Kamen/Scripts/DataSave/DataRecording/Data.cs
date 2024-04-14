@@ -67,7 +67,7 @@ namespace Kamen.DataSave
         [SerializeField] private List<BattlePassDataSave> _battlePassesDataSave = new List<BattlePassDataSave>();
 
         [Header("Diamond Pass")]
-        [SerializeField] private DiamondPassDataSave _diamondPassDataSave;
+        [SerializeField] private DiamondPassDataSave _diamondPassDataSave = new DiamondPassDataSave();
 
         #endregion
 

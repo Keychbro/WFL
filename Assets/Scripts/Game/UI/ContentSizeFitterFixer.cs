@@ -27,8 +27,15 @@ namespace CatTranslator.UI
         {
             StartCoroutine(WaitToUpdate());
         }
-        private IEnumerator WaitToUpdate()
+        public IEnumerator WaitToUpdate()
         {
+            yield return null;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+        }
+        public IEnumerator WaitToUpdate2()
+        {
+            yield return null;
             yield return null;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);

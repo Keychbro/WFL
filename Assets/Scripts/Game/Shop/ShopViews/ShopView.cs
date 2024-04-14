@@ -1,3 +1,4 @@
+using CatTranslator.UI;
 using Kamen.DataSave;
 using System;
 using System.Collections;
@@ -21,6 +22,7 @@ namespace WOFL.UI
 
         [Header("Objects")]
         [SerializeField] protected GameObject _packsScrollHolder;
+        [SerializeField] protected ContentSizeFitterFixer _uiFixer;
 
         [Header("Settings")]
         [SerializeField] protected ShopPackInfo[] _shopPackInfos;
@@ -80,7 +82,7 @@ namespace WOFL.UI
             if (shopPackInfo.IsCreateDiamondPass)
             {
                 DiamondPassView diamondPassView = Instantiate(_shopScreen.GetDiamondPass(), passHolder);
-                diamondPassView.Initialize(DiamondPassManager.Instance.StageInfos, DataSaveManager.Instance.MyData.DiamondPassDataSave);
+                diamondPassView.Initialize(DiamondPassManager.Instance.StageInfos, DataSaveManager.Instance.MyData.DiamondPassDataSave, _uiFixer);
                 createdPasses.Add(diamondPassView.gameObject);
             }
             if (BattlePassManager.Instance.CurrentSeasonInfo != null && shopPackInfo.IsCreateBattlePass)
