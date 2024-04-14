@@ -23,6 +23,7 @@ namespace WOFL.Chat
        // [Header("Variables")]
         public event Action OnStartInput;
         public event Action OnFinishInput;
+        public event Action<ChatScreen.ChatType, string> OnMessageSend;
 
         #endregion
 
@@ -38,8 +39,10 @@ namespace WOFL.Chat
 
         #region Control Methods
 
-        public void Initialize()
+        public void Initialize(ChatScreen chatScreen)
         {
+            _chatScreen = chatScreen;
+
             _inputField = GetComponent<TMP_InputField>();
             _inputField.onValueChanged.AddListener(SendMessageButtonViewControl);
             _inputField.onSelect.AddListener(StartInput);
@@ -60,9 +63,14 @@ namespace WOFL.Chat
             bool result = await ServerConnectManager.Instance.SendMessage(
                 DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, 
                 DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID, 
-                _chatScreen.GetCurrentChatType(),
+                _chatScreen.GetCurrentChatType() == ChatScreen.ChatType.Global ? Fraction.FractionName.None : DataSaveManager.Instance.MyData.ChoosenFraction,
                 _inputField.text);
-            Debug.Log(result);
+
+            if (result)
+            {
+                OnMessageSend?.Invoke(_chatScreen.GetCurrentChatType(), _inputField.text);
+                _inputField.text = "";
+            }
            // string result = await ServerConnectManager.Instance.GetPlayerUUID(_email);
         }
 

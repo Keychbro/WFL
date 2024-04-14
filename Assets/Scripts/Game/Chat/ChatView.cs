@@ -9,21 +9,13 @@ using NativeWebSocket;
 using DG.Tweening;
 using System;
 using System.Threading.Tasks;
+using WOFL.UI;
+using UnityEngine.SocialPlatforms;
 
 namespace WOFL.Chat
 {
     public class ChatView : MonoBehaviour
     {
-        #region Enums
-
-        public enum ChatType
-        {
-            Global,
-            Fraction
-        }
-
-        #endregion
-
         #region Classes
 
         [Serializable] private struct ChatSizeInfo
@@ -72,40 +64,69 @@ namespace WOFL.Chat
 
         #region Variables
 
+        [Header("Prefabs")]
+        [SerializeField] private Message _playerMessagePrefab;
+        [SerializeField] private OtherPlayerMessage _otherPlayerMessagePrefab;
+
         [Header("Objects")]
+        [SerializeField] private GameObject _messagesHolder;
         private RectTransform _chatViewRect;
         private ChatInputField _inputField;
 
         [Header("Settings")]
-        [SerializeField] private ChatType _chatType;
+        [SerializeField] private ChatScreen.ChatType _chatType;
         [SerializeField] private ChatSizeInfo _fullSizeInfo;
         [SerializeField] private ChatSizeInfo _miniSizeInfo;
+        [Space]
+        [SerializeField] private int _maxMessagesInChat;
+        [SerializeField] private float _delayBetweenRequest;
 
         [Header("Variables")]
         private Fraction.FractionName _chatFractionName;
         private float _keyboardSize;
+        private List<GetMessageInfo> _spawnedMessageInfo = new List<GetMessageInfo>();
+        private List<Message> _spawnedMessage = new List<Message>();
+        private List<Message> _localMessages = new List<Message>();
+        private bool _isAppWorking = false;
+
+        #endregion
+
+        #region Properties
+
+        public ChatScreen.ChatType ChatType { get => _chatType; }
+
+        #endregion
+
+        #region Unity Methods
+
+        public void OnApplicationQuit()
+        {
+            _isAppWorking = false;
+        }
 
         #endregion
 
         #region Control Methods
-        
+
         public void Initialize(ChatInputField inputField)
         {
             _inputField = inputField;
             _inputField.OnStartInput += MoveUp;
             _inputField.OnFinishInput += MoveDown;
+            _inputField.OnMessageSend += CallShowPlayerMessage;
 
             _chatFractionName = AdjustChatFractionName();
             _chatViewRect = GetComponent<RectTransform>();
 
             CalculateResizeChat();
+            GetAllMessages();
         }
         public Fraction.FractionName AdjustChatFractionName()
         {
             return _chatType switch
             {
-                ChatType.Global => Fraction.FractionName.None,
-                ChatType.Fraction => DataSaveManager.Instance.MyData.ChoosenFraction,
+                ChatScreen.ChatType.Global => Fraction.FractionName.None,
+                ChatScreen.ChatType.Fraction => DataSaveManager.Instance.MyData.ChoosenFraction,
                 _ => Fraction.FractionName.None,
             };
         }
@@ -122,8 +143,7 @@ namespace WOFL.Chat
         private async void CalculateResizeChat()
         {
             await Task.Delay(100);
-            //_keyboardSize = MobileUtilities.GetKeyboardHeight(true);
-            _keyboardSize = 400;
+            _keyboardSize = MobileUtilities.GetKeyboardHeight(true);
 
             _fullSizeInfo.ChatViewSize = _chatViewRect.sizeDelta;
             _fullSizeInfo.InputFieldPosition = _inputField.transform.localPosition;
@@ -131,53 +151,74 @@ namespace WOFL.Chat
             _miniSizeInfo.ChatViewSize = _chatViewRect.sizeDelta + new Vector2(0, -_keyboardSize);
             _miniSizeInfo.InputFieldPosition = _inputField.transform.localPosition + new Vector3(0, _keyboardSize, 0);
         }
-        private  void ChangeSize()
-        {
-
-
-        }
         private async void GetAllMessages()
         {
-            List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages(DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, _chatFractionName);
+            _isAppWorking = true;
+            await Task.Delay(1000);
 
+            while (_isAppWorking)
+            {
+                List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages(DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, _chatFractionName);
+                DistributeMessages(messages);
+
+                await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000));
+            }
         }
+        private void DistributeMessages(List<GetMessageInfo> messagesInfo)
+        {
+            for (int i = 0; i <  messagesInfo.Count; i++)
+            {
+                if (_spawnedMessageInfo.Contains(messagesInfo[i])) continue;
 
-       //WebSocket websocket;
-       //async void Start()
-       //{
-       //    websocket = new WebSocket("ws://localhost:2567");
-       //
-       //    websocket.OnOpen += () =>
-       //    {
-       //        Debug.Log("Connection open!");
-       //    };
-       //
-       //    websocket.OnError += (e) =>
-       //    {
-       //        Debug.Log("Error! " + e);
-       //    };
-       //
-       //    websocket.OnClose += (e) =>
-       //    {
-       //        Debug.Log("Connection closed!");
-       //    };
-       //
-       //    websocket.OnMessage += (bytes) =>
-       //    {
-       //        Debug.Log("OnMessage!");
-       //        Debug.Log(bytes);
-       //
-       //        // getting the message as a string
-       //        // var message = System.Text.Encoding.UTF8.GetString(bytes);
-       //        // Debug.Log("OnMessage! " + message);
-       //    };
-       //
-       //    // Keep sending messages at every 0.3s
-       //    InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
-       //
-       //    // waiting for messages
-       //    await websocket.Connect();
-       //}
+                if (messagesInfo[i].player_uuid == DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID) CreatePlayerMessage(messagesInfo[i], false);
+                else CreateOtherPlayerMessage(messagesInfo[i]);
+            }
+
+            while (_localMessages.Count > 0)
+            {
+                Destroy(_localMessages[0].gameObject);
+                _localMessages.RemoveAt(0);
+            }
+        }
+        private void CreatePlayerMessage(GetMessageInfo messageInfo, bool isLocal)
+        {
+            Message newMessage = Instantiate(_playerMessagePrefab, _messagesHolder.transform);
+            newMessage.AdjustMessage(messageInfo);
+
+            if (isLocal) _localMessages.Add(newMessage);
+            else AddMessageInLists(newMessage, messageInfo);
+        }
+        private void CreateOtherPlayerMessage(GetMessageInfo messageInfo)
+        {
+            OtherPlayerMessage newMassage = Instantiate(_otherPlayerMessagePrefab, _messagesHolder.transform);
+            newMassage.AdjustMessage(messageInfo);
+
+            AddMessageInLists(newMassage, messageInfo);
+        }
+        private void CallShowPlayerMessage(ChatScreen.ChatType chatType, string messageText)
+        {
+            if (chatType != _chatType) return;
+            GetMessageInfo messageInfo = new GetMessageInfo(
+                DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID,
+                DataSaveManager.Instance.MyData.Username,
+                DataSaveManager.Instance.MyData.IconNumber.ToString(),
+                messageText);
+
+            CreatePlayerMessage(messageInfo, true);
+        }
+        private void AddMessageInLists(Message message, GetMessageInfo messageInfo)
+        {
+            _spawnedMessage.Add(message);
+            _spawnedMessageInfo.Add(messageInfo);
+
+            if (_spawnedMessage.Count > _maxMessagesInChat)
+            {
+                Message deleteMessage = _spawnedMessage[0];
+                _spawnedMessageInfo.RemoveAt(0);
+                _spawnedMessage.RemoveAt(0);
+                Destroy(deleteMessage.gameObject);
+            }
+        }
 
         #endregion
     }

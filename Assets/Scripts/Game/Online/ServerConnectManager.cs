@@ -11,6 +11,7 @@ using WOFL.Online;
 using Newtonsoft.Json;
 using WOFL.Game;
 using Kamen.DataSave;
+using NativeWebSocket;
 
 namespace WOFL.Control
 {
@@ -31,20 +32,17 @@ namespace WOFL.Control
         [SerializeField] private string _getPlayerDataName;
         [SerializeField] private string _updatePlayerDataName;
         [SerializeField] private string _deletePlayerDataName;
+        [SerializeField] private string _getSupportMessageName;
+        [SerializeField] private string _sendSupportMessageName;
 
         [Header("Variables")]
-        [SerializeField] private List<ServerInfo> _serverInfos;
-        [SerializeField] private List<GetMessageInfo> _getMessageInfos;
-        [SerializeField] private CreatePlayerSuccessInfo _createPlayerAnswerInfo;
-        [SerializeField] private CreatePlayerFailureInfo _createPlayerFailureInfo;
-        [SerializeField] private GetPlayerUUIDInfo _getPlayerUUIDInfo;
-        [SerializeField] private Data _data;
+        WebSocket websocket;
 
         #endregion
 
-        #region Control Methods
+        #region Unity Methods
 
-        private void Start()
+        private async void Start()
         {
             //GetServersList();
             //GetMessages("fb988152-8f01-4f9a-b436-3691d2ffe806", Fraction.FractionName.Human);
@@ -55,6 +53,20 @@ namespace WOFL.Control
             //UpdatePlayerData(JsonUtility.ToJson(DataSaveManager.Instance.MyData), "dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
             //DeletePlayer("test4@gmail.com");
             //DeletePlayerData("dc5c24c6-fd8a-404e-aee3-ff770086e201", "fb988152-8f01-4f9a-b436-3691d2ffe806");
+            //SendSupportMessage("Hi", "d631ed78-56b7-415a-8b3d-1b52eb400b76");
+            //GetSupportMessages("d631ed78-56b7-415a-8b3d-1b52eb400b76");
+
+            //GetMessages2("23b2995f-66b9-4060-9627-900daa40961f", Fraction.FractionName.Human);
+            //
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    await Task.Delay(5000);
+            //    SendMessage("23b2995f-66b9-4060-9627-900daa40961f", "1187f1c5-014e-4393-b0f0-3b6c7b346498", Fraction.FractionName.Human, "hi" + i);
+            //}
+        }
+        private async void OnApplicationQuit()
+        {
+            await websocket.Close();
         }
 
         #endregion
@@ -76,8 +88,7 @@ namespace WOFL.Control
             else
             {
                 Debug.Log(www.downloadHandler.text);
-                _serverInfos = JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
-                return _serverInfos;
+                return JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
             }
         }
 
@@ -100,13 +111,31 @@ namespace WOFL.Control
             }
             else
             {
-
                 Debug.Log(www.downloadHandler.text);
-                _getMessageInfos = JsonConvert.DeserializeObject<List<GetMessageInfo>>(www.downloadHandler.text);
-                return _getMessageInfos;
-
-                //_serverInfos = JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
+                return JsonConvert.DeserializeObject<List<GetMessageInfo>>(www.downloadHandler.text); 
             }
+        }
+        public async Task GetMessagesWithSocket(string server_uuid, Fraction.FractionName fraction)
+        {
+            string realFraction = fraction == Fraction.FractionName.None ? "global" : fraction.ToString();
+            string url = $"{_hostURL}/{_apiName}/{_getMessagesName}/?server_uuid={server_uuid}&fraction={realFraction}";
+
+            websocket = new WebSocket(url);
+
+            websocket.OnOpen += () =>
+            {
+                Debug.Log("Connection open!");
+            };
+
+            websocket.OnMessage += (bytes) =>
+            {
+                Debug.Log("OnMessage!");
+                Debug.Log(bytes);
+                var message = System.Text.Encoding.UTF8.GetString(bytes);
+                Debug.Log("OnMessage! " + message);
+            };
+
+            await websocket.Connect();
         }
         public async Task<bool> SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, string message)
         {
@@ -160,13 +189,11 @@ namespace WOFL.Control
                 Debug.Log(www.downloadHandler.text);
                 if (www.downloadHandler.text.Contains("email busy"))
                 {
-                    _createPlayerFailureInfo = JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text);
-                    return _createPlayerFailureInfo.info;
+                    return JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text).info;
                 }
                 else
                 {
-                    _createPlayerAnswerInfo = JsonConvert.DeserializeObject<CreatePlayerSuccessInfo>(www.downloadHandler.text);
-                    return _createPlayerAnswerInfo.player_uuid;
+                    return JsonConvert.DeserializeObject<CreatePlayerSuccessInfo>(www.downloadHandler.text).player_uuid;
                 }
             }
         }
@@ -189,16 +216,6 @@ namespace WOFL.Control
             else
             {
                 Debug.Log(www.downloadHandler.text);
-                if (www.downloadHandler.text.Contains("email busy"))
-                {
-                    _createPlayerFailureInfo = JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text);
-                   // return _createPlayerFailureInfo.info;
-                }
-                else
-                {
-                    _createPlayerAnswerInfo = JsonConvert.DeserializeObject<CreatePlayerSuccessInfo>(www.downloadHandler.text);
-                   // return _createPlayerAnswerInfo.player_uuid;
-                }
             }
         }
         public async Task<string> GetPlayerUUID(string email)
@@ -216,8 +233,7 @@ namespace WOFL.Control
             else
             {
                 Debug.Log(www.downloadHandler.text);
-                _getPlayerUUIDInfo = JsonConvert.DeserializeObject<GetPlayerUUIDInfo>(www.downloadHandler.text);
-                return _getPlayerUUIDInfo.player_uuid;
+                return JsonConvert.DeserializeObject<GetPlayerUUIDInfo>(www.downloadHandler.text).player_uuid;
             }
         }
         public async Task<T> GetPlayerData<T>(string server_uuid, string player_uuid)
@@ -288,6 +304,51 @@ namespace WOFL.Control
             {
                 Debug.LogError(www.error);
                 //return null;
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+            }
+        }
+
+        #endregion
+
+        #region Support Methods
+
+        public async Task<List<GetSupportMessageInfo>> GetSupportMessages(string player_uuid)
+        {
+            using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_getSupportMessageName}/?player_uuid={player_uuid}");
+            var operation = www.SendWebRequest();
+       
+            while (!operation.isDone) await Task.Yield();
+       
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+                return null;
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                return JsonConvert.DeserializeObject<List<GetSupportMessageInfo>>(www.downloadHandler.text);
+            }
+        }
+        public async Task SendSupportMessage(string message, string player_uuid)
+        {
+            WWWForm form = new WWWForm();
+
+            form.AddField("text", message);
+            form.AddField("answer", 0);
+            form.AddField("player_uuid", player_uuid);
+
+            using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_sendSupportMessageName}/", form);
+            var operation = www.SendWebRequest();
+
+            while (!operation.isDone) await Task.Yield();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
             }
             else
             {

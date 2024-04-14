@@ -27,8 +27,10 @@ namespace WOFL.UI
             _canvasGroup.alpha = 0f;
 
             await Task.Yield();
-            //TODO: Add icon
-            _playerIcon.sprite = FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList[Convert.ToInt32(getMessageInfo.player_icon)];
+
+            int iconNumber = Convert.ToInt32(getMessageInfo.player_icon);
+
+            _playerIcon.sprite = FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList[iconNumber > FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList.Length ? 0 : iconNumber];
             _playerName.text = getMessageInfo.player_name;
             _playerName.color = FractionManager.Instance.CurrentFraction.MainColor;
 

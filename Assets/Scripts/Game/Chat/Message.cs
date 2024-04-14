@@ -32,9 +32,12 @@ namespace WOFL.UI
             _canvasGroup.alpha = 0f;
 
             await Task.Yield();
+
             _messageText.text = getMessageInfo.text;
-            _sendingTimeText.text = $"{getMessageInfo.created_at.Hour}:{getMessageInfo.created_at.Minute}";
+            string additionalZero = getMessageInfo.created_at.Minute > 9 ? "" : "0";
+            _sendingTimeText.text = $"{getMessageInfo.created_at.Hour}:{additionalZero + getMessageInfo.created_at.Minute}";
             _messageText.ForceMeshUpdate();
+
             await Task.Yield();
             if (_messageText.textBounds.size.x >= _maxWidth)
             {

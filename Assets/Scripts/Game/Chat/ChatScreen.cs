@@ -6,36 +6,104 @@ using WOFL.Online;
 using WOFL.Control;
 using WOFL.Game;
 using WOFL.Chat;
+using System;
+using System.Linq;
+using UnityEngine.UIElements;
+using Cysharp.Threading.Tasks;
+using Kamen.DataSave;
+using System.Threading.Tasks;
 
 namespace WOFL.UI
 {
     public class ChatScreen : Kamen.UI.Screen
     {
+        #region Enums
+
+        public enum ChatType
+        {
+            Global,
+            Fraction
+        }
+
+        #endregion
+
+        #region Classes
+
+        [Serializable] private struct ChatViewInfo
+        {
+            #region ChatViewInfo Variables
+
+            [SerializeField] private ChatViewButton _button;
+            [SerializeField] private ChatView _view;
+
+            #endregion
+
+            #region ChatViewInfo Properties
+
+            public ChatViewButton Button { get => _button; }
+            public ChatView View { get => _view; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
         [Header("Objects")]
         [SerializeField] private Message _myMessagePrefab;
         [SerializeField] private OtherPlayerMessage _otherPlayerMessagePrefab;
         [Space]
-        [SerializeField] private ChatView _chatView; //TODO: Change this
         [SerializeField] private ChatInputField _inputField;
+
+        [Header("Settings")]
+        [SerializeField] private ChatViewInfo[] _chatViewsInfo;
+        [SerializeField] private ChatType _startChat;
+
+        [Header("Variables")]
+        private ChatViewButton _activeButton;
+
 
         #endregion
 
         #region Control Methods
 
-        private void Start()
+        public async override void Initialize()
         {
-            GetAllMessages();
-            _chatView.Initialize(_inputField);
-            _inputField.Initialize();
-        }
-        private async void GetAllMessages()
-        {
-            List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages("fb988152-8f01-4f9a-b436-3691d2ffe806", Fraction.FractionName.Human);
+            base.Initialize();
 
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
+            await Task.Delay(100);
+
+            _inputField.Initialize(this);
+            AdjustShopView();
         }
-        public Fraction.FractionName GetCurrentChatType() => Fraction.FractionName.Human; //TODO: Fix this panel
+        private void AdjustShopView()
+        {
+            for (int i = 0; i < _chatViewsInfo.Length; i++)
+            {
+                _chatViewsInfo[i].Button.Initialize();
+                _chatViewsInfo[i].Button.OnButtonClicked += ChangeChatView;
+
+                _chatViewsInfo[i].View.Initialize(_inputField);
+                if (_chatViewsInfo[i].View.ChatType == _startChat) ChangeChatView(_chatViewsInfo[i].Button);
+            }
+        }
+        private void ChangeChatView(ChatViewButton button)
+        {
+            if (button == _activeButton) return;
+
+            if (_activeButton != null)
+            {
+                _activeButton.SwitchActive(false);
+                _chatViewsInfo.First(chatViewInfo => chatViewInfo.Button == _activeButton).View.gameObject.SetActive(false);
+            }
+            button.SwitchActive(true);
+            _chatViewsInfo.First(chatViewInfo => chatViewInfo.Button == button).View.gameObject.SetActive(true);
+            _activeButton = button;
+        }
+        public ChatType GetCurrentChatType() => ChatType.Fraction; //TODO: Fix this panel
 
         #endregion
     }
