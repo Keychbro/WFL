@@ -63,6 +63,9 @@ namespace WOFL.Control
             //    await Task.Delay(5000);
             //    SendMessage("23b2995f-66b9-4060-9627-900daa40961f", "1187f1c5-014e-4393-b0f0-3b6c7b346498", Fraction.FractionName.Human, "hi" + i);
             //}
+
+            //SendSupportMessage("i have a problem", "d631ed78-56b7-415a-8b3d-1b52eb400b76");
+            GetSupportMessages("d631ed78-56b7-415a-8b3d-1b52eb400b76");
         }
         private async void OnApplicationQuit()
         {
