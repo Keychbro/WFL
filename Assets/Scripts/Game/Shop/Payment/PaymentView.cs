@@ -53,13 +53,15 @@ namespace WOFL.Payment
 
             if (_icon != null) _icon.sprite = _currentPaymentInfo.CurrencyIcon;
 
-            if (int.TryParse(priceText, out int priceInValue)) _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
-            else _price.text = priceText;
+            UpdatePriceText(priceText);
             _price.color = _isUseCurrencyColor ? _currentPaymentInfo.CurrencyMainColor : _newPriceColor;
-
             _button.Initialize();
         }
-
+        public void UpdatePriceText(string priceText)
+        {
+            if (int.TryParse(priceText, out int priceInValue)) _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
+            else _price.text = priceText;
+        }
         #endregion
     }
 }

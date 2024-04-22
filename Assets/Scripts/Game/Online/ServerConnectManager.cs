@@ -65,7 +65,7 @@ namespace WOFL.Control
             //}
 
             //SendSupportMessage("i have a problem", "d631ed78-56b7-415a-8b3d-1b52eb400b76");
-            GetSupportMessages("d631ed78-56b7-415a-8b3d-1b52eb400b76");
+            //GetSupportMessages("d631ed78-56b7-415a-8b3d-1b52eb400b76");
         }
         private async void OnApplicationQuit()
         {
@@ -336,7 +336,7 @@ namespace WOFL.Control
                 return JsonConvert.DeserializeObject<List<GetSupportMessageInfo>>(www.downloadHandler.text);
             }
         }
-        public async Task SendSupportMessage(string message, string player_uuid)
+        public async Task<bool> SendSupportMessage(string message, string player_uuid)
         {
             WWWForm form = new WWWForm();
 
@@ -352,10 +352,12 @@ namespace WOFL.Control
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError(www.error);
+                return false;
             }
             else
             {
                 Debug.Log(www.downloadHandler.text);
+                return true;
             }
         }
 

@@ -59,6 +59,7 @@ namespace WOFL.UI
 
             DataSaveManager.Instance.MyData.Tools -= _levelInfo.Price;
             DataSaveManager.Instance.MyData.CityLevel++;
+            DataSaveManager.Instance.SaveData();
             PopupManager.Instance.HideAllPopups();
         }
 

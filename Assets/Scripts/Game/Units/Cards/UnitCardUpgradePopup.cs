@@ -12,6 +12,7 @@ using WOFL.Save;
 using Kamen.DataSave;
 using Unity.VisualScripting;
 using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace WOFL.UI
 {
@@ -46,8 +47,9 @@ namespace WOFL.UI
         public async override void Initialize()
         {
             base.Initialize();
-
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
+            await Task.Delay(200);
 
             _upgradeCardHolder.SubscribeOnCardsMoreButton(AdjustStats);
             _upgradeButton.Initialize();

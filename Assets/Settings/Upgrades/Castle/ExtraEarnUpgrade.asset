@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe81b12ad27fa3e4fbd943d90b6c86e1, type: 3}
+  m_Name: ExtraEarnUpgrade
+  m_EditorClassIdentifier: 
+  _name: Extra Earn
+  _type: 1
+  _cardLevels:
+  - {fileID: 11400000, guid: 1bec8eec31813be4687426fa5290143e, type: 2}
+  - {fileID: 11400000, guid: d0110a9565866ba478fc97a6688fb732, type: 2}
+  - {fileID: 11400000, guid: 6979cce3079ac7147ad12dedaa4d517e, type: 2}
+  - {fileID: 11400000, guid: eb7a5efaf57acb34f9014d522a5e688c, type: 2}
+  - {fileID: 11400000, guid: d3af241464fc9d542844410400df4a46, type: 2}
+  - {fileID: 11400000, guid: 67263048c871cfe45b72699c152b083e, type: 2}
+  - {fileID: 11400000, guid: 69668f61840326c49b4bd958bdf2460d, type: 2}
+  - {fileID: 11400000, guid: 5ad3662fe76598a4fbdf65128bb5caa6, type: 2}
+  - {fileID: 11400000, guid: 1227ee8e508f7434a82962db87bc45cc, type: 2}
+  - {fileID: 11400000, guid: 592e28fdfb6eb5242b5b73eeb900815a, type: 2}

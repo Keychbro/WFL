@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe81b12ad27fa3e4fbd943d90b6c86e1, type: 3}
+  m_Name: ManaRegenerationUpgrade
+  m_EditorClassIdentifier: 
+  _name: Mana<br>Regeneration
+  _type: 2
+  _cardLevels:
+  - {fileID: 11400000, guid: e3dd8735aca8e2342908148f57a5b8f6, type: 2}
+  - {fileID: 11400000, guid: 7eb6b8241d88ec0419df1b2f6c0052af, type: 2}
+  - {fileID: 11400000, guid: 407c8d21755cd464d9efa1c149383bf7, type: 2}
+  - {fileID: 11400000, guid: c658ccc9ff76aa44892e38af3daefcf7, type: 2}
+  - {fileID: 11400000, guid: 700cb61328c70664c9bedfffcdc31c76, type: 2}
+  - {fileID: 11400000, guid: 4f85c38ec21088a4e88b51aa3a13de93, type: 2}
+  - {fileID: 11400000, guid: 0f5f22dd8b54fb745aec144bd4394eb3, type: 2}
+  - {fileID: 11400000, guid: a5c8916a0da70bc4ca26a1f3c2f7a2be, type: 2}
+  - {fileID: 11400000, guid: 4f5a9e96fc80818419d6357c02d966b5, type: 2}
+  - {fileID: 11400000, guid: 6f84307fc97cdf04b960ab6fcde744e9, type: 2}

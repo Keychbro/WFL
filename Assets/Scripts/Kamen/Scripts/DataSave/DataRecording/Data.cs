@@ -10,6 +10,7 @@ using WOFL.Stats;
 using WOFL.Control;
 using WOFL.BattlePass;
 using WOFL.DiamondPass;
+using Unity.VisualScripting;
 
 namespace Kamen.DataSave
 {
@@ -45,6 +46,7 @@ namespace Kamen.DataSave
         [Header("Castle")]
         [SerializeField] private int _castleManaSpeedCollectLevel;
         [SerializeField] private int _castleHealthIncreaseLevel;
+        [SerializeField] private List<UpgradeCastleCardData> _upgradeCastleCardDatas = new List<UpgradeCastleCardData>();
 
         [Header("Units")]
         [SerializeField] private List<UnitDataForSave> _unitsDatas = new List<UnitDataForSave>();
@@ -246,6 +248,26 @@ namespace Kamen.DataSave
                 if (value < 0) return;
                 _castleHealthIncreaseLevel = value;
             }
+        }
+        public List<UpgradeCastleCardData> UpgradeCastleCardDatas { get => _upgradeCastleCardDatas; }
+
+        #endregion
+
+        #region Castle Methods
+
+        public void AdjustUpgradeCastleCardDatas(UpgradeCastleCardLevelsHolder[] upgradeCastleCardLevelsHolders)
+        {
+            for (int i = 0; i < upgradeCastleCardLevelsHolders.Length; i++)
+            {
+                if (!_upgradeCastleCardDatas.Any(holder => holder.Type == upgradeCastleCardLevelsHolders[i].Type))
+                {
+                    _upgradeCastleCardDatas.Add(new UpgradeCastleCardData(upgradeCastleCardLevelsHolders[i].Type));
+                }
+            }
+        }
+        public UpgradeCastleCardData GetUpgradeCastleCardDataByType(UpgradeCastleCardLevelsHolder.UpgradeCastleCardType type)
+        {
+            return _upgradeCastleCardDatas.First(upgradeCastleCardDatas => upgradeCastleCardDatas.Type == type);
         }
 
         #endregion

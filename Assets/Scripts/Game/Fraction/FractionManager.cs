@@ -36,6 +36,7 @@ namespace WOFL.Control
             base.Awake();
 
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
 
             InitializeUnitsInBase();
             if (DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None) SetCurrentFraction();

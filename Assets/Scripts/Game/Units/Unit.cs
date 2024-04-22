@@ -34,7 +34,7 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        private void Start()
+        private void Initialize()
         {
             _currentHealth = _startHealthValue;
         }
@@ -66,7 +66,11 @@ namespace WOFL.Game
 
         public virtual void Heal(int value)
         {
+            if (value < 0) return;
 
+            _currentHealth += value;
+            if (_currentHealth > MaxHealth) _currentHealth = MaxHealth;
+            OnHealed?.Invoke(value);
         }
 
         #endregion

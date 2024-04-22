@@ -77,6 +77,7 @@ namespace WOFL.UI
         private void StartGame()
         {
             DataSaveManager.Instance.MyData.ChoosenFraction = _currentFractionPanel.GetFractionName();
+            DataSaveManager.Instance.MyData.IconNumber = Random.Range(0, FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList.Length);
             DataSaveManager.Instance.SaveData();
 
             PopupManager.Instance.Hide("ChooseFractionPopup");

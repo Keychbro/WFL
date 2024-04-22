@@ -22,7 +22,7 @@ namespace Kamen.UI
             SwipeLeft
         }
 
-        private enum State
+        protected enum State
         {
             Standing,
             Transition
@@ -32,7 +32,7 @@ namespace Kamen.UI
 
         #region Classes
 
-        [Serializable] private class TransitionInfo
+        [Serializable] protected class TransitionInfo
         {
             #region TransitionInfo Variables
 
@@ -53,13 +53,17 @@ namespace Kamen.UI
             #endregion
         }
 
-        [Serializable] private class ScreenInfo
+        [Serializable]
+        public class ScreenInfo
         {
             #region ScreenInfo Variables
 
             [SerializeField][Tooltip("Should be unique")] private string _id;
             [SerializeField][Tooltip("Should be unique")] private int _number;
             [SerializeField] private Screen _screen;
+            [Space]
+            [SerializeField] private bool _isShownTopBar;
+            [SerializeField] private bool _isShownQuickButtons;
 
             #endregion
 
@@ -68,6 +72,8 @@ namespace Kamen.UI
             public string ID { get => _id; }
             public int Number { get => _number; }
             public Screen ThisScreen { get => _screen; }
+            public bool IsShowTopBar { get => _isShownTopBar; }
+            public bool IsShowQuickButtons { get => _isShownQuickButtons; }
 
             #endregion
         }
@@ -77,16 +83,17 @@ namespace Kamen.UI
         #region Variables
 
         [Header("Settings")]
-        [SerializeField] private TransitionInfo _transitionInfo;
+        [SerializeField] protected TransitionInfo _transitionInfo;
         [Space]
-        [SerializeField] private ScreenInfo[] _screenInfos;
+        [SerializeField] protected ScreenInfo[] _screenInfos;
         [Space]
-        [SerializeField] private string _startScreen;
-        [SerializeField] private string _registrationScreenName;
+        [SerializeField] protected string _startScreen;
+        [SerializeField] protected string _registrationScreenName;
 
         [Header("Variables")]
-        private ScreenInfo _currentScreen;
-        private State _state;
+        protected ScreenInfo _currentScreen;
+        protected State _state;
+        public event Action<ScreenInfo, bool> OnScreenChanged;
 
         #endregion
 
@@ -145,6 +152,7 @@ namespace Kamen.UI
                 screen.Transit(true, isForth, _transitionInfo.Type, isFast ? 0 : _transitionInfo.Duration, _transitionInfo.Curve, _transitionInfo.GetMyCurve);
                 _currentScreen?.ThisScreen.Transit(false, isForth, _transitionInfo.Type, isFast ? 0 : _transitionInfo.Duration, _transitionInfo.Curve, _transitionInfo.GetMyCurve);
                 _currentScreen = screenInfo;
+                OnScreenChanged?.Invoke(_currentScreen, isFast);
             }
             else Debug.LogError($"[Kamen - ScreenManager] Screen with id \"{id}\" does not exist in the scene!");
         }
@@ -182,10 +190,11 @@ namespace Kamen.UI
                 screen.gameObject.SetActive(true);
 
                 _currentScreen = screenInfo;
+                OnScreenChanged?.Invoke(_currentScreen, true);
             }
             else Debug.LogError($"[Kamen - ScreenManager] Screen with id \"{id}\" does not exist in the scene!");
         }
-        private IEnumerator WaitToTransitionEnd(Screen oldScreen)
+        protected IEnumerator WaitToTransitionEnd(Screen oldScreen)
         {
             yield return new WaitForSeconds(_transitionInfo.Duration);
             _state = State.Standing;
@@ -197,7 +206,7 @@ namespace Kamen.UI
 
         #region Calculate Methods
 
-        private ScreenInfo GetScreenInfoByID(string id)
+        protected ScreenInfo GetScreenInfoByID(string id)
         {
             for (int i = 0; i < _screenInfos.Length; i++)
             {

@@ -60,18 +60,37 @@ namespace WOFL.Chat
 
         private async void CallSendMessage()
         {
-            bool result = await ServerConnectManager.Instance.SendMessage(
-                DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, 
-                DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID, 
-                _chatScreen.GetCurrentChatType() == ChatScreen.ChatType.Global ? Fraction.FractionName.None : DataSaveManager.Instance.MyData.ChoosenFraction,
-                _inputField.text);
-
-            if (result)
+            ChatScreen.ChatType currentChatType = _chatScreen.GetCurrentChatType();
+            switch (currentChatType)
             {
-                OnMessageSend?.Invoke(_chatScreen.GetCurrentChatType(), _inputField.text);
-                _inputField.text = "";
+                case ChatScreen.ChatType.Global:
+                case ChatScreen.ChatType.Fraction:
+                    bool result = await ServerConnectManager.Instance.SendMessage(
+                        DataSaveManager.Instance.MyPlayerAuthData.ServerUUID,
+                        DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID,
+                        currentChatType == ChatScreen.ChatType.Global ? Fraction.FractionName.None : DataSaveManager.Instance.MyData.ChoosenFraction,
+                        _inputField.text);
+
+                    if (result)
+                    {
+                        OnMessageSend?.Invoke(_chatScreen.GetCurrentChatType(), _inputField.text);
+                        _inputField.text = "";
+                    }
+                    break;
+                case ChatScreen.ChatType.Support:
+                    bool supportResult = await ServerConnectManager.Instance.SendSupportMessage(
+                        _inputField.text,
+                        DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID);
+
+                    if (supportResult)
+                    {
+                        OnMessageSend?.Invoke(_chatScreen.GetCurrentChatType(), _inputField.text);
+                        _inputField.text = "";
+                    }
+                    break;
             }
-           // string result = await ServerConnectManager.Instance.GetPlayerUUID(_email);
+            
+           // string supportResult = await ServerConnectManager.Instance.GetPlayerUUID(_email);
         }
 
         #endregion

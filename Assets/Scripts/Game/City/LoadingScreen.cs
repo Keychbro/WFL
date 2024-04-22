@@ -48,7 +48,8 @@ namespace WOFL.UI
             await Task.Delay(Mathf.RoundToInt(_loadDuration * 1000));
             await Task.Delay(Mathf.RoundToInt(_delayAfterLoad * 1000));
 
-            ScreenManager.Instance.TransitionTo("Fight");
+            //ScreenManager.Instance.TransitionTo("Fight");
+            QuickBar.Instance.CallSwitchButtonByName("Fight");
         }
         private void UpdateLoadingText(int value) => _loadingText.text = $"{_sliderText}{value}{_valueSign}";
 

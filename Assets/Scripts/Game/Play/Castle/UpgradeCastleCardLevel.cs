@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WOFL.Settings
 {
-    [CreateAssetMenu(fileName = "Upgrade Castle Card Level", menuName = "WOFL/Settings/Game/Upgrade Castle Card Level", order = 1)]
+    [CreateAssetMenu(fileName = "Upgrade Castle Card Level", menuName = "WOFL/Castle/Upgrade Castle Card Level", order = 1)]
     public class UpgradeCastleCardLevel : ScriptableObject
     {
         #region Variables

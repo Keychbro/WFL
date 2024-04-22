@@ -22,7 +22,8 @@ namespace WOFL.UI
         public enum ChatType
         {
             Global,
-            Fraction
+            Fraction,
+            Support
         }
 
         #endregion
@@ -62,7 +63,7 @@ namespace WOFL.UI
 
         [Header("Variables")]
         private ChatViewButton _activeButton;
-
+        private ChatViewInfo _currentChatViewInfo;
 
         #endregion
 
@@ -100,10 +101,11 @@ namespace WOFL.UI
                 _chatViewsInfo.First(chatViewInfo => chatViewInfo.Button == _activeButton).View.gameObject.SetActive(false);
             }
             button.SwitchActive(true);
-            _chatViewsInfo.First(chatViewInfo => chatViewInfo.Button == button).View.gameObject.SetActive(true);
+            _currentChatViewInfo =  _chatViewsInfo.First(chatViewInfo => chatViewInfo.Button == button);
+            _currentChatViewInfo.View.gameObject.SetActive(true);
             _activeButton = button;
         }
-        public ChatType GetCurrentChatType() => ChatType.Fraction; //TODO: Fix this panel
+        public ChatType GetCurrentChatType() => _currentChatViewInfo.View.ChatType;
 
         #endregion
     }

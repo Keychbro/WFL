@@ -50,6 +50,35 @@ namespace WOFL.UI
 
             _canvasGroup.alpha = 1f;
         }
+        public override async void AdjustSupportMessage(GetSupportMessageInfo getSupportMessageInfo)
+        {
+            _canvasGroup.alpha = 0f;
+
+            await Task.Yield();
+
+            _playerName.text = "Support";
+            _playerName.color = Color.white;
+
+            _messageText.text = getSupportMessageInfo.text;
+            _sendingTimeText.text = $"{getSupportMessageInfo.created_at.Hour}:{getSupportMessageInfo.created_at.Minute}";
+
+            _playerName.ForceMeshUpdate();
+            _messageText.ForceMeshUpdate();
+
+            await Task.Yield();
+            await Task.Yield();
+
+            if (_messageText.textBounds.size.x >= _maxWidth || _playerName.textBounds.size.x >= _maxWidth)
+            {
+                _layoutElement.preferredWidth = _preferredWidth;
+            }
+
+            _canvasGroup.alpha = 1f;
+        }
+        public void SetSupportMessageIcon(Sprite icon)
+        {
+            _playerIcon.sprite = icon;
+        }
 
         #endregion
     }

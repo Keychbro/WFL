@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe81b12ad27fa3e4fbd943d90b6c86e1, type: 3}
+  m_Name: CastleHealthUpgrade
+  m_EditorClassIdentifier: 
+  _name: Castle Health
+  _cardLevels:
+  - {fileID: 11400000, guid: 09a4c13429093784aa99745df393d6e5, type: 2}
+  - {fileID: 11400000, guid: 1dcedbc6b4ce20448a33335252745b7a, type: 2}
+  - {fileID: 11400000, guid: 7700b1391b21ed44094d5812e630ce6f, type: 2}
+  - {fileID: 11400000, guid: e736b03f0be51a148871e57a484f6e00, type: 2}
+  - {fileID: 11400000, guid: 2eabded7565dba04fb1d02254b3a86a8, type: 2}
+  - {fileID: 11400000, guid: c86faadd21e9d3f4fabe8f0e6c7ec1d5, type: 2}
+  - {fileID: 11400000, guid: 93e08551a3a4b7040ad92d26c03d26ca, type: 2}
+  - {fileID: 11400000, guid: efaf4c8fa1ff96c4da37439f861302aa, type: 2}
+  - {fileID: 11400000, guid: db56a427997fe4c4fac61874fd66bf6b, type: 2}
+  - {fileID: 11400000, guid: 8b9cbbd806fda2542b8f94f1206e9b23, type: 2}

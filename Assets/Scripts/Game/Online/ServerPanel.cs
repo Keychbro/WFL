@@ -6,6 +6,7 @@ using TMPro;
 using WOFL.Online;
 using Kamen.UI;
 using Kamen.DataSave;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.UI
 {
@@ -34,11 +35,12 @@ namespace WOFL.UI
             _serverNameText.text = _currentServerInfo.name;
             _playButton.onClick.AddListener(ClickOnPlayButton);
         }
-        private void ClickOnPlayButton()
+        private async void ClickOnPlayButton()
         {
             DataSaveManager.Instance.MyPlayerAuthData.ServerUUID = _currentServerInfo.uuid;
             DataSaveManager.Instance.AdjustPlayerDataOnServer();
 
+            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
             ScreenManager.Instance.TransitionWithOwnDuration("LoadingScreen", _starPlayDuration);
         }
 

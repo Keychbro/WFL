@@ -8,6 +8,7 @@ using Kamen.DataSave;
 using System;
 using TMPro;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
 namespace WOFL.UI
@@ -25,10 +26,22 @@ namespace WOFL.UI
 
         [Header("Settings")]
         [SerializeField] private CityLevelInfo[] _levelInfos;
+        [SerializeField] private int _collectDelay;
 
         [Header("Variables")]
         private CityLevelInfo _currentLevelInfo;
         private CityLevelInfo _nextLevelInfo;
+        private bool _isGameWorking = true;
+        public event Action<int> OnTimeToCollectUpdate;
+
+        #endregion
+
+        #region Unity Methods
+
+        private void OnApplicationQuit()
+        {
+            _isGameWorking = false;
+        }
 
         #endregion
 
@@ -42,6 +55,34 @@ namespace WOFL.UI
 
             DataSaveManager.Instance.MyData.OnCityLevelChanged += UpdateCity;
             UpdateCity();
+            CollectResources();
+        }
+        private async void CollectResources()
+        {
+            while (_isGameWorking)
+            {
+                for (int i = 0; i < _collectDelay; i++)
+                {
+                    await Task.Delay(Mathf.RoundToInt(1000));
+                    OnTimeToCollectUpdate?.Invoke(_collectDelay - i);
+                }
+                for (int i = 0; i < _currentLevelInfo.ResourceProduceInfos.Length; i++)
+                {
+                    switch (_currentLevelInfo.ResourceProduceInfos[i].Type)
+                    {
+                        case Resources.Gold:
+                            DataSaveManager.Instance.MyData.Gold += Mathf.RoundToInt(_currentLevelInfo.ResourceProduceInfos[i].ProducePerSeconds * _collectDelay);
+                            break;
+                        case Resources.Diamonds:
+                            DataSaveManager.Instance.MyData.Diamonds += Mathf.RoundToInt(_currentLevelInfo.ResourceProduceInfos[i].ProducePerSeconds * _collectDelay);
+                            break;
+                        case Resources.Tools:
+                            DataSaveManager.Instance.MyData.Tools += Mathf.RoundToInt(_currentLevelInfo.ResourceProduceInfos[i].ProducePerSeconds * _collectDelay);
+                            break;
+                    }
+                }
+                DataSaveManager.Instance.SaveData();
+            }
         }
         private void UpdateCity()
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using WOFL.Control;
+using WOFL.UI;
 
 namespace WOFL.Chat
 {
@@ -16,6 +17,7 @@ namespace WOFL.Chat
         [Header("Objects")]
         [SerializeField] private Image _background;
         [SerializeField] private Image _icon;
+        [SerializeField] private NotificationPoint _notificationPoint;
         private KamenButton _button;
 
         [Header("Settings")]

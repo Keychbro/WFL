@@ -47,8 +47,6 @@ namespace WOFL.Game
         {
             _castleSettings = castleSettings;
 
-            await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
-
             _castleView.sprite = _castleSettings.CastleView;
             MaxHealth = _castleSettings.StartHealth + _castleSettings.IncreaseHealthStep * DataSaveManager.Instance.MyData.CastleHealthIncreaseLevel;
             ManaFillDuration = 100f / _castleSettings.StartManaSpeedCollectValue + _castleSettings.IncreaseManaSpeedCollectStep * DataSaveManager.Instance.MyData.CastleManaSpeedCollectLevel;

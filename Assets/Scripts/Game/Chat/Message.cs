@@ -46,6 +46,25 @@ namespace WOFL.UI
 
             _canvasGroup.alpha = 1f;
         }
+        public virtual async void AdjustSupportMessage(GetSupportMessageInfo getSupportMessageInfo)
+        {
+            _canvasGroup.alpha = 0f;
+
+            await Task.Yield();
+
+            _messageText.text = getSupportMessageInfo.text;
+            string additionalZero = getSupportMessageInfo.created_at.Minute > 9 ? "" : "0";
+            _sendingTimeText.text = $"{getSupportMessageInfo.created_at.Hour}:{additionalZero + getSupportMessageInfo.created_at.Minute}";
+            _messageText.ForceMeshUpdate();
+
+            await Task.Yield();
+            if (_messageText.textBounds.size.x >= _maxWidth)
+            {
+                _layoutElement.preferredWidth = _preferredWidth;
+            }
+
+            _canvasGroup.alpha = 1f;
+        }
 
         #endregion
     }
