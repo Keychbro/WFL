@@ -20,37 +20,16 @@ namespace WOFL.Control
         [SerializeField] private ManaView _manaView;
         [SerializeField] private GameCardsPanel _gameCardsPanel;
 
-        [Header("Variables")]
-        private Fraction _playerfraction;
-
-        #endregion
-
-        #region Properties
-
-        public Fraction PlayerFraction { get => _playerfraction; }
-
-        #endregion
-
-        #region Unity Methods
-
-        protected void Start()
-        {
-            //_playerfraction = FractionManager.Instance.Fractions
-            //    .First(fraction => fraction.Name == DataSaveManager.Instance.MyData.ChoosenFraction);
-
-            _playerfraction = FractionManager.Instance.Fractions[0];
-            StartBattle();
-        }
-
         #endregion
 
         #region Control Methods
 
         public void StartBattle()
-        {     
-            _alliedCastle.Initialize(_playerfraction.CastleSettings, _playerfraction.Units);
+        {
+            Fraction playerFraction = FractionManager.Instance.CurrentFraction;
+            _alliedCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
             _manaView.Initialize(_alliedCastle);
-            _gameCardsPanel.Initialize(_alliedCastle, _playerfraction.Units);
+            _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
             {

@@ -10,6 +10,7 @@ using DG.Tweening;
 using System;
 using System.Threading.Tasks;
 using WOFL.UI;
+using System.Threading;
 
 
 namespace WOFL.Chat
@@ -28,17 +29,17 @@ namespace WOFL.Chat
 
         #region Control Methods
 
-        protected override async void GetAllMessages()
+        protected override async Task GetAllMessages(CancellationToken cancellationToken)
         {
             _isAppWorking = true;
-            await Task.Delay(1000);
+            await Task.Delay(1000, cancellationToken);
 
             while (_isAppWorking)
             {
                 List<GetSupportMessageInfo> messages = await ServerConnectManager.Instance.GetSupportMessages(DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID);
                 DistributeSupportMessages(messages);
 
-                await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000));
+                await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000), cancellationToken);
             }
         }
         private void DistributeSupportMessages(List<GetSupportMessageInfo> messagesInfo)

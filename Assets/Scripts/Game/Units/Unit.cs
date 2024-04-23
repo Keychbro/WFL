@@ -7,7 +7,6 @@ using WOFL.Game.Components;
 
 namespace WOFL.Game
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     public abstract class Unit : MonoBehaviour, IMoveable, IDamagable, IHealable, IDeathable
     {
         #region Variables
@@ -15,7 +14,6 @@ namespace WOFL.Game
         [Header("Settings")]
         [SerializeField] private string _name;
         [SerializeField] private int _startHealthValue;
-        [SerializeField] private Sprite _appearance;
 
         [Header("Variables")]
         private IMoveable.MoveType _movingType;
@@ -34,7 +32,7 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        private void Initialize()
+        public void Initialize()
         {
             _currentHealth = _startHealthValue;
         }

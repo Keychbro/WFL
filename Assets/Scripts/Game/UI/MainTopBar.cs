@@ -44,7 +44,7 @@ namespace WOFL.UI
         {
             SwitchVisible(screenInfo.IsShowTopBar, isFast);
         }
-        private async void SwitchVisible(bool isShow, bool isFast)
+        public async void SwitchVisible(bool isShow, bool isFast)
         {
             if (_isVisible == isShow) return;
 

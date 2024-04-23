@@ -99,7 +99,7 @@ namespace WOFL.UI
             if (_currentSelectedButton != null) _currentSelectedButton.Button.CallChangeButtonState(QuickBarButtonInfo.ButtonState.Selecting);
             if (_oldSelectedButton != null) _oldSelectedButton.Button.CallChangeButtonState(QuickBarButtonInfo.ButtonState.Enabling);
         }
-        private async void SwitchVisible(bool isShow, bool isFast)
+        public async void SwitchVisible(bool isShow, bool isFast)
         {
             if (_isVisible == isShow) return;
 

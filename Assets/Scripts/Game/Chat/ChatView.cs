@@ -10,6 +10,7 @@ using DG.Tweening;
 using System;
 using System.Threading.Tasks;
 using WOFL.UI;
+using System.Threading;
 
 namespace WOFL.Chat
 {
@@ -41,6 +42,7 @@ namespace WOFL.Chat
         protected List<Message> _spawnedMessage = new List<Message>();
         protected List<Message> _localMessages = new List<Message>();
         protected bool _isAppWorking = false;
+        protected CancellationTokenSource _cancellationTokenSource;
 
         #endregion
 
@@ -54,7 +56,12 @@ namespace WOFL.Chat
 
         public void OnApplicationQuit()
         {
-            _isAppWorking = false;
+            StopGettingMessages();
+        }
+        public void OnApplicationPause(bool pause)
+        {
+            if (pause) StopGettingMessages();
+            else StartGettingMessages();
         }
 
         #endregion
@@ -72,7 +79,7 @@ namespace WOFL.Chat
             _chatViewRect = GetComponent<RectTransform>();
 
             CalculateResizeChat();
-            GetAllMessages();
+            StartGettingMessages();
         }
         public Fraction.FractionName AdjustChatFractionName()
         {
@@ -104,18 +111,32 @@ namespace WOFL.Chat
             _miniSizeInfo.ChatViewSize = _chatViewRect.sizeDelta + new Vector2(0, -_keyboardSize);
             _miniSizeInfo.InputFieldPosition = _inputField.transform.localPosition + new Vector3(0, _keyboardSize, 0);
         }
-        protected virtual async void GetAllMessages()
+        protected virtual async Task GetAllMessages(CancellationToken cancellationToken)
         {
             _isAppWorking = true;
-            await Task.Delay(1000);
+            await Task.Delay(1000, cancellationToken);
 
             while (_isAppWorking)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages(DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, _chatFractionName);
                 DistributeMessages(messages);
 
-                await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000));
+                await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000), cancellationToken);
             }
+        }
+        protected virtual void StartGettingMessages()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = _cancellationTokenSource.Token;
+            GetAllMessages(cancellationToken);
+        }
+
+        protected virtual void StopGettingMessages()
+        {
+            _isAppWorking = false;
+            _cancellationTokenSource?.Cancel();
         }
         protected void DistributeMessages(List<GetMessageInfo> messagesInfo)
         {

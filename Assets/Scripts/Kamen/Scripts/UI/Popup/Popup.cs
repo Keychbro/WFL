@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 namespace Kamen.UI
 {
@@ -79,7 +80,7 @@ namespace Kamen.UI
             _canvasGroup = gameObject.GetComponent<CanvasGroup>();
             _canvasGroup.alpha = 0f;
             _state = State.Hidden;
-            _rightPosition = transform.localPosition;
+            _rightPosition = _container.localPosition;
             _backgroundAlpha = _background.color.a;
 
             gameObject.SetActive(false);
