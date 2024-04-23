@@ -11,6 +11,7 @@ namespace WOFL.Settings
 
         [SerializeField] private int _damage;
         [SerializeField] private float _attackSpeed;
+        [SerializeField] private float _attackRange;
 
         #endregion
 
@@ -18,6 +19,7 @@ namespace WOFL.Settings
 
         public int Damage { get => _damage; }
         public float AttackSpeed { get => _attackSpeed; }
+        public float AttackRange { get => _attackRange; }
 
         #endregion
     }

@@ -11,13 +11,16 @@ using Cysharp.Threading.Tasks;
 
 namespace WOFL.Game
 {
-    public class Castle : MonoBehaviour, IManaOwnable, IDamagable, IDeathable
+    public class Castle : MonoBehaviour, IManaOwnable, IDamageable, IDeathable
     {
         #region Variables
 
         [Header("Objects")]
         [SerializeField] private SpriteRenderer _castleView;
         [SerializeField] private Transform _unitsSpawnPoint;
+
+        [Header("Settings")]
+        [SerializeField] private IDamageable.GameSideName _sideName;
 
         [Header("Variables")]
         private int _currentHealth;
@@ -28,6 +31,7 @@ namespace WOFL.Game
 
         #region Properties
 
+        public IDamageable.GameSideName SideName { get => _sideName; }
         public int CurrentGold { get; private set; }
         public int MaxHealth { get; private set; }
         public int CurrentMana { get; private set; }

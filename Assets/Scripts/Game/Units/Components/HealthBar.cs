@@ -26,7 +26,7 @@ namespace WOFL.Game.Components
         [SerializeField] private Ease _animationEase;
 
         [Header("Variables")]
-        private IDamagable _damageableObject;
+        private IDamageable _damageableObject;
         private IHealable _healableObject;
         private HealthBarSettings _currentSettings;
 
@@ -49,7 +49,7 @@ namespace WOFL.Game.Components
 
         private void Initialize()
         {
-            _damageableObject = GetComponent<IDamagable>();
+            _damageableObject = GetComponent<IDamageable>();
             _damageableObject.OnTakedDamage += CallMinusValue;
 
             _healableObject = GetComponent<IHealable>();

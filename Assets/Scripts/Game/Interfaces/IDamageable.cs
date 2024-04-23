@@ -5,10 +5,22 @@ using UnityEngine;
 
 namespace WOFL.Game
 {
-    public interface IDamagable
+    public interface IDamageable
     {
+        #region Enums
+
+        public enum GameSideName
+        {
+            None,
+            Allied,
+            Enemy
+        }
+
+        #endregion
+
         #region Properties
 
+        public GameSideName SideName { get; }
         public int MaxHealth { get; }
         public event Action<int> OnTakedDamage;
 

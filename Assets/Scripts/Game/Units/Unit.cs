@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using WOFL.Game;
 using WOFL.Game.Components;
+using WOFL.Settings;
 
 namespace WOFL.Game
 {
-    public abstract class Unit : MonoBehaviour, IMoveable, IDamagable, IHealable, IDeathable
+    public abstract class Unit : MonoBehaviour, IMoveable, IDamageable, IHealable, IDeathable
     {
         #region Variables
+
+        [Header("Settings")]
+        [SerializeField] private Animator _unitAnimator;
+        [SerializeField] private GameObject _unitSkin;
 
         [Header("Settings")]
         [SerializeField] private string _name;
@@ -18,6 +23,8 @@ namespace WOFL.Game
         [Header("Variables")]
         private IMoveable.MoveType _movingType;
         private int _currentHealth;
+        private UnitInfo _unitInfo;
+        private Vector3 _moveDirection;
         public event Action<int> OnTakedDamage;
         public event Action<int> OnHealed;
 
@@ -25,6 +32,7 @@ namespace WOFL.Game
 
         #region Properties
 
+        public IDamageable.GameSideName SideName { get; private set; }
         public int MaxHealth { get => _startHealthValue; }
         public IMoveable.MoveType MovingType { get => _movingType; }
 
@@ -32,9 +40,12 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize()
+        public void Initialize(UnitInfo unitInfo, IDamageable.GameSideName sideName)
         {
-            _currentHealth = _startHealthValue;
+            SideName = sideName;
+            _unitInfo = unitInfo;
+            _currentHealth = _startHealthValue; // TODO: Fix this
+            _moveDirection = sideName == IDamageable.GameSideName.Enemy ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0);
         }
 
         #endregion
@@ -43,7 +54,7 @@ namespace WOFL.Game
 
         public void Move()
         {
-            
+            transform.position += _moveDirection * _unitInfo.MoveSpeed * Time.fixedDeltaTime;
         }
 
         #endregion
