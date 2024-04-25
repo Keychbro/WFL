@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _castleView: {fileID: 2061933221072097313}
   _unitsSpawnPoint: {fileID: 4650033365128800733}
+  _sideName: 0
 --- !u!1 &2569561212610399198
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +272,10 @@ PrefabInstance:
     - target: {fileID: 6812797199713069975, guid: 2af60b3c160aab844bccb1a8d74b428f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900666496852173435, guid: 2af60b3c160aab844bccb1a8d74b428f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

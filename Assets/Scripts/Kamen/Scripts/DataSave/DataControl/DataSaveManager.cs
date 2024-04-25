@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using WOFL.Online;
+using NativeWebSocket;
 
 namespace Kamen.DataSave
 {

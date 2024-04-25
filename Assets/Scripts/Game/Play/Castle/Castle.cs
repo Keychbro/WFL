@@ -26,6 +26,9 @@ namespace WOFL.Game
         private int _currentHealth;
         private CastleSettings _castleSettings;
         private UnitInfo[] _units;
+        private List<Unit> _createdUnits = new List<Unit>();
+
+        public event Action<IDeathable> OnDead;
 
         #endregion
 
@@ -38,6 +41,7 @@ namespace WOFL.Game
         public float ManaFillDuration { get; private set; }
 
         public UnitInfo[] Units { get => _units; }
+        public List<Unit> CreatedUnits { get => _createdUnits; }
 
         public event Action<int> OnTakedDamage;
         public event Action OnManaValueChanged;
@@ -85,6 +89,18 @@ namespace WOFL.Game
         private UnitInfo GetUnitInfoByName(string uniqueName)
         {
             return _units.First(unit => unit.UniqueName == uniqueName);
+        }
+
+        #endregion
+
+        #region Units Control
+
+        public void SendUnitsToAttack(Castle otherCastle)
+        {
+            for (int i = 0; i < otherCastle.CreatedUnits.Count; i++)
+            {
+
+            }
         }
 
         #endregion

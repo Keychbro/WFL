@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using System;
 using WOFL.Settings;
 using TMPro;
+using Cysharp.Threading.Tasks;
+using WOFL.Control;
 
 namespace WOFL.Game.Components
 {
@@ -33,14 +35,18 @@ namespace WOFL.Game.Components
         #endregion
 
         #region Unity Methods
-        private void Start()
+        private async void Start()
         {
+            gameObject.SetActive(false);
+            await UniTask.WaitUntil(() => GameManager.Instance.IsBattleStarted);
+
+            gameObject.SetActive(true);
             Initialize();
         }
         private void OnDestroy()
         {
-            _damageableObject.OnTakedDamage -= CallMinusValue;
-            _healableObject.OnHealed += CallPlusValue;
+            if (_damageableObject != null) _damageableObject.OnTakedDamage -= CallMinusValue;
+            if (_healableObject != null) _healableObject.OnHealed -= CallPlusValue;
         }
 
         #endregion
@@ -49,14 +55,16 @@ namespace WOFL.Game.Components
 
         private void Initialize()
         {
-            _damageableObject = GetComponent<IDamageable>();
-            _damageableObject.OnTakedDamage += CallMinusValue;
+            _damageableObject = GetComponentInParent<IDamageable>();
+            if (_damageableObject != null) _damageableObject.OnTakedDamage += CallMinusValue;
 
-            _healableObject = GetComponent<IHealable>();
-            _healableObject.OnHealed += CallPlusValue;
+            _healableObject = GetComponentInParent<IHealable>();
+            if (_healableObject != null) _healableObject.OnHealed += CallPlusValue;
 
             SetUpSlider(_instantSlider, _damageableObject.MaxHealth);
             SetUpSlider(_animationSlider, _damageableObject.MaxHealth);
+
+            UpdateBarViewStyle(GameSideManager.Instance.GetHealthBarSettingsInfoByName(_damageableObject.SideName));
         }
         public void UpdateBarViewStyle(HealthBarSettings settings)
         {

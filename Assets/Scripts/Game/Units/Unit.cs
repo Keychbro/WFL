@@ -25,8 +25,13 @@ namespace WOFL.Game
         private int _currentHealth;
         private UnitInfo _unitInfo;
         private Vector3 _moveDirection;
+
+        private IDamageable _currentTargetDamageable;
+        private MonoBehaviour _currentTargetObject;
+
         public event Action<int> OnTakedDamage;
         public event Action<int> OnHealed;
+        public event Action<IDeathable> OnDead;
 
         #endregion
 
@@ -45,8 +50,9 @@ namespace WOFL.Game
             SideName = sideName;
             _unitInfo = unitInfo;
             _currentHealth = _startHealthValue; // TODO: Fix this
-            _moveDirection = sideName == IDamageable.GameSideName.Enemy ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0);
+            //_moveDirection = sideName == IDamageable.GameSideName.Enemy ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0);
         }
+       // private void 
 
         #endregion
 
@@ -54,6 +60,19 @@ namespace WOFL.Game
 
         public void Move()
         {
+            if (_currentTargetDamageable == null) return;
+
+            if (_currentTargetObject.transform.position.x < transform.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                _moveDirection = new Vector3(-1, 0, 0);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                _moveDirection = new Vector3(1, 0, 0);
+            }
+
             transform.position += _moveDirection * _unitInfo.MoveSpeed * Time.fixedDeltaTime;
         }
 
@@ -88,7 +107,47 @@ namespace WOFL.Game
 
         public virtual void Death()
         {
+            OnDead.Invoke(this);
+        }
 
+        #endregion
+
+        #region Calculate Methods
+
+        public void FindClosestTarget(List<IDamageable> allTargets)
+        {
+            IDamageable closestTarget = allTargets[0];
+            float minDistance = Vector3.Distance(transform.position, GetIDamageablePosition(closestTarget));
+
+            for (int i = 1; i < allTargets.Count; i++)
+            {
+                float distance = Vector2.Distance(transform.position, GetIDamageablePosition(closestTarget));
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestTarget = allTargets[i];
+                }
+            }
+
+            _currentTargetDamageable = closestTarget;
+
+            Type damageableType = _currentTargetDamageable.GetType();
+            if (typeof(MonoBehaviour).IsAssignableFrom(damageableType))
+            {
+                _currentTargetObject = (MonoBehaviour)_currentTargetDamageable;
+            }
+        }
+
+        private Vector3 GetIDamageablePosition(IDamageable iDamageable)
+        {
+            Type damageableType = iDamageable.GetType();
+
+            if (typeof(MonoBehaviour).IsAssignableFrom(damageableType))
+            {
+                MonoBehaviour monoBehaviour = (MonoBehaviour)iDamageable;
+                return monoBehaviour.transform.position;
+            }
+            return Vector3.zero;
         }
 
         #endregion

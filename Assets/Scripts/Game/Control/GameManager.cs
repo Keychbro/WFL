@@ -6,6 +6,7 @@ using WOFL.Game;
 using System.Linq;
 using Kamen.DataSave;
 using WOFL.UI;
+using System.Threading.Tasks;
 
 namespace WOFL.Control
 {
@@ -19,6 +20,12 @@ namespace WOFL.Control
         [Space]
         [SerializeField] private ManaView _manaView;
         [SerializeField] private GameCardsPanel _gameCardsPanel;
+
+        #endregion
+
+        #region Properties
+
+        public bool IsBattleStarted;
 
         #endregion
 
@@ -36,7 +43,18 @@ namespace WOFL.Control
                 DataSaveManager.Instance.MyData.UnitsDatas[0].IncreaseLevel();
                 DataSaveManager.Instance.SaveData();
             }
+
+            IsBattleStarted = true;
         }
+        private async void BattleControl()
+        {
+            while (IsBattleStarted)
+            {
+                await Task.Yield();
+                //_alliedCastle.A
+            }
+        }
+
 
         #endregion
     }
