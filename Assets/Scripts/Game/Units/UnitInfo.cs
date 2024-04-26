@@ -18,9 +18,6 @@ namespace WOFL.Settings
         [SerializeField] private SkinsHolder _skinsHolder;
         [SerializeField] private Unit _prefab;
 
-        [Header("Additional Settings")]
-        [SerializeField] private float _moveSpeed;
-
         #endregion
 
         #region Properties
@@ -30,8 +27,6 @@ namespace WOFL.Settings
         public UnitLevelsHolder LevelsHolder { get => _levelsHolder; }
         public SkinsHolder SkinsHolder { get => _skinsHolder; }
         public Unit Prefab { get => _prefab; }
-
-        public float MoveSpeed { get => _moveSpeed; }
 
         #endregion
     }

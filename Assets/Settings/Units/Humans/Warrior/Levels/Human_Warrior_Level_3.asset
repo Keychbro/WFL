@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
   m_Name: Human_Warrior_Level_3
   m_EditorClassIdentifier: 
-  _type: 0
   _maxHealthValue: 300
+  _moveSpeed: 5
   _weaponInfo: {fileID: 11400000, guid: 0b81a95e7b68f5d469b97ee1a0cbcd32, type: 2}
   _amountGoldForKill: 5
   _manePrice: 4

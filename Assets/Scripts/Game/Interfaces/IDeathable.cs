@@ -8,6 +8,7 @@ namespace WOFL.Game
     {
         #region Properties
 
+        public bool IsAlive { get; }
         public event Action<IDeathable> OnDead;
 
         #endregion

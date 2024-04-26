@@ -18606,7 +18606,7 @@ MonoBehaviour:
   _enemyCastle: {fileID: 1386485629}
   _manaView: {fileID: 654551219}
   _gameCardsPanel: {fileID: 475387899}
-  IsBattleStarted: 0
+  _delayBetweenUpdateBattleControl: 0.5
 --- !u!1 &514867619
 GameObject:
   m_ObjectHideFlags: 0

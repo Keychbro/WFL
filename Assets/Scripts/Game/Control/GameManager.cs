@@ -21,11 +21,14 @@ namespace WOFL.Control
         [SerializeField] private ManaView _manaView;
         [SerializeField] private GameCardsPanel _gameCardsPanel;
 
+        [Header("Settings")]
+        [SerializeField] private float _delayBetweenUpdateBattleControl;
+
         #endregion
 
         #region Properties
 
-        public bool IsBattleStarted;
+        public bool IsBattleStarted { get; private set; }
 
         #endregion
 
@@ -38,6 +41,8 @@ namespace WOFL.Control
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
+            _enemyCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
+
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
             {
                 DataSaveManager.Instance.MyData.UnitsDatas[0].IncreaseLevel();
@@ -45,13 +50,15 @@ namespace WOFL.Control
             }
 
             IsBattleStarted = true;
+            BattleControl();
         }
         private async void BattleControl()
         {
             while (IsBattleStarted)
             {
-                await Task.Yield();
-                //_alliedCastle.A
+                await Task.Delay(Mathf.RoundToInt(_delayBetweenUpdateBattleControl * 1000));
+                _alliedCastle.UpdateTargets(_enemyCastle);
+                _enemyCastle.UpdateTargets(_alliedCastle);
             }
         }
 

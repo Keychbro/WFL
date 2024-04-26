@@ -16,8 +16,9 @@ namespace WOFL.Game
 
         #endregion
 
-        #region Variables
+        #region Properties
 
+        public Vector3 MoveDirection { get; }
         public MoveType MovingType { get; }
 
         #endregion
@@ -25,6 +26,7 @@ namespace WOFL.Game
         #region Control Methods
 
         public void Move();
+        public void Stand();
 
         #endregion
     }

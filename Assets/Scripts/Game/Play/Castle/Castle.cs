@@ -8,6 +8,7 @@ using Kamen.DataSave;
 using System.Linq;
 using WOFL.Save;
 using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace WOFL.Game
 {
@@ -21,14 +22,18 @@ namespace WOFL.Game
 
         [Header("Settings")]
         [SerializeField] private IDamageable.GameSideName _sideName;
+        [SerializeField] private float _timeToDestroyUnit;
 
         [Header("Variables")]
         private int _currentHealth;
         private CastleSettings _castleSettings;
         private UnitInfo[] _units;
         private List<Unit> _createdUnits = new List<Unit>();
+        private List<IDamageable> _allDamageableObject = new List<IDamageable>();
+        private List<IAttacking> _attackObjects = new List<IAttacking>();
 
         public event Action<IDeathable> OnDead;
+        public bool IsAlive { get; private set; }
 
         #endregion
 
@@ -41,11 +46,25 @@ namespace WOFL.Game
         public float ManaFillDuration { get; private set; }
 
         public UnitInfo[] Units { get => _units; }
-        public List<Unit> CreatedUnits { get => _createdUnits; }
+
+        public List<IDamageable> AllDamageableObject { get => _allDamageableObject; }
+        public List<IAttacking> AttackingObjects { get => _attackObjects; }
 
         public event Action<int> OnTakedDamage;
         public event Action OnManaValueChanged;
         public event Action<float> OnManaFilled;
+
+        #endregion
+
+        #region Unity Methods
+
+        private void Update()
+        {
+            for (int i = 0; i <  _createdUnits.Count; i++)
+            {
+                _createdUnits[i].ControlUnit();
+            }
+        }
 
         #endregion
 
@@ -58,8 +77,10 @@ namespace WOFL.Game
             _castleView.sprite = _castleSettings.CastleView;
             MaxHealth = _castleSettings.StartHealth + _castleSettings.IncreaseHealthStep * DataSaveManager.Instance.MyData.CastleHealthIncreaseLevel;
             ManaFillDuration = 100f / _castleSettings.StartManaSpeedCollectValue + _castleSettings.IncreaseManaSpeedCollectStep * DataSaveManager.Instance.MyData.CastleManaSpeedCollectLevel;
+            _allDamageableObject.Add(this);
 
             _units = units;
+            IsAlive = true;
 
             StartCoroutine(Collect());
         }
@@ -72,19 +93,40 @@ namespace WOFL.Game
             if (!CheckUnitForLevel(unitData)) return;
             if (!CheckUnitForMana(createdUnitInfo, unitData)) return;
 
-            Unit createdUnit = Instantiate(createdUnitInfo.Prefab);
-            createdUnit.transform.position = _unitsSpawnPoint.position;
-            createdUnit.transform.parent = transform;
+            SpawnUnit(createdUnitInfo, unitData.CurrentLevel);
 
             CurrentMana -= createdUnitInfo.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice;
             OnManaValueChanged?.Invoke();
         }
-        private void CreateUnitForFree(string uniqueName)
+        private void CreateUnitForFree(string uniqueName, int level)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
             if (CheckUnitForNull(createdUnitInfo)) return;
 
-            Unit createdUnit = Instantiate(createdUnitInfo.Prefab, _unitsSpawnPoint.position, transform.rotation, transform);
+            SpawnUnit(createdUnitInfo, level);
+        }
+        private void SpawnUnit(UnitInfo createdUnitInfo, int levelNumber)
+        {
+            Unit createdUnit = Instantiate(createdUnitInfo.Prefab);
+            createdUnit.transform.position = _unitsSpawnPoint.position;
+            createdUnit.transform.parent = transform;
+            createdUnit.Initialize(createdUnitInfo.LevelsHolder.Levels[levelNumber], levelNumber, SideName);
+            createdUnit.OnDead += DestroyUnit;
+
+            _createdUnits.Add(createdUnit);
+            if (createdUnit.TryGetComponent(out IDamageable damageableObject)) _allDamageableObject.Add(damageableObject);
+            if (createdUnit.TryGetComponent(out IAttacking attackObject)) _attackObjects.Add(attackObject);
+        }
+        private async void DestroyUnit(IDeathable deadObject)
+        {
+            await Task.Delay(Mathf.RoundToInt(_timeToDestroyUnit * 1000));
+            Unit destroyUnit = (Unit)deadObject;
+            destroyUnit.OnDead -= DestroyUnit;
+
+            _createdUnits.Remove(destroyUnit);
+            if (destroyUnit.TryGetComponent(out IDamageable damageableObject)) _allDamageableObject.Remove(damageableObject);
+            if (destroyUnit.TryGetComponent(out IAttacking attackObject)) _attackObjects.Remove(attackObject);
+            Destroy(((Unit)deadObject).gameObject);
         }
         private UnitInfo GetUnitInfoByName(string uniqueName)
         {
@@ -95,11 +137,11 @@ namespace WOFL.Game
 
         #region Units Control
 
-        public void SendUnitsToAttack(Castle otherCastle)
+        public void UpdateTargets(Castle otherCastle)
         {
-            for (int i = 0; i < otherCastle.CreatedUnits.Count; i++)
+            for (int i = 0; i < _attackObjects.Count; i++)
             {
-
+                _attackObjects[i].FindClosestTarget(otherCastle.AllDamageableObject);
             }
         }
 
