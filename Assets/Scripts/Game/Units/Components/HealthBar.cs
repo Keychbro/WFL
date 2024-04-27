@@ -83,6 +83,7 @@ namespace WOFL.Game.Components
         private void UpdateBarView(float value)
         {
             _instantSlider.value = value;
+            _instantSlider.value = _instantSlider.value <= 0 ? 0 : _instantSlider.value;
             _animationSlider?.DOValue(value, _animationDuration).SetEase(_animationEase);
 
             _amountHealth.text = value.ToString();

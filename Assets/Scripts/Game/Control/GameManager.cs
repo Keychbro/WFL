@@ -22,6 +22,7 @@ namespace WOFL.Control
         [SerializeField] private GameCardsPanel _gameCardsPanel;
 
         [Header("Settings")]
+        [SerializeField] private LevelSettings[] _levelSettings;
         [SerializeField] private float _delayBetweenUpdateBattleControl;
 
         #endregion

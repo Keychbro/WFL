@@ -62,6 +62,12 @@ namespace WOFL.Game
             if (value < 0) return;
 
             _currentHealth -= value;
+            if (_currentHealth <= 0)
+            {
+                _currentHealth = 0;
+                Death();
+            }
+
             OnTakedDamage?.Invoke(value);
         }
 

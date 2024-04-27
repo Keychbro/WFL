@@ -98,7 +98,7 @@ namespace WOFL.Game
             CurrentMana -= createdUnitInfo.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice;
             OnManaValueChanged?.Invoke();
         }
-        private void CreateUnitForFree(string uniqueName, int level)
+        public void CreateUnitForFree(string uniqueName, int level)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
             if (CheckUnitForNull(createdUnitInfo)) return;
@@ -170,9 +170,13 @@ namespace WOFL.Game
             if (value < 0) return;
 
             _currentHealth -= value;
-            OnTakedDamage?.Invoke(value);
+            if (_currentHealth <= 0) 
+            {
+                _currentHealth = 0;
+                Death();
+            }
 
-            if (_currentHealth < 0) Death();
+            OnTakedDamage?.Invoke(value);
         }
 
         #endregion

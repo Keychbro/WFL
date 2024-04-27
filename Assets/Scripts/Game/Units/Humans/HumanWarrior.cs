@@ -54,7 +54,7 @@ namespace WOFL.Game
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, _currentTargetObject.transform.position) >= _currentLevel.WeaponInfo.AttackRange)
+                    if (CalculateDistanceOnXAxis(transform.position, _currentTargetObject.transform.position) >= _currentLevel.WeaponInfo.AttackRange)
                     {
                         Move();
                     }
@@ -77,7 +77,7 @@ namespace WOFL.Game
             IsAttacking = true;
             _unitAnimator.SetInteger("AttackValue", Random.Range(1, 3));
             _unitAnimator.SetBool("IsOnAttackRange", true);
-            _unitAnimator.speed = 100f / _currentLevel.WeaponInfo.AttackSpeed;
+            _unitAnimator.speed = _currentLevel.WeaponInfo.AttackSpeed / 100f;
 
             bool result = await _weapon.DoAttack(_currentTargetDamageable);
 
@@ -122,7 +122,11 @@ namespace WOFL.Game
             }
             return Vector3.zero;
         }
-
+        public float CalculateDistanceOnXAxis(Vector3 position1, Vector3 position2)
+        {
+            return Mathf.Abs(position2.x - position1.x);
+        }
+                    
         #endregion
 
         #region IMoveable Methods
