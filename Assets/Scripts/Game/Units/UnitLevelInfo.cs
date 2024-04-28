@@ -12,7 +12,6 @@ namespace WOFL.Settings
         [Header("Game Settings")]
         [SerializeField] private int _maxHealthValue;
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private WeaponLevelInfo _weaponInfo;
         [SerializeField] private int _amountGoldForKill;
         [SerializeField] private int _manePrice;
 
@@ -26,7 +25,6 @@ namespace WOFL.Settings
 
         public int MaxHealthValue { get => _maxHealthValue; }
         public float MoveSpeed { get => _moveSpeed; }
-        public WeaponLevelInfo WeaponInfo { get => _weaponInfo; }
         public int AmountGoldForKill { get => _amountGoldForKill; }
         public int ManaPrice { get => _manePrice; }
 

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff196f89e6a86554eb81fa78fcfb5e93, type: 3}
   m_Name: Human_Warrior_Info
   m_EditorClassIdentifier: 
-  _uniqueName: Human_Warrior_001
+  _uniqueName: 1
   _type: 0
   _levelsHolder: {fileID: 11400000, guid: bf68ae4f61cbedd4795987a15a98b170, type: 2}
   _skinsHolder: {fileID: 11400000, guid: bfab1d7e36b308d4f9cece693fa9fe83, type: 2}
+  _weaponInfo: {fileID: 11400000, guid: 6e6c904a8ad452248b58733725cb0074, type: 2}
   _prefab: {fileID: 7552971647585130974, guid: bbf097b820ea0ea40be98c182b3493b8, type: 3}
-  _moveSpeed: 5

@@ -44,13 +44,13 @@ namespace WOFL.UI
         {
             UnitCardInGame unitCard = Instantiate(_unitCardPrefab, _cardsHolder.transform);
             unitCard.Adjust(unitInfo);
-            string uniqueName = unitInfo.UniqueName;
+            UnitInfo.UniqueUnitName uniqueName = unitInfo.UniqueName;
             unitCard.OnClick.AddListener(() => CallSpawn(uniqueName));
             unitCard.UpdateCardView(false);
 
             _unitCards.Add(unitCard);
         }
-        private void CallSpawn(string uniqueName)
+        private void CallSpawn(UnitInfo.UniqueUnitName uniqueName)
         {
             _currentCastle.CreateUnitForMana(uniqueName);
         }

@@ -84,7 +84,7 @@ namespace WOFL.Game
 
             StartCoroutine(Collect());
         }
-        public void CreateUnitForMana(string uniqueName)
+        public void CreateUnitForMana(UnitInfo.UniqueUnitName uniqueName)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
             if (!CheckUnitForNull(createdUnitInfo)) return;
@@ -98,7 +98,7 @@ namespace WOFL.Game
             CurrentMana -= createdUnitInfo.LevelsHolder.Levels[unitData.CurrentLevel].ManaPrice;
             OnManaValueChanged?.Invoke();
         }
-        public void CreateUnitForFree(string uniqueName, int level)
+        public void CreateUnitForFree(UnitInfo.UniqueUnitName uniqueName, int level)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
             if (!CheckUnitForNull(createdUnitInfo)) return;
@@ -110,7 +110,7 @@ namespace WOFL.Game
             Unit createdUnit = Instantiate(createdUnitInfo.Prefab);
             createdUnit.transform.position = _unitsSpawnPoint.position;
             createdUnit.transform.parent = transform;
-            createdUnit.Initialize(createdUnitInfo.LevelsHolder.Levels[levelNumber], levelNumber, SideName);
+            createdUnit.Initialize(createdUnitInfo, levelNumber, SideName);
             createdUnit.OnDead += DestroyUnit;
 
             _createdUnits.Add(createdUnit);
@@ -128,7 +128,7 @@ namespace WOFL.Game
             if (destroyUnit.TryGetComponent(out IAttacking attackObject)) _attackObjects.Remove(attackObject);
             Destroy(((Unit)deadObject).gameObject);
         }
-        private UnitInfo GetUnitInfoByName(string uniqueName)
+        private UnitInfo GetUnitInfoByName(UnitInfo.UniqueUnitName uniqueName)
         {
             return _units.First(unit => unit.UniqueName == uniqueName);
         }

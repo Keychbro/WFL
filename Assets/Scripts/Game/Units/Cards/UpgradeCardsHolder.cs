@@ -54,7 +54,7 @@ namespace WOFL.UI
 
             _unitCards.Add(unitCard);
         }
-        public void SubscribeOnCardsMoreButton(Action<UnitDataForSave, UnitLevelsHolder, Skin> callback)
+        public void SubscribeOnCardsMoreButton(Action<UnitDataForSave, UnitLevelsHolder, Skin, WeaponInfo> callback)
         {
             for (int i = 0; i < _unitCards.Count; i++)
             {

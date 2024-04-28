@@ -22,7 +22,7 @@ namespace WOFL.Game
         
         protected int _currentHealth;
 
-        protected UnitLevelInfo _currentLevel;
+        protected UnitInfo _currentUnitInfo;
         protected int _levelNumber;
 
         public event Action<int> OnTakedDamage;
@@ -41,14 +41,14 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public virtual void Initialize(UnitLevelInfo unitLevel, int levelNumber, IDamageable.GameSideName sideName)
+        public virtual void Initialize(UnitInfo unitInfo, int levelNumber, IDamageable.GameSideName sideName)
         {
             SideName = sideName;
-            _currentLevel = unitLevel;
+            _currentUnitInfo = unitInfo;
             _levelNumber = levelNumber;
 
-            MaxHealth = _currentLevel.MaxHealthValue;
-            _currentHealth = _currentLevel.MaxHealthValue;
+            MaxHealth = _currentUnitInfo.LevelsHolder.Levels[_levelNumber].MaxHealthValue;
+            _currentHealth = MaxHealth;
             IsAlive = true;
         }
         public abstract void ControlUnit();

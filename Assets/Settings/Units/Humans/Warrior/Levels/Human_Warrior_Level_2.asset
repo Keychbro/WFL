@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
   m_Name: Human_Warrior_Level_2
   m_EditorClassIdentifier: 
-  _maxHealthValue: 200
-  _moveSpeed: 5
+  _maxHealthValue: 288
+  _moveSpeed: 10
   _weaponInfo: {fileID: 11400000, guid: 5d9e8e43b16d5a149924b069295628a7, type: 2}
-  _amountGoldForKill: 5
+  _amountGoldForKill: 7
   _manePrice: 3
   _amountCardToUpgrade: 4
-  _amountGoldToUpgrade: 25
+  _amountGoldToUpgrade: 50

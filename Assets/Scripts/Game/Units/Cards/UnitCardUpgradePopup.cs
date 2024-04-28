@@ -39,6 +39,7 @@ namespace WOFL.UI
         private UnitDataForSave _unitData;
         private UnitLevelsHolder _levelsHolder;
         private Skin _currentSkin;
+        private WeaponInfo _unitWeaponInfo;
 
         #endregion
 
@@ -55,18 +56,19 @@ namespace WOFL.UI
             _upgradeButton.Initialize();
             _upgradeButton.OnClick().AddListener(UpgradeUnit);
         }
-        public void AdjustStats(UnitDataForSave unitData, UnitLevelsHolder levelsHolder, Skin currentSkin)
+        public void AdjustStats(UnitDataForSave unitData, UnitLevelsHolder levelsHolder, Skin currentSkin, WeaponInfo unitWeaponInfo)
         {
             _unitData = unitData;
             _levelsHolder = levelsHolder;
             _currentSkin = currentSkin;
+            _unitWeaponInfo = unitWeaponInfo;
 
             _levelText.text = $"LEVEl {unitData.CurrentLevel}";
             (_fractionNameText.text, _fractionNameBackground.color) = FractionManager.Instance.GetCurrentFractionAtributes();
 
             _unitView.sprite = currentSkin.SkinSprite;
-            _currentStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel]);
-            _nextStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel + 1]);
+            _currentStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel], unitWeaponInfo.Levels[unitData.CurrentLevel]);
+            _nextStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel + 1], unitWeaponInfo.Levels[unitData.CurrentLevel + 1]);
 
             _upgradeButton.ChangeInteractable(CheckOpportunityToBuy());
             _upgradePrice.text = $"{_levelsHolder.Levels[_unitData.CurrentLevel].AmountGoldToUpgrade}";
@@ -80,7 +82,7 @@ namespace WOFL.UI
             _unitData.IncreaseLevel();
 
             DataSaveManager.Instance.SaveData();
-            AdjustStats(_unitData, _levelsHolder, _currentSkin);
+            AdjustStats(_unitData, _levelsHolder, _currentSkin, _unitWeaponInfo);
         }
         private bool CheckOpportunityToBuy()
         {

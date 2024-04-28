@@ -21,6 +21,15 @@ namespace WOFL.Game
 
         #endregion
 
+        #region Unity Methods
+
+        private void OnApplicationQuit()
+        {
+            _cancellationTokenSource?.Cancel();
+        }
+
+        #endregion
+
         #region Control Methods
 
         public void UpdateLevelSettings(AIEnemySettings levelSettings)

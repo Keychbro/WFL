@@ -39,7 +39,7 @@ namespace WOFL.UI
         private UnitInfo _unitInfo;
         private UnitDataForSave _unitData;
         private Skin _currentSkin;
-        public event Action<UnitDataForSave, UnitLevelsHolder, Skin> OnUpgradeButtonClicked;
+        public event Action<UnitDataForSave, UnitLevelsHolder, Skin, WeaponInfo> OnUpgradeButtonClicked;
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace WOFL.UI
         }
         private void Upgrade()
         {
-            OnUpgradeButtonClicked?.Invoke(_unitData, _unitInfo.LevelsHolder, _currentSkin);
+            OnUpgradeButtonClicked?.Invoke(_unitData, _unitInfo.LevelsHolder, _currentSkin, _unitInfo.WeaponInfo);
             PopupManager.Instance.Show("UpgradeUnit");
         }
         private void BuyCard()

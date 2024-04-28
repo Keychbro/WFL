@@ -32,10 +32,13 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public override void Initialize(UnitLevelInfo unitLevel, int levelNumber, IDamageable.GameSideName sideName)
+        public override void Initialize(UnitInfo unitInfo, int levelNumber, IDamageable.GameSideName sideName)
         {
-            base.Initialize(unitLevel, levelNumber, sideName);
-            _weapon.Initialize(_currentLevel.WeaponInfo);
+            base.Initialize(unitInfo, levelNumber, sideName);
+            if (_currentUnitInfo.WeaponInfo != null)
+            {
+                _weapon.Initialize(_currentUnitInfo.WeaponInfo.Levels[_levelNumber < _currentUnitInfo.WeaponInfo.Levels.Length ? _levelNumber : ^1]);
+            }
 
         }
         public override void ControlUnit()
@@ -54,7 +57,7 @@ namespace WOFL.Game
                 }
                 else
                 {
-                    if (CalculateDistanceOnXAxis(transform.position, _currentTargetObject.transform.position) >= _currentLevel.WeaponInfo.AttackRange)
+                    if (CalculateDistanceOnXAxis(transform.position, _currentTargetObject.transform.position) >= _currentUnitInfo.WeaponInfo.Levels[_levelNumber].AttackRange)
                     {
                         Move();
                     }
@@ -77,11 +80,15 @@ namespace WOFL.Game
             IsAttacking = true;
             _unitAnimator.SetInteger("AttackValue", Random.Range(1, 3));
             _unitAnimator.SetBool("IsOnAttackRange", true);
-            _unitAnimator.speed = _currentLevel.WeaponInfo.AttackSpeed / 100f;
+            _unitAnimator.speed = _currentUnitInfo.WeaponInfo.Levels[_levelNumber].AttackSpeed / 100f;
 
-            bool result = await _weapon.DoAttack(_currentTargetDamageable);
+            if (_weapon != null)
+            {
+                bool result = await _weapon.DoAttack(_currentTargetDamageable);
+            }
 
             IsAttacking = false;
+            _unitAnimator.SetBool("IsOnAttackRange", false);
         }
         public void FindClosestTarget(List<IDamageable> allTargets)
         {
@@ -137,16 +144,16 @@ namespace WOFL.Game
             _movingType = IMoveable.MoveType.Going;
             if (_currentTargetObject.transform.position.x < transform.position.x)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                _unitSkin.transform.eulerAngles = new Vector3(0, 180, 0);
                 MoveDirection = new Vector3(-1, 0, 0);
             }
             else
             {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                _unitSkin.transform.eulerAngles = new Vector3(0, 0, 0);
                 MoveDirection = new Vector3(1, 0, 0);
             }
 
-            transform.position += MoveDirection * _currentLevel.MoveSpeed * Time.fixedDeltaTime / 100f;
+            transform.position += MoveDirection * _currentUnitInfo.LevelsHolder.Levels[_levelNumber].MoveSpeed * Time.fixedDeltaTime / 100f;
             _unitAnimator.SetBool("IsHaveTarget", true);
         }
         public void Stand()

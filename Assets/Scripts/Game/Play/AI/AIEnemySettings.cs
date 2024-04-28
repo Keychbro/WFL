@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using WOFL.Settings;
 
 namespace WOFL.Game
 {
@@ -15,7 +16,7 @@ namespace WOFL.Game
         {
             #region NewEnemyUnitInfo Variables
 
-            [SerializeField] private string _uniqueUnitName;
+            [SerializeField] private UnitInfo.UniqueUnitName _uniqueUnitName;
             [SerializeField] private int _unitLevel;
             [SerializeField] private float _spawnDelay;
 
@@ -23,7 +24,7 @@ namespace WOFL.Game
 
             #region NewEnemyUnitInfo Properties
 
-            public string UniqueUnitName { get => _uniqueUnitName; }
+            public UnitInfo.UniqueUnitName UniqueUnitName { get => _uniqueUnitName; }
             public int UnitLevel { get => _unitLevel; }
             public float SpawnDelay { get => _spawnDelay; }
 

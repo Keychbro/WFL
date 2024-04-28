@@ -15,14 +15,14 @@ namespace WOFL.Settings
             #region RewardCardInfo Variables
 
             [SerializeField] private Fraction.FractionName _fractionName;
-            [SerializeField] private string _uniqueName;
+            [SerializeField] private UnitInfo.UniqueUnitName _uniqueName;
 
             #endregion
 
             #region RewardCardInfo Properties
 
             public Fraction.FractionName FractionName { get => _fractionName; }
-            public string UniqueName { get => _uniqueName; }
+            public UnitInfo.UniqueUnitName UniqueName { get => _uniqueName; }
 
             #endregion
         }

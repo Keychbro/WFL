@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
   m_Name: Human_Archer_Level_4
   m_EditorClassIdentifier: 
-  _maxHealthValue: 0
-  _weaponInfo: {fileID: 11400000, guid: 2a32fb0e1bf993f4cb77d60a2c86f173, type: 2}
-  _amountGoldForKill: 0
-  _manePrice: 0
-  _amountCardToUpgrade: 0
-  _amountGoldToUpgrade: 0
+  _maxHealthValue: 158
+  _moveSpeed: 30
+  _amountGoldForKill: 16
+  _manePrice: 2
+  _amountCardToUpgrade: 16
+  _amountGoldToUpgrade: 2000

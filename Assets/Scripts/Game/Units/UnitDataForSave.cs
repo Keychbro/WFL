@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WOFL.Settings;
 
 namespace WOFL.Save
 {
@@ -10,7 +11,7 @@ namespace WOFL.Save
         #region Variables
 
         [Header("Main Settings")]
-        [SerializeField] private string _uniqueName;
+        [SerializeField] private UnitInfo.UniqueUnitName _uniqueName;
 
         [Header("Level Settings")]
         [SerializeField] private int _currentLevel;
@@ -27,7 +28,7 @@ namespace WOFL.Save
 
         #region Properties
 
-        public string UniqueName { get => _uniqueName; }
+        public UnitInfo.UniqueUnitName UniqueName { get => _uniqueName; }
 
         public int CurrentLevel { get => _currentLevel; }
         public int AmountCards 
@@ -64,9 +65,9 @@ namespace WOFL.Save
 
         #region Constructors
 
-        public UnitDataForSave(string uniquename, List<string> obtainedSkinsNames, string currentSkinName)
+        public UnitDataForSave(UnitInfo.UniqueUnitName uniqueName, List<string> obtainedSkinsNames, string currentSkinName)
         {
-            _uniqueName = uniquename;
+            _uniqueName = uniqueName;
             _currentLevel = 0;
             _amountCards = 0;
             _obtainedSkinsNames = obtainedSkinsNames;

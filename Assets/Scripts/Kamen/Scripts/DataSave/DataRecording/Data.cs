@@ -295,7 +295,7 @@ namespace Kamen.DataSave
                 }
             }
         }
-        public UnitDataForSave GetUnitDataMyName(string uniqueName)
+        public UnitDataForSave GetUnitDataMyName(UnitInfo.UniqueUnitName uniqueName)
         {
             return _unitsDatas.First(unitData => unitData.UniqueName == uniqueName);
         }

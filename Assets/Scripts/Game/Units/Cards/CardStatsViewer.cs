@@ -56,7 +56,9 @@ namespace WOFL.UI
         }
         public void CallUpdateStats()
         {
-            _currentUnitStats.UpdateStats(_unitInfo.LevelsHolder.Levels[_unitData.CurrentLevel]);
+            _currentUnitStats.UpdateStats(
+                _unitInfo.LevelsHolder == null ? null : _unitInfo.LevelsHolder.Levels[_unitData.CurrentLevel < _unitInfo.LevelsHolder.Levels.Length ? _unitData.CurrentLevel : ^1],
+                _unitInfo.WeaponInfo == null ? null : _unitInfo.WeaponInfo.Levels[_unitData.CurrentLevel < _unitInfo.WeaponInfo.Levels.Length ? _unitData.CurrentLevel : ^1]);
         }
         public void SwapViews()
         {

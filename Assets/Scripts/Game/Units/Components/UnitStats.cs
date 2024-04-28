@@ -25,11 +25,11 @@ namespace WOFL.UI
 
         #region Control Methods
 
-        public void UpdateStats(UnitLevelInfo levelInfo)
+        public void UpdateStats(UnitLevelInfo unitLevelInfo, WeaponLevelInfo weaponLevelInfo)
         {
-            _healthAmount.text = $"{levelInfo.MaxHealthValue}";
-            _damageAmount.text = $"{levelInfo.WeaponInfo.Damage}";
-            _manaPriceAmount.text = $"{levelInfo.ManaPrice}";
+            _healthAmount.text = $"{(unitLevelInfo == null ? 0 : unitLevelInfo.MaxHealthValue)}";
+            _damageAmount.text = $"{(weaponLevelInfo == null ? 0 : weaponLevelInfo.Damage)}";
+            _manaPriceAmount.text = $"{(unitLevelInfo == null ? 0 : unitLevelInfo.ManaPrice)}";
         }
 
         #endregion
