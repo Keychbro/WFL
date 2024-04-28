@@ -8,4 +8,16 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: HumanAnimatorController_Archer
   m_Controller: {fileID: 9100000, guid: 97f46ac70dd97f0448143a3022a2bc6f, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5bc3773e110a571478d5a4895d4a4b41, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a53e3059d78a2304fb7b000ad160ae1a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b902e39027b03ec4eb71ca9c66230b1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fc91df460e0ea2846a57fed261e4bef8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a21599f23addec84b88f1fec54fcfa84, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed11a5686e1012043b855b07c8f5f426, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1c4c9e0ff92bd4f42a986ce915507f7b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: db67fc02db4924f41939c3ae1a23abbc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1d0c82b9a7352de4f96e43a5252eb84a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a064c6b1b3eebfe4d8587b483270b7a2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fa200317470fbaf44a45d0a75c12d2eb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 529fed785ef701a46a171a2be93a8b09, type: 2}

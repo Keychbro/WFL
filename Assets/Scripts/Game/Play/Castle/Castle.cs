@@ -19,6 +19,7 @@ namespace WOFL.Game
         [Header("Objects")]
         [SerializeField] private SpriteRenderer _castleView;
         [SerializeField] private Transform _unitsSpawnPoint;
+        [SerializeField] private Transform _hitPoint;
 
         [Header("Settings")]
         [SerializeField] private IDamageable.GameSideName _sideName;
@@ -42,6 +43,7 @@ namespace WOFL.Game
         public IDamageable.GameSideName SideName { get => _sideName; }
         public int CurrentGold { get; private set; }
         public int MaxHealth { get; private set; }
+        public Transform HitPoint { get => _hitPoint; }
         public int CurrentMana { get; private set; }
         public float ManaFillDuration { get; private set; }
 
@@ -70,7 +72,7 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public async void Initialize(CastleSettings castleSettings, UnitInfo[] units)
+        public void Initialize(CastleSettings castleSettings, UnitInfo[] units)
         {
             _castleSettings = castleSettings;
 

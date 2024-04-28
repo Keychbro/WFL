@@ -25,6 +25,10 @@ namespace WOFL.Control
         [Header("Settings")]
         [SerializeField] private float _delayBetweenUpdateBattleControl;
 
+        [Header("Variables")]
+        private Coroutine _aiEnemyPlayCoroutine;
+        private Coroutine _battleControlCoroutine;
+
         #endregion
 
         #region Properties
@@ -46,7 +50,7 @@ namespace WOFL.Control
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
-            _aiEnemy.ControlGame();
+            _aiEnemyPlayCoroutine = StartCoroutine(_aiEnemy.Play());
             _enemyCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
@@ -56,13 +60,13 @@ namespace WOFL.Control
             }
 
             IsBattleStarted = true;
-            BattleControl();
+            _battleControlCoroutine = StartCoroutine(BattleControl());
         }
-        private async void BattleControl()
+        private IEnumerator BattleControl()
         {
             while (IsBattleStarted)
             {
-                await Task.Delay(Mathf.RoundToInt(_delayBetweenUpdateBattleControl * 1000));
+                yield return new WaitForSeconds(_delayBetweenUpdateBattleControl);
                 _alliedCastle.UpdateTargets(_enemyCastle);
                 _enemyCastle.UpdateTargets(_alliedCastle);
             }

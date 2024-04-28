@@ -14,6 +14,9 @@ namespace WOFL.Game
     {
         #region Variables
 
+        [Header("Objects")]
+        [SerializeField] protected Transform _hitPoint;
+
         [Header("Settings")]
         [SerializeField] protected Animator _unitAnimator;
         [SerializeField] protected GameObject _unitSkin;
@@ -36,6 +39,7 @@ namespace WOFL.Game
 
         public IDamageable.GameSideName SideName { get; private set; }
         public int MaxHealth { get; private set; }
+        public Transform HitPoint { get => _hitPoint; }
 
         #endregion
 

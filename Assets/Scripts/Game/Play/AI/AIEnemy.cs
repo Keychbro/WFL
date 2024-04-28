@@ -36,17 +36,17 @@ namespace WOFL.Game
         {
             _levelSettings = levelSettings;
         }
-        public async void ControlGame()
+        public IEnumerator Play()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = _cancellationTokenSource.Token;
-            await UniTask.WaitUntil(() => GameManager.Instance.IsBattleStarted);
-            if (_levelSettings == null) return;
+            yield return new WaitUntil(() => GameManager.Instance.IsBattleStarted);
+            if (_levelSettings == null) yield break;
 
             for (int i = 0; i < _levelSettings.UnitList.Length; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await Task.Delay(Mathf.RoundToInt(_levelSettings.UnitList[i].SpawnDelay * 1000), cancellationToken);
+                yield return new WaitForSeconds(_levelSettings.UnitList[i].SpawnDelay);;
                 _controllableCastle.CreateUnitForFree(_levelSettings.UnitList[i].UniqueUnitName, _levelSettings.UnitList[i].UnitLevel);
             }
         }

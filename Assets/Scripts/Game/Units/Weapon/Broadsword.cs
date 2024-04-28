@@ -8,12 +8,6 @@ namespace WOFL.Game
 {
     public class Broadsword : Weapon
     {
-        #region Variables
-
-        [SerializeField][Range(0f, 1f)] private float _finishAttackPoint;
-
-        #endregion
-
         #region Control Methods
 
         public override async Task<bool> DoAttack(IDamageable target)

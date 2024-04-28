@@ -22,6 +22,7 @@ namespace WOFL.Game
 
         public GameSideName SideName { get; }
         public int MaxHealth { get; }
+        public Transform HitPoint { get; }
         public event Action<int> OnTakedDamage;
 
         #endregion
