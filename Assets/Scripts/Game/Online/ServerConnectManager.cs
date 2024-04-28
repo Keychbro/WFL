@@ -11,7 +11,6 @@ using WOFL.Online;
 using Newtonsoft.Json;
 using WOFL.Game;
 using Kamen.DataSave;
-using NativeWebSocket;
 
 namespace WOFL.Control
 {
@@ -34,9 +33,6 @@ namespace WOFL.Control
         [SerializeField] private string _deletePlayerDataName;
         [SerializeField] private string _getSupportMessageName;
         [SerializeField] private string _sendSupportMessageName;
-
-        [Header("Variables")]
-        WebSocket websocket;
 
         #endregion
 
@@ -69,7 +65,7 @@ namespace WOFL.Control
         }
         private async void OnApplicationQuit()
         {
-            await websocket.Close();
+            //await websocket.Close();
         }
 
         #endregion
@@ -118,28 +114,28 @@ namespace WOFL.Control
                 return JsonConvert.DeserializeObject<List<GetMessageInfo>>(www.downloadHandler.text); 
             }
         }
-        public async Task GetMessagesWithSocket(string server_uuid, Fraction.FractionName fraction)
-        {
-            string realFraction = fraction == Fraction.FractionName.None ? "global" : fraction.ToString();
-            string url = $"{_hostURL}/{_apiName}/{_getMessagesName}/?server_uuid={server_uuid}&fraction={realFraction}";
-
-            websocket = new WebSocket(url);
-
-            websocket.OnOpen += () =>
-            {
-                Debug.Log("Connection open!");
-            };
-
-            websocket.OnMessage += (bytes) =>
-            {
-                Debug.Log("OnMessage!");
-                Debug.Log(bytes);
-                var message = System.Text.Encoding.UTF8.GetString(bytes);
-                Debug.Log("OnMessage! " + message);
-            };
-
-            await websocket.Connect();
-        }
+        //public async Task GetMessagesWithSocket(string server_uuid, Fraction.FractionName fraction)
+        //{
+        //    string realFraction = fraction == Fraction.FractionName.None ? "global" : fraction.ToString();
+        //    string url = $"{_hostURL}/{_apiName}/{_getMessagesName}/?server_uuid={server_uuid}&fraction={realFraction}";
+        //
+        //    websocket = new WebSocket(url);
+        //
+        //    websocket.OnOpen += () =>
+        //    {
+        //        Debug.Log("Connection open!");
+        //    };
+        //
+        //    websocket.OnMessage += (bytes) =>
+        //    {
+        //        Debug.Log("OnMessage!");
+        //        Debug.Log(bytes);
+        //        var message = System.Text.Encoding.UTF8.GetString(bytes);
+        //        Debug.Log("OnMessage! " + message);
+        //    };
+        //
+        //    await websocket.Connect();
+        //}
         public async Task<bool> SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, string message)
         {
             WWWForm form = new WWWForm();
