@@ -18,12 +18,18 @@ namespace WOFL.UI
         #region Variables
 
         [Header("Objects")]
-        [SerializeField] private Button _playButton;
+        [SerializeField] private LevelInfoView _levelInfoView;
         [Space]
         [SerializeField] private MainTopBar _mainTopBar;
         [SerializeField] private QuickBar _quickBar;
         [SerializeField] private MiniProfileIcon _miniProfileIcon;
         [SerializeField] private GameObject _gameBottomBar;
+
+        [Header("Settings")]
+        [SerializeField] private LevelSettings[] _levelSettings;
+
+        [Header("Variables")]
+        private int _currentLevel;
 
         #endregion
 
@@ -31,9 +37,10 @@ namespace WOFL.UI
 
         private void OnDestroy()
         {
-            _playButton.onClick.AddListener(Play);
+            _levelInfoView.OnCallPreviousLevel -= ShowPreviousLevel;
+            _levelInfoView.OnCallNextLevel -= ShowNextLevel;
+            _levelInfoView.OnCallStartGame -= StartGame;
         }
-
         #endregion
 
         #region Control Methods
@@ -46,7 +53,14 @@ namespace WOFL.UI
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
             await Task.Delay(100);
 
-            _playButton.onClick.AddListener(Play);
+            _currentLevel = DataSaveManager.Instance.MyData.GameLevel;
+
+            _levelInfoView.Initialize();
+            _levelInfoView.OnCallPreviousLevel += ShowPreviousLevel;
+            _levelInfoView.OnCallNextLevel += ShowNextLevel;
+            _levelInfoView.OnCallStartGame += StartGame;
+
+            UdpateAllLevelView();
         }
         public override void Transit(bool isShow, bool isForth, ScreenManager.TransitionType type, float duration, Ease curve, MyCurve myCurve)
         {
@@ -57,12 +71,30 @@ namespace WOFL.UI
                 PopupManager.Instance.Show("ChooseFractionPopup");
             }
         }
-        private void Play()
+        private void ShowPreviousLevel()
+        {
+            _currentLevel--;
+            UdpateAllLevelView();
+        }
+        private void ShowNextLevel()
+        {
+            _currentLevel++;
+            UdpateAllLevelView();
+        }
+        private void UdpateAllLevelView()
+        {
+            _levelInfoView.UpdateCurrentLevel(
+                FractionManager.Instance.GetFractionByName(_levelSettings[_currentLevel].AIEnemySettings.EnemyFractionName),
+                _currentLevel,
+                _levelSettings.Length);
+            GameManager.Instance.CallUpdateLevel(_levelSettings[_currentLevel].AIEnemySettings);
+        }
+        private void StartGame()
         {
             _mainTopBar.SwitchVisible(false, true);
             _quickBar.SwitchVisible(false, true);
             _miniProfileIcon.gameObject.SetActive(false);
-            _playButton.gameObject.SetActive(false);
+            _levelInfoView.gameObject.SetActive(false);
 
             _gameBottomBar.SetActive(true);
 

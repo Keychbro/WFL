@@ -62,6 +62,7 @@ namespace WOFL.Control
         {
             return (_currentFraction.Name.ToString(), _currentFraction.MainColor);
         }
+        public Fraction GetFractionByName(Fraction.FractionName uniqueName) => _fractions.First(fraction => fraction.Name == uniqueName);
 
         #endregion
     }

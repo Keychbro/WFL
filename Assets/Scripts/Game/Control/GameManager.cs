@@ -16,13 +16,13 @@ namespace WOFL.Control
 
         [Header("Objects")]
         [SerializeField] private Castle _alliedCastle;
+        [SerializeField] private AIEnemy _aiEnemy;
         [SerializeField] private Castle _enemyCastle;
         [Space]
         [SerializeField] private ManaView _manaView;
         [SerializeField] private GameCardsPanel _gameCardsPanel;
 
         [Header("Settings")]
-        [SerializeField] private LevelSettings[] _levelSettings;
         [SerializeField] private float _delayBetweenUpdateBattleControl;
 
         #endregion
@@ -35,6 +35,10 @@ namespace WOFL.Control
 
         #region Control Methods
 
+        public void CallUpdateLevel(AIEnemySettings enemySettings)
+        {
+            _aiEnemy.UpdateLevelSettings(enemySettings);
+        }
         public void StartBattle()
         {
             Fraction playerFraction = FractionManager.Instance.CurrentFraction;
@@ -42,6 +46,7 @@ namespace WOFL.Control
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
+            _aiEnemy.ControlGame();
             _enemyCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)

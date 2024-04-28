@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace WOFL.Game
 {
-    [CreateAssetMenu(fileName = "AI Enemy Battle Settings", menuName = "WOFL/Game/Settings/AI Enemy Battle Settings", order = 1)]
+    [CreateAssetMenu(fileName = "AI Enemy Settings", menuName = "WOFL/Game/Settings/AI Enemy Settings", order = 1)]
     public class AIEnemySettings : ScriptableObject
     {
         #region Classes
@@ -35,7 +35,7 @@ namespace WOFL.Game
         #region Variables
 
         [Header("Settings")]
-        [SerializeField] private Fraction _enemyFraction;
+        [SerializeField] private Fraction.FractionName _enemyFractionName;
         [SerializeField] private NewEnemyUnitInfo[] _unitList;
         [SerializeField] private bool _isInfinity;
         [SerializeField] private int _castleHealth;
@@ -44,6 +44,7 @@ namespace WOFL.Game
 
         #region Properties
 
+        public Fraction.FractionName EnemyFractionName { get => _enemyFractionName; }
         public NewEnemyUnitInfo[] UnitList { get => _unitList; }
         public bool IsInfinity { get => _isInfinity; }
         public int CastleHealth { get => _castleHealth; }

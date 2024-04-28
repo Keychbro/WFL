@@ -101,7 +101,7 @@ namespace WOFL.Game
         public void CreateUnitForFree(string uniqueName, int level)
         {
             UnitInfo createdUnitInfo = GetUnitInfoByName(uniqueName);
-            if (CheckUnitForNull(createdUnitInfo)) return;
+            if (!CheckUnitForNull(createdUnitInfo)) return;
 
             SpawnUnit(createdUnitInfo, level);
         }

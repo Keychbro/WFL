@@ -129,7 +129,7 @@ namespace WOFL.Chat
         protected virtual void StartGettingMessages()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = _cancellationTokenSource.Token;
+            CancellationToken cancellationToken = _cancellationTokenSource.Token;
             GetAllMessages(cancellationToken);
         }
 
