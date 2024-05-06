@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace WOFL.Game
 {
-    public class Castle : MonoBehaviour, IManaOwnable, IDamageable, IDeathable
+    public class Castle : MonoBehaviour, IManaOwnable, IDamageable, IDeathable, IBuilding
     {
         #region Variables
 

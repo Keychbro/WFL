@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
-  m_Name: Human_King_Level_8
+  m_Script: {fileID: 11500000, guid: cf063bd8b9a11774fac0865993b988b3, type: 3}
+  m_Name: Giant_Fist_Level_2
   m_EditorClassIdentifier: 
-  _maxHealthValue: 3088
-  _moveSpeed: 5
-  _amountGoldForKill: 276
-  _manePrice: 7
-  _amountCardToUpgrade: 256
-  _amountGoldToUpgrade: 18000
+  _damage: 103
+  _attackSpeed: 50
+  _attackRange: 0.7

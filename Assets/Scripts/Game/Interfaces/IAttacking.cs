@@ -17,7 +17,7 @@ namespace WOFL.Game
 
         public void Attack();
         public void FindClosestTarget(List<IDamageable> allTargets);
-        public Vector3 GetTargetPosition(IDamageable iDamageable);
+        public MonoBehaviour GetTargetMonoBehaviour(IDamageable iDamageable);
         public float CalculateDistanceOnXAxis(Vector3 position1, Vector3 position2);
 
         #endregion
