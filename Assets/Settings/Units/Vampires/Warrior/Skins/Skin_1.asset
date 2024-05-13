@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a869d4e00b88ba5449af583d795c55ca, type: 3}
+  m_Name: Skin_1
+  m_EditorClassIdentifier: 
+  _uniqueName: Vampire_Warrior_Skin_001
+  _skinSprite: {fileID: 21300000, guid: 058947d06aca5954ea46e1c84772199d, type: 3}
+  _bwSkinSprite: {fileID: 21300000, guid: e2ab14e3acd5fe94ca6a6c11e8c3c481, type: 3}
+  _unlockStatus: 2

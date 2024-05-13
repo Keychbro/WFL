@@ -74,9 +74,12 @@ namespace WOFL.UI
 
             _currentFractionPanel = fractionPanel;
         }
-        private void StartGame()
+        private async void StartGame()
         {
             DataSaveManager.Instance.MyData.ChoosenFraction = _currentFractionPanel.GetFractionName();
+
+            await UniTask.WaitUntil(() => FractionManager.Instance.CurrentFraction != null);
+
             DataSaveManager.Instance.MyData.IconNumber = Random.Range(0, FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList.Length);
             DataSaveManager.Instance.SaveData();
 
