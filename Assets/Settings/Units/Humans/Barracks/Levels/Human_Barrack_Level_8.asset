@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
   m_Name: Human_Barrack_Level_8
   m_EditorClassIdentifier: 
-  _maxHealthValue: 0
-  _weaponInfo: {fileID: 11400000, guid: f9924ca78d695d2438630caf799846da, type: 2}
-  _amountGoldForKill: 0
-  _manePrice: 0
-  _amountCardToUpgrade: 0
-  _amountGoldToUpgrade: 0
+  _maxHealthValue: 880
+  _moveSpeed: 0
+  _amountGoldForKill: 156
+  _manePrice: 6
+  _amountCardToUpgrade: 256
+  _amountGoldToUpgrade: 256

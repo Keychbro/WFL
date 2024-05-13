@@ -25,14 +25,14 @@ namespace WOFL.Settings
         #region Variables
 
         [Header("Main Settings")]
-        [SerializeField] private UniqueUnitName _uniqueName;
-        [SerializeField] private UnitTypeManager.UnitType _type;
+        [SerializeField] protected UniqueUnitName _uniqueName;
+        [SerializeField] protected UnitTypeManager.UnitType _type;
         [Space]
-        [SerializeField] private UnitLevelsHolder _levelsHolder;
-        [SerializeField] private SkinsHolder _skinsHolder;
-        [SerializeField] private WeaponInfo _weaponInfo;
+        [SerializeField] protected UnitLevelsHolder _levelsHolder;
+        [SerializeField] protected SkinsHolder _skinsHolder;
+        [SerializeField] protected WeaponInfo _weaponInfo;
         [Space]
-        [SerializeField] private Unit _prefab;
+        [SerializeField] protected Unit _prefab;
 
         #endregion
 

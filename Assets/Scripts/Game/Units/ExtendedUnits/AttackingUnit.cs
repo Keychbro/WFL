@@ -75,7 +75,7 @@ namespace WOFL.Game
 
         public virtual async void Attack()
         {
-            if (IsAttacking) return;
+            if (IsAttacking || !IsAlive) return;
 
             IsAttacking = true;
             _unitAnimator.SetInteger("AttackValue", Random.Range(1, 3));
@@ -144,8 +144,10 @@ namespace WOFL.Game
 
         public virtual void Move()
         {
+            if (!IsAlive) return;
+
             _movingType = IMoveable.MoveType.Going;
-            if (_currentTargetObject.transform.position.x < transform.position.x)
+            if (_currentTargetDamageable.HitPoint.transform.position.x < transform.position.x)
             {
                 _unitSkin.transform.eulerAngles = new Vector3(0, 180, 0);
                 MoveDirection = new Vector3(-1, 0, 0);

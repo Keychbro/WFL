@@ -47,8 +47,7 @@ namespace WOFL.UI
             _button.onClick.AddListener(Click);
         }
         private void Click()
-        {
-            Debug.Log("Click");
+        {;
             OnClicked?.Invoke(this);
         }
         public void CallChangeButtonState(QuickBarButtonInfo.ButtonState state, bool isFast = false)

@@ -10,7 +10,7 @@ namespace WOFL.Control
     public class BackgroundMover : SingletonComponent<BackgroundMover>
     {
         #region Variables
-
+        
         [Header("Settings")]
         [SerializeField] private float _leftBoarder;
         [SerializeField] private float _rightBoarder;

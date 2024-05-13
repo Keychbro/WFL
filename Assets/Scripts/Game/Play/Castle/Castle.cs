@@ -9,6 +9,7 @@ using System.Linq;
 using WOFL.Save;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
@@ -24,6 +25,7 @@ namespace WOFL.Game
         [Header("Settings")]
         [SerializeField] private IDamageable.GameSideName _sideName;
         [SerializeField] private float _timeToDestroyUnit;
+        [SerializeField] private Vector3 _spawnUnitOffset;
 
         [Header("Variables")]
         private int _currentHealth;
@@ -60,7 +62,7 @@ namespace WOFL.Game
 
         #region Unity Methods
 
-        private void Update()
+        private void FixedUpdate()
         {
             for (int i = 0; i <  _createdUnits.Count; i++)
             {
@@ -110,7 +112,11 @@ namespace WOFL.Game
         private void SpawnUnit(UnitInfo createdUnitInfo, int levelNumber)
         {
             Unit createdUnit = Instantiate(createdUnitInfo.Prefab);
-            createdUnit.transform.position = _unitsSpawnPoint.position;
+            createdUnit.transform.position = _unitsSpawnPoint.position + new Vector3(
+                Random.Range(-_spawnUnitOffset.x, _spawnUnitOffset.x),
+                Random.Range(-_spawnUnitOffset.y, _spawnUnitOffset.y),
+                Random.Range(-_spawnUnitOffset.z, _spawnUnitOffset.z));
+
             createdUnit.transform.parent = transform;
             createdUnit.Initialize(createdUnitInfo, levelNumber, SideName);
             createdUnit.OnDead += DestroyUnit;
@@ -121,13 +127,15 @@ namespace WOFL.Game
         }
         private async void DestroyUnit(IDeathable deadObject)
         {
-            await Task.Delay(Mathf.RoundToInt(_timeToDestroyUnit * 1000));
             Unit destroyUnit = (Unit)deadObject;
             destroyUnit.OnDead -= DestroyUnit;
 
             _createdUnits.Remove(destroyUnit);
+            Debug.LogWarning(destroyUnit);
             if (destroyUnit.TryGetComponent(out IDamageable damageableObject)) _allDamageableObject.Remove(damageableObject);
             if (destroyUnit.TryGetComponent(out IAttacking attackObject)) _attackObjects.Remove(attackObject);
+
+            await Task.Delay(Mathf.RoundToInt(_timeToDestroyUnit * 1000));
             Destroy(((Unit)deadObject).gameObject);
         }
         private UnitInfo GetUnitInfoByName(UnitInfo.UniqueUnitName uniqueName)

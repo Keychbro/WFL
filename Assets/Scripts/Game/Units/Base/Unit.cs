@@ -63,7 +63,7 @@ namespace WOFL.Game
 
         public virtual void TakeDamage(int value)
         {
-            if (value < 0) return;
+            if (value < 0 || !IsAlive) return;
 
             _currentHealth -= value;
             if (_currentHealth <= 0)
@@ -81,7 +81,7 @@ namespace WOFL.Game
 
         public virtual void Heal(int value)
         {
-            if (value < 0) return;
+            if (value < 0 || !IsAlive) return;
 
             _currentHealth += value;
             if (_currentHealth > MaxHealth) _currentHealth = MaxHealth;
@@ -94,6 +94,7 @@ namespace WOFL.Game
 
         public virtual void Death()
         {
+            IsAlive = false;
             OnDead.Invoke(this);
             _unitAnimator.SetTrigger("Dead");
         }
