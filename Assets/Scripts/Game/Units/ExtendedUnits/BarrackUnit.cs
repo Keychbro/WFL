@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class HumanBarrack : Unit, IBuilding
+    public class BarrackUnit : Unit, IBuilding
     {
         #region Variables
 
@@ -39,7 +39,7 @@ namespace WOFL.Game
 
             Spawn();
         }
-        public async UniTask Spawn()
+        public virtual async UniTask Spawn()
         {
             if (IsSpawning || !IsAlive) return;
 

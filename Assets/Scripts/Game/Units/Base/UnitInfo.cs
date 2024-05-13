@@ -17,7 +17,19 @@ namespace WOFL.Settings
             Human_Warrior,
             Human_Archer,
             Human_Barack,
-            Human_Giant
+            Human_Giant,
+            Angel_Warrior,
+            Angel_Mage,
+            Angel_Barrack,
+            Angel_King,
+            Demon_Warrior,
+            Demon_Mage,
+            Demon_Barrack,
+            Demon_King,
+            Vampire_Warrior,
+            Vampire_Mage,
+            Vampire_Barrack,
+            Vampire_King
         }
 
         #endregion
