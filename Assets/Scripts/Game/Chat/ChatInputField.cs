@@ -68,7 +68,8 @@ namespace WOFL.Chat
                     bool result = await ServerConnectManager.Instance.SendMessage(
                         DataSaveManager.Instance.MyPlayerAuthData.ServerUUID,
                         DataSaveManager.Instance.MyPlayerAuthData.PlayerUUID,
-                        currentChatType == ChatScreen.ChatType.Global ? Fraction.FractionName.None : DataSaveManager.Instance.MyData.ChoosenFraction,
+                        FractionManager.Instance.CurrentFraction.Name,
+                        currentChatType == ChatScreen.ChatType.Global ? true : false,
                         _inputField.text);
 
                     if (result)

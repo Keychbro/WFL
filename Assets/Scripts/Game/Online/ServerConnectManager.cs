@@ -42,7 +42,7 @@ namespace WOFL.Control
         {
             //GetServersList();
             //GetMessages("fb988152-8f01-4f9a-b436-3691d2ffe806", Fraction.FractionName.Human);
-            //SendMessage("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1", Fraction.FractionName.Human, "Test message");
+            SendMessage("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1", Fraction.FractionName.Human, true, "Test message");
             //CreatePlayer("Test player9", "test8gmail.com", 0);
             //GetPlayerUUID("test5@gmail.com");
             //GetPlayerData("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1");
@@ -136,13 +136,14 @@ namespace WOFL.Control
         //
         //    await websocket.Connect();
         //}
-        public async Task<bool> SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, string message)
+        public async Task<bool> SendMessage(string server_uuid, string player_uuid, Fraction.FractionName fraction, bool isGlobalChat, string message)
         {
             WWWForm form = new WWWForm();
 
             form.AddField("server_uuid", server_uuid);
             form.AddField("player_uuid", player_uuid);
-            form.AddField("fraction", fraction == Fraction.FractionName.None ? "global" : fraction.ToString());
+            form.AddField("fraction", fraction.ToString());
+            form.AddField("global_chat", isGlobalChat ? "true" : "false");
             form.AddField("text", message);
 
             using UnityWebRequest www = UnityWebRequest.Post($"{_hostURL}/{_apiName}/{_sendMessageName}/", form);
