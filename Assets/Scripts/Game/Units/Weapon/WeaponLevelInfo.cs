@@ -9,9 +9,9 @@ namespace WOFL.Settings
     {
         #region Variables
 
-        [SerializeField] private int _damage;
-        [SerializeField] private float _attackSpeed;
-        [SerializeField] private float _attackRange;
+        [SerializeField] protected int _damage;
+        [SerializeField] protected float _attackSpeed;
+        [SerializeField] protected float _attackRange;
 
         #endregion
 

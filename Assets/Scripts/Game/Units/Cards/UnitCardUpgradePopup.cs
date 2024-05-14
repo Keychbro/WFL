@@ -64,7 +64,7 @@ namespace WOFL.UI
             _unitWeaponInfo = unitWeaponInfo;
 
             _levelText.text = $"LEVEl {unitData.CurrentLevel}";
-            (_fractionNameText.text, _fractionNameBackground.color) = FractionManager.Instance.GetCurrentFractionAtributes();
+            (_fractionNameText.text, _fractionNameBackground.color, _fractionNameText.color) = FractionManager.Instance.GetCurrentFractionAtributes();
 
             _unitView.sprite = currentSkin.SkinSprite;
             _currentStats.UpdateStats(_levelsHolder.Levels[unitData.CurrentLevel], unitWeaponInfo.Levels[unitData.CurrentLevel]);

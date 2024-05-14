@@ -20,6 +20,10 @@ MonoBehaviour:
   _mainTextColor:
     serializedVersion: 2
     rgba: 4291596047
-  _castleSettings: {fileID: 0}
-  _units: []
+  _castleSettings: {fileID: 11400000, guid: c3f17e9e7fa3f3042943c04af179e4ee, type: 2}
+  _units:
+  - {fileID: 11400000, guid: 986f3b941c80fb44c8222059295df54d, type: 2}
+  - {fileID: 11400000, guid: 40f22cd6a8768e843a599ac20e6be443, type: 2}
+  - {fileID: 11400000, guid: 99f8d210228ca0e4d871cec81355ede6, type: 2}
+  - {fileID: 11400000, guid: f2ad344c454ea55458e9bdfdd9acbd58, type: 2}
   _playerProfileSettings: {fileID: 11400000, guid: 6fc552fc05ccf414f864cfc63be0f14c, type: 2}

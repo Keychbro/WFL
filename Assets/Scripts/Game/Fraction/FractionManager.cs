@@ -58,9 +58,9 @@ namespace WOFL.Control
         {
             _currentFraction = _fractions.First(fraction => (fraction.Name == DataSaveManager.Instance.MyData.ChoosenFraction));
         }
-        public (string, Color) GetCurrentFractionAtributes()
+        public (string, Color, Color) GetCurrentFractionAtributes()
         {
-            return (_currentFraction.Name.ToString(), _currentFraction.MainColor);
+            return (_currentFraction.Name.ToString(), _currentFraction.MainColor, _currentFraction.MainTextColor);
         }
         public Fraction GetFractionByName(Fraction.FractionName uniqueName) => _fractions.First(fraction => fraction.Name == uniqueName);
 
