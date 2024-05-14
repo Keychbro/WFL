@@ -77,7 +77,7 @@ namespace Kamen.DataSave
             try
             {
                 if (File.Exists(path)) File.Delete(path);
-                else Debug.LogError($"[Kamen - JsonDataService] File with path \"{path}\" does not exist");
+                else Debug.LogWarning($"[Kamen - JsonDataService] File with path \"{path}\" does not exist");
                 return true;
             }
             catch (Exception e)

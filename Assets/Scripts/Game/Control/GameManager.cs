@@ -7,6 +7,7 @@ using System.Linq;
 using Kamen.DataSave;
 using WOFL.UI;
 using System.Threading.Tasks;
+using Kamen.UI;
 
 namespace WOFL.Control
 {
@@ -37,6 +38,16 @@ namespace WOFL.Control
 
         #endregion
 
+        #region Unity Methods
+
+        private void OnDestroy()
+        {
+            _alliedCastle.OnDead -= CallLose;
+            _enemyCastle.OnDead -= CallWin;
+        }
+
+        #endregion
+
         #region Control Methods
 
         public void CallUpdateLevel(AIEnemySettings enemySettings)
@@ -47,11 +58,13 @@ namespace WOFL.Control
         {
             Fraction playerFraction = FractionManager.Instance.CurrentFraction;
             _alliedCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
+            _alliedCastle.OnDead += CallLose;
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
             _aiEnemyPlayCoroutine = StartCoroutine(_aiEnemy.Play());
             _enemyCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
+            _enemyCastle.OnDead += CallWin;
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
             {
@@ -71,7 +84,16 @@ namespace WOFL.Control
                 _enemyCastle.UpdateTargets(_alliedCastle);
             }
         }
-
+        private void CallWin(IDeathable deathableObject)
+        {
+            IsBattleStarted = false;
+            PopupManager.Instance.Show("WinScreenPopup");
+        }
+        private void CallLose(IDeathable deathableObject)
+        {
+            IsBattleStarted = false;
+            PopupManager.Instance.Show("LoseScreenPopup");
+        }
 
         #endregion
     }

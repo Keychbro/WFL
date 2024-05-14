@@ -195,7 +195,7 @@ namespace WOFL.Game
 
         public void Death()
         {
-           
+            OnDead?.Invoke(this);
         }
 
         #endregion
