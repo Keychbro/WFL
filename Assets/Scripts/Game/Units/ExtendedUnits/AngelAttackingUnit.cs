@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class AngelAttackingUnit : Unit, IAttacking, IMoveable
+    public class AngelAttackingUnit : Unit, IAttacking, IMoveable, IFlammable
     {
         #region  Variables
 
@@ -20,6 +20,8 @@ namespace WOFL.Game
         protected IDamageable _currentTargetDamageable;
         protected MonoBehaviour _currentTargetObject;
 
+        public event Action OnBurned;
+
         #endregion
 
         #region Properties
@@ -27,6 +29,7 @@ namespace WOFL.Game
         public IMoveable.MoveType MovingType { get => _movingType; }
         public bool IsAttacking { get; protected set; }
         public Vector3 MoveDirection { get; protected set; }
+        public Coroutine BurningCoroutine { get; protected set; }
 
         #endregion
 
@@ -165,6 +168,27 @@ namespace WOFL.Game
             _unitAnimator.SetBool("IsHaveTarget", false);
             _movingType = IMoveable.MoveType.Standing;
 
+        }
+
+        #endregion
+
+        #region IFlammable Methods
+
+        public void Burn(int damage, float duration)
+        {
+            if (BurningCoroutine != null) StopCoroutine(BurningCoroutine);
+            BurningCoroutine = StartCoroutine(Burning(damage, duration));
+
+            OnBurned?.Invoke();
+        }
+
+        public IEnumerator Burning(int damage, float duration)
+        {
+            for (int i = 0; i < duration; i++)
+            {
+                TakeDamage(damage);
+                yield return new WaitForSeconds(1);
+            }
         }
 
         #endregion

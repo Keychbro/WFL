@@ -77,6 +77,18 @@ namespace WOFL.Control
             IsBattleStarted = true;
             _battleControlCoroutine = StartCoroutine(BattleControl());
         }
+        public void CallTakeDamageInPointWithRadius(IDamageable.GameSideName targetSideName,Vector3 damagePosition, float radius, int damage)
+        {
+            switch (targetSideName)
+            {
+                case IDamageable.GameSideName.Allied:
+                    _alliedCastle.TakeDamageInPointWithRadius(damagePosition, radius, damage);
+                    break;
+                case IDamageable.GameSideName.Enemy:
+                    _enemyCastle.TakeDamageInPointWithRadius(damagePosition, radius, damage);
+                    break;
+            }
+        }
         private IEnumerator BattleControl()
         {
             while (IsBattleStarted)

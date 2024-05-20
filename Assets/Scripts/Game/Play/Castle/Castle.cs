@@ -131,7 +131,6 @@ namespace WOFL.Game
             destroyUnit.OnDead -= DestroyUnit;
 
             _createdUnits.Remove(destroyUnit);
-            Debug.LogWarning(destroyUnit);
             if (destroyUnit.TryGetComponent(out IDamageable damageableObject)) _allDamageableObject.Remove(damageableObject);
             if (destroyUnit.TryGetComponent(out IAttacking attackObject)) _attackObjects.Remove(attackObject);
 
@@ -152,6 +151,19 @@ namespace WOFL.Game
             for (int i = 0; i < _attackObjects.Count; i++)
             {
                 _attackObjects[i].FindClosestTarget(otherCastle.AllDamageableObject);
+            }
+        }
+        public void TakeDamageInPointWithRadius(Vector3 damagePosition,float radius, int damage)
+        {
+            List<IDamageable> nearbyUnits = new List<IDamageable>();
+            for (int i = 0; i < AllDamageableObject.Count; i++)
+            {
+                if (Mathf.Abs(damagePosition.x - AllDamageableObject[i].HitPoint.transform.position.x) < radius) nearbyUnits.Add(AllDamageableObject[i]);
+            }
+
+            for (int i = 0; i < nearbyUnits.Count; i++)
+            {
+                nearbyUnits[i].TakeDamage(damage);
             }
         }
 

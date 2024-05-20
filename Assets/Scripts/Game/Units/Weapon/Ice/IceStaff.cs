@@ -31,13 +31,13 @@ namespace WOFL.Game
 
             for (int i = 0; i < _amountCrystals; i++)
             {
-                StartCoroutine(Shot(target, _currentWeaponLevel.Damage / _amountCrystals));
+                StartCoroutine(Shot(target, targetObject, _currentWeaponLevel.Damage / _amountCrystals));
             }
 ;
             await UniTask.Delay(Mathf.RoundToInt(attackTime * (1 - _finishAttackPoint) * 1000));
             return true;
         }
-        private IEnumerator Shot(IDamageable target, int damage)
+        private IEnumerator Shot(IDamageable target, MonoBehaviour targetObject, int damage)
         {
             IceCrystal iceCrystal = Instantiate(_iceCrystal, BackgroundMover.Instance.transform);
             Vector3 offset = new Vector3(Random.Range(-_spawnCrystalsOffset.x, _spawnCrystalsOffset.x), Random.Range(-_spawnCrystalsOffset.y, _spawnCrystalsOffset.y),0);
@@ -56,6 +56,7 @@ namespace WOFL.Game
             if (target != null)
             {
                 target.TakeDamage(damage);
+                if (targetObject.TryGetComponent(out ISlowdownable slow)) Slowdown(slow);
                 Destroy(iceCrystal.gameObject);
             }
         }

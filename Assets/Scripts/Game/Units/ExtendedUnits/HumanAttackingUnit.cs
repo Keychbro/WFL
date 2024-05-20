@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class HumanAttackingUnit :  Unit, IAttacking, IMoveable, ISlowdownable
+    public class HumanAttackingUnit :  Unit, IAttacking, IMoveable, ISlowdownable, IFlammable
     {
         #region  Variables
 
@@ -22,6 +22,7 @@ namespace WOFL.Game
 
         //[Header("Variables")]
         public event Action OnSlowed;
+        public event Action OnBurned;
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace WOFL.Game
         public Vector3 MoveDirection { get; protected set; }
         public float SpeedIncreaseValue { get; protected set; }
         public Coroutine SlowingCoroutine { get; protected set; }
+        public Coroutine BurningCoroutine { get; protected set; }
 
         #endregion
 
@@ -176,7 +178,7 @@ namespace WOFL.Game
 
         #endregion
 
-        #region ISlowdownable
+        #region ISlowdownable Methods
 
         public void Slow(float increaseValue, float duration)
         {
@@ -191,6 +193,28 @@ namespace WOFL.Game
         {
             yield return new WaitForSeconds(duration);
             SpeedIncreaseValue = 1;
+        }
+
+
+        #endregion
+
+        #region IFlammable Methods
+
+        public void Burn(int damage, float duration)
+        {
+            if (BurningCoroutine != null) StopCoroutine(BurningCoroutine);
+            BurningCoroutine = StartCoroutine(Burning(damage, duration));
+
+            OnBurned?.Invoke();
+        }
+
+        public IEnumerator Burning(int damage, float duration)
+        {
+            for (int i = 0; i < duration; i++)
+            {
+                TakeDamage(damage);
+                yield return new WaitForSeconds(1);
+            }
         }
 
         #endregion
