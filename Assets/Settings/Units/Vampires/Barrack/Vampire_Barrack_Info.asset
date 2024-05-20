@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff196f89e6a86554eb81fa78fcfb5e93, type: 3}
+  m_Script: {fileID: 11500000, guid: 40a53a5f7810185498fd3b4f0825b33b, type: 3}
   m_Name: Vampire_Barrack_Info
   m_EditorClassIdentifier: 
   _uniqueName: 15
   _type: 3
   _levelsHolder: {fileID: 11400000, guid: 252e4ff42b7c6a5438168207960a6968, type: 2}
   _skinsHolder: {fileID: 11400000, guid: aa7f1e2058109fe42b44b8d297cd8063, type: 2}
-  _weaponInfo: {fileID: 11400000, guid: a6184a819b6bb4440b1212ccb7d3f72e, type: 2}
+  _weaponInfo: {fileID: 0}
   _prefab: {fileID: 7277783965168729694, guid: 04e1ace574649854b9093c080cf707c2, type: 3}
+  _delayBetweenSpawnUnit: 4.7
+  _spawnUnitName: 13

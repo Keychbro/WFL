@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b4fc602ee21d9145bb3d4660d4e8a3f, type: 3}
+  m_Script: {fileID: 11500000, guid: cf063bd8b9a11774fac0865993b988b3, type: 3}
   m_Name: Level_10
   m_EditorClassIdentifier: 
-  _damage: 296
+  _damage: 141
   _attackSpeed: 70
-  _attackRange: 0.5
-  _slowdownIncreaseValue: 0.7
-  _slowdownIncreaseDuration: 1
+  _attackRange: 4

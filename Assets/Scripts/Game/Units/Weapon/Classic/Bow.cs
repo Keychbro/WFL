@@ -26,26 +26,26 @@ namespace WOFL.Game
             float attackTime = 100f / _currentWeaponLevel.AttackSpeed;
             await Task.Delay(Mathf.RoundToInt(attackTime * _finishAttackPoint * 1000));
             if (!_isCanAttack) return false;
-            StartCoroutine(Shot(target));
+            StartCoroutine(Shot(target, targetObject));
             await Task.Delay(Mathf.RoundToInt(attackTime * (1 - _finishAttackPoint) * 1000));
             return true;
         }
-        private IEnumerator Shot(IDamageable target)
+        private IEnumerator Shot(IDamageable target, MonoBehaviour targetObject)
         {
             Arrow arrow = Instantiate(_arrow, BackgroundMover.Instance.transform);
             arrow.transform.position = _shotPoint.transform.position;
             while (target != null && Vector3.Distance(arrow.transform.position, target.HitPoint.position) > 0.1f)
             {
-                if (target.HitPoint == null)
+                yield return null;
+                if (target.HitPoint == null || target.HitPoint?.transform == null)
                 {
                     Destroy(arrow.gameObject);
                     break;
                 }
                 arrow.Move(target.HitPoint);
-                yield return null;
             }
 
-            if (target != null)
+            if (target != null && targetObject != null)
             {
                 target.TakeDamage(_currentWeaponLevel.Damage);
                 Destroy(arrow.gameObject);

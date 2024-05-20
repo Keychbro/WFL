@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabfc6f0e18148249b18b0021f88c904, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fa94726b2b083c48950f45a23aed4fb, type: 3}
   m_Name: Level_7
   m_EditorClassIdentifier: 
-  _maxHealthValue: 461
+  _maxHealthValue: 262
   _moveSpeed: 40
-  _amountGoldForKill: 21
+  _amountGoldForKill: 5
   _manePrice: 3
-  _amountCardToUpgrade: 128
-  _amountGoldToUpgrade: 1800
+  _amountCardToUpgrade: 2
+  _amountGoldToUpgrade: 25
+  _lifestealValue: 0.05

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7231077809020782368
+--- !u!1 &832924482298158140
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8846787290949927550}
-  - component: {fileID: 389509846396650510}
-  - component: {fileID: 2335658273364443360}
+  - component: {fileID: 1517938169255663970}
+  - component: {fileID: 7687934525736886034}
+  - component: {fileID: 5746375699949181948}
   m_Layer: 0
   m_Name: BloodStaff
   m_TagString: Untagged
@@ -18,28 +18,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8846787290949927550
+--- !u!4 &1517938169255663970
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231077809020782368}
+  m_GameObject: {fileID: 832924482298158140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.16780114, w: 0.9858209}
   m_LocalPosition: {x: -0.02, y: 0.34, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 6811370583923751780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 19.32}
---- !u!212 &389509846396650510
+--- !u!212 &7687934525736886034
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231077809020782368}
+  m_GameObject: {fileID: 832924482298158140}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -85,20 +86,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2335658273364443360
+--- !u!114 &5746375699949181948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231077809020782368}
+  m_GameObject: {fileID: 832924482298158140}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68ccb38df0539f640bd0a04da0f6fa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _finishAttackPoint: 0.6
-  _bat: {fileID: 0}
+  _bat: {fileID: 7919106387322354767, guid: 791f5070ed39166488220fcb3590b9ef, type: 3}
   _amountBats: 4
-  _shotPoint: {fileID: 0}
-  _spawnBatsOffset: {x: 0.05, y: 0.05, z: 0}
+  _shotPoint: {fileID: 2534335213729072272}
+  _spawnBatsOffset: {x: 0.4, y: 0.4, z: 0}
+--- !u!1 &2534335213729072272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6811370583923751780}
+  m_Layer: 0
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6811370583923751780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534335213729072272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 5.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1517938169255663970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

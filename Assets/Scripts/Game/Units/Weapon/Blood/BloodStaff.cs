@@ -7,7 +7,7 @@ using WOFL.Game;
 
 namespace WOFL.Game
 {
-    public class BloodStaff : IceWeapon
+    public class BloodStaff : Weapon
     {
         #region Variables
 
@@ -39,29 +39,28 @@ namespace WOFL.Game
         }
         private IEnumerator Shot(IDamageable target, MonoBehaviour targetObject, int damage)
         {
-            Bat iceCrystal = Instantiate(_bat, BackgroundMover.Instance.transform);
+            Bat bat = Instantiate(_bat, BackgroundMover.Instance.transform);
             Vector3 offset = new Vector3(Random.Range(-_spawnBatsOffset.x, _spawnBatsOffset.x), Random.Range(-_spawnBatsOffset.y, _spawnBatsOffset.y), 0);
-            iceCrystal.transform.position = _shotPoint.transform.position + offset;
-            while (target != null && Vector3.Distance(iceCrystal.transform.position, target.HitPoint.position) > 0.1f)
+            bat.transform.position = _shotPoint.transform.position + offset;
+            while (target != null && Vector3.Distance(bat.transform.position, target.HitPoint.position) > 0.1f)
             {
-                if (target.HitPoint == null)
+                yield return null;
+
+                if (target.HitPoint == null || target.HitPoint?.transform == null)
                 {
-                    Destroy(iceCrystal.gameObject);
+                    Destroy(bat.gameObject);
                     break;
                 }
-                iceCrystal.Move(target.HitPoint);
-                yield return null;
+                else bat.Move(target.HitPoint);
             }
 
             if (target != null)
             {
                 target.TakeDamage(damage);
-                if (targetObject.TryGetComponent(out ISlowdownable slow)) Slowdown(slow);
-                Destroy(iceCrystal.gameObject);
+                Destroy(bat.gameObject);
             }
         }
 
         #endregion
-
     }
 }

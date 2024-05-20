@@ -44,16 +44,16 @@ namespace WOFL.Game
             iceCrystal.transform.position = _shotPoint.transform.position + offset;
             while (target != null && Vector3.Distance(iceCrystal.transform.position, target.HitPoint.position) > 0.1f)
             {
-                if (target.HitPoint == null)
+                yield return null;
+                if (target.HitPoint == null || target.HitPoint?.transform == null)
                 {
                     Destroy(iceCrystal.gameObject);
                     break;
                 }
                 iceCrystal.Move(target.HitPoint);
-                yield return null;
             }
 
-            if (target != null)
+            if (target != null && targetObject != null)
             {
                 target.TakeDamage(damage);
                 if (targetObject.TryGetComponent(out ISlowdownable slow)) Slowdown(slow);

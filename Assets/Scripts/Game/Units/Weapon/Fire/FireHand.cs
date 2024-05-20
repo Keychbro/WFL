@@ -39,16 +39,17 @@ namespace WOFL.Game
             fireball.transform.position = _shotPoint.transform.position + offset;
             while (target != null && Vector3.Distance(fireball.transform.position, target.HitPoint.position) > 0.1f)
             {
-                if (target.HitPoint == null)
+                yield return null;
+
+                if (target.HitPoint == null || target.HitPoint?.transform == null)
                 {
                     Destroy(fireball.gameObject);
                     break;
                 }
                 fireball.Move(target.HitPoint);
-                yield return null;
             }
 
-            if (target != null)
+            if (target != null && targetObject != null)
             {
                 if (_currentFireWeaponLevel.BurnRadius == 0) target.TakeDamage(damage); 
                 else GameManager.Instance.CallTakeDamageInPointWithRadius(target.SideName, targetObject.transform.position, _currentFireWeaponLevel.BurnRadius, damage);
