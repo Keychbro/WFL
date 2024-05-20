@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class HumanArcher : AttackingUnit
+    public class HumanArcher : HumanAttackingUnit
     {
 
     }

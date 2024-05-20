@@ -62,8 +62,10 @@ namespace WOFL.Control
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
+            Fraction enemyFraction = FractionManager.Instance.GetFractionByName(_aiEnemy.EnemyFraction);
+
             _aiEnemyPlayCoroutine = StartCoroutine(_aiEnemy.Play());
-            _enemyCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
+            _enemyCastle.Initialize(enemyFraction.CastleSettings, enemyFraction.Units);
             _enemyCastle.OnDead += CallWin;
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)

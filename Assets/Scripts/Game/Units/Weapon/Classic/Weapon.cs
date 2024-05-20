@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,11 +22,11 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize(WeaponLevelInfo weaponLevel)
+        public virtual void Initialize(WeaponLevelInfo weaponLevel)
         {
             _currentWeaponLevel = weaponLevel;
         }
-        public abstract Task<bool> DoAttack(IDamageable target);
+        public abstract UniTask<bool> DoAttack(IDamageable target, MonoBehaviour targetObject);
         public void StopAttack() => _isCanAttack = false;
 
         #endregion

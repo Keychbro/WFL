@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2893985210207195905}
-  - component: {fileID: 7390821162534030435}
+  - component: {fileID: 7448131834984802012}
   m_Layer: 0
   m_Name: Angel_Barrack
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 9131504399200316062}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7390821162534030435
+--- !u!114 &7448131834984802012
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 115438869891784558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efe5c44a91735348b9c98e2e8e6208c, type: 3}
+  m_Script: {fileID: 11500000, guid: b9f772928718fe844ace3e1c4b8ef47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _hitPoint: {fileID: 4328238956653009410}

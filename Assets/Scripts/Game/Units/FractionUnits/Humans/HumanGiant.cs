@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class HumanGiant : AttackingUnit
+    public class HumanGiant : HumanAttackingUnit
     {
         #region IAttacking Methods
 

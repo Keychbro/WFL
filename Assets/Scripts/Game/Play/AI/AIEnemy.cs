@@ -21,6 +21,12 @@ namespace WOFL.Game
 
         #endregion
 
+        #region Propeties
+
+        public Fraction.FractionName EnemyFraction { get => _levelSettings.EnemyFractionName; }
+
+        #endregion
+
         #region Unity Methods
 
         private void OnApplicationQuit()

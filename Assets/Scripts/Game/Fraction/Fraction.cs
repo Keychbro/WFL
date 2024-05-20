@@ -13,7 +13,7 @@ namespace WOFL.Game
         public enum FractionName
         {
             None,
-            Angle,
+            Angel,
             Demon,
             Vampire,
             Human

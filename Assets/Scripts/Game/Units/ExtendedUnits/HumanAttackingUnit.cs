@@ -9,16 +9,19 @@ using Random = UnityEngine.Random;
 
 namespace WOFL.Game
 {
-    public class AttackingUnit :  Unit, IAttacking, IMoveable
+    public class HumanAttackingUnit :  Unit, IAttacking, IMoveable, ISlowdownable
     {
         #region  Variables
 
-        [Header("Objets")]
+        [Header("Objects")]
         [SerializeField] protected Weapon _weapon;
 
         protected IMoveable.MoveType _movingType;
         protected IDamageable _currentTargetDamageable;
         protected MonoBehaviour _currentTargetObject;
+
+        //[Header("Variables")]
+        public event Action OnSlowed;
 
         #endregion
 
@@ -27,6 +30,8 @@ namespace WOFL.Game
         public IMoveable.MoveType MovingType { get => _movingType; }
         public bool IsAttacking { get; protected set; }
         public Vector3 MoveDirection { get; protected set; }
+        public float SpeedIncreaseValue { get; protected set; }
+        public Coroutine SlowingCoroutine { get; protected set; }
 
         #endregion
 
@@ -40,6 +45,7 @@ namespace WOFL.Game
                 _weapon.Initialize(_currentUnitInfo.WeaponInfo.Levels[_levelNumber < _currentUnitInfo.WeaponInfo.Levels.Length ? _levelNumber : ^1]);
             }
 
+            SpeedIncreaseValue = 1;
         }
         public override void ControlUnit()
         {
@@ -80,11 +86,11 @@ namespace WOFL.Game
             IsAttacking = true;
             _unitAnimator.SetInteger("AttackValue", Random.Range(1, 3));
             _unitAnimator.SetBool("IsOnAttackRange", true);
-            _unitAnimator.speed = _currentUnitInfo.WeaponInfo.Levels[_levelNumber].AttackSpeed / 100f;
+            _unitAnimator.speed = _currentUnitInfo.WeaponInfo.Levels[_levelNumber].AttackSpeed / 100f * SpeedIncreaseValue;
 
             if (_weapon != null)
             {
-                bool result = await _weapon.DoAttack(_currentTargetDamageable);
+                bool result = await _weapon.DoAttack(_currentTargetDamageable, _currentTargetObject);
             }
 
             IsAttacking = false;
@@ -158,7 +164,7 @@ namespace WOFL.Game
                 MoveDirection = new Vector3(1, 0, 0);
             }
 
-            transform.position += MoveDirection * _currentUnitInfo.LevelsHolder.Levels[_levelNumber].MoveSpeed * Time.fixedDeltaTime / 100f;
+            transform.position += MoveDirection * _currentUnitInfo.LevelsHolder.Levels[_levelNumber].MoveSpeed * Time.fixedDeltaTime / 100f * SpeedIncreaseValue;
             _unitAnimator.SetBool("IsHaveTarget", true);
         }
         public virtual void Stand()
@@ -166,6 +172,25 @@ namespace WOFL.Game
             _unitAnimator.SetBool("IsHaveTarget", false);
             _movingType = IMoveable.MoveType.Standing; 
             
+        }
+
+        #endregion
+
+        #region ISlowdownable
+
+        public void Slow(float increaseValue, float duration)
+        {
+            SpeedIncreaseValue = increaseValue;
+
+            if (SlowingCoroutine != null) StopCoroutine(SlowingCoroutine);
+            SlowingCoroutine = StartCoroutine(SlowingControl(duration));
+
+            OnSlowed?.Invoke();
+        }
+        public IEnumerator SlowingControl(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            SpeedIncreaseValue = 1;
         }
 
         #endregion
