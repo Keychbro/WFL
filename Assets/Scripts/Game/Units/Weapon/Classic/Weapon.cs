@@ -20,6 +20,12 @@ namespace WOFL.Game
 
         #endregion
 
+        #region Properties
+
+        public WeaponLevelInfo CurrentWeaponLevel { get => _currentWeaponLevel; }
+
+        #endregion
+
         #region Control Methods
 
         public virtual void Initialize(WeaponLevelInfo weaponLevel)

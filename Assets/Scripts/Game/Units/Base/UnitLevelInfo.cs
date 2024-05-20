@@ -10,14 +10,14 @@ namespace WOFL.Settings
         #region Variables
 
         [Header("Game Settings")]
-        [SerializeField] private int _maxHealthValue;
-        [SerializeField] private float _moveSpeed;
-        [SerializeField] private int _amountGoldForKill;
-        [SerializeField] private int _manePrice;
+        [SerializeField] protected int _maxHealthValue;
+        [SerializeField] protected float _moveSpeed;
+        [SerializeField] protected int _amountGoldForKill;
+        [SerializeField] protected int _manePrice;
 
         [Header("UpgradeUnit Settings")]
-        [SerializeField] private int _amountCardToUpgrade;
-        [SerializeField] private int _amountGoldToUpgrade;
+        [SerializeField] protected int _amountCardToUpgrade;
+        [SerializeField] protected int _amountGoldToUpgrade;
 
         #endregion
 

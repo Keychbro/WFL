@@ -1,13 +1,11 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 
 namespace WOFL.Game
 {
-    public class Broadsword : Weapon
+    public class BloodTeeth : Weapon
     {
         #region Control Methods
 
