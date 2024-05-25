@@ -26,6 +26,12 @@ namespace WOFL.UI
 
         #endregion
 
+        #region Properties
+
+        public UpgradeCastleCardLevelsHolder[] UpgradeCastleCardLevelsHolders { get => _upgradeCastleCardLevelsHolders; }
+
+        #endregion
+
         #region Contorl Methods
 
         public async override void Initialize()

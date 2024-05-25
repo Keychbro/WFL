@@ -13,7 +13,6 @@ namespace WOFL.Game
         [Header("Settings")]
         [SerializeField] private int _amount;
         [SerializeField] private EndGameRewardSettings _rewardSettings;
-        [SerializeField] private Action<int> _callback;
 
         #endregion
 
@@ -21,24 +20,27 @@ namespace WOFL.Game
 
         public int Amount { get => _amount; }
         public EndGameRewardSettings RewardSettings { get => _rewardSettings; }
-        public Action<int> Callback { get => _callback; } 
+        public event Action<int> OnAmountChanged; 
 
         #endregion
 
         #region Constructors
 
-        public EndGameRewardInfo(int amount, EndGameRewardSettings rewardSettings, Action<int> callback)
+        public EndGameRewardInfo(int amount, EndGameRewardSettings rewardSettings)
         {
             _amount = amount;
             _rewardSettings = rewardSettings;
-            _callback = callback;
         }
 
         #endregion
 
         #region Control Methods
 
-        public void IncreaseByFactorValue(float factorValue) => _amount = Mathf.RoundToInt(_amount * factorValue);
+        public void IncreaseByFactorValue(float factorValue)
+        {
+            _amount = Mathf.RoundToInt(_amount * factorValue);
+            OnAmountChanged?.Invoke(_amount);
+        }
 
         #endregion
     }

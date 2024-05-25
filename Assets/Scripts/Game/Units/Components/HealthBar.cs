@@ -40,13 +40,29 @@ namespace WOFL.Game.Components
             gameObject.SetActive(false);
             await UniTask.WaitUntil(() => GameManager.Instance.IsBattleStarted);
 
-            gameObject.SetActive(true);
+            if (gameObject == null) return;
+
+            gameObject?.SetActive(true);
+            GameManager.Instance.OnBattleStarted += ShowBar;
+            GameManager.Instance.OnBattleFinished += HideBar;
             Initialize();
         }
+
+        private void HideBar() => gameObject.SetActive(false);
+        private void ShowBar()
+        {
+            SetUpSlider(_instantSlider, _damageableObject.MaxHealth);
+            SetUpSlider(_animationSlider, _damageableObject.MaxHealth);
+            gameObject.SetActive(true);
+        }
+
         private void OnDestroy()
         {
             if (_damageableObject != null) _damageableObject.OnTakedDamage -= CallMinusValue;
             if (_healableObject != null) _healableObject.OnHealed -= CallPlusValue;
+
+            GameManager.Instance.OnBattleStarted -= ShowBar;
+            GameManager.Instance.OnBattleFinished -= HideBar;
         }
 
         #endregion
@@ -84,9 +100,9 @@ namespace WOFL.Game.Components
         {
             _instantSlider.value = value;
             _instantSlider.value = _instantSlider.value <= 0 ? 0 : _instantSlider.value;
-            _animationSlider?.DOValue(value, _animationDuration).SetEase(_animationEase);
+            _animationSlider?.DOValue(_instantSlider.value, _animationDuration).SetEase(_animationEase);
 
-            _amountHealth.text = value.ToString();
+            _amountHealth.text = _instantSlider.value.ToString();
         }
         private void SetUpSlider(Slider slider, int maxValue)
         {

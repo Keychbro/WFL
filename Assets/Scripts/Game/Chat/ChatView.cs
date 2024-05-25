@@ -119,7 +119,10 @@ namespace WOFL.Chat
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages(DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, _chatFractionName);
+                List<GetMessageInfo> messages = await ServerConnectManager.Instance.GetMessages(
+                    DataSaveManager.Instance.MyPlayerAuthData.ServerUUID, 
+                    FractionManager.Instance.CurrentFraction.Name,
+                    _chatFractionName == Fraction.FractionName.None ? true : false);
                 DistributeMessages(messages);
 
                 await Task.Delay(Mathf.RoundToInt(_delayBetweenRequest * 1000), cancellationToken);

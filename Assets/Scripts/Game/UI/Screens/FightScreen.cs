@@ -100,6 +100,15 @@ namespace WOFL.UI
 
             GameManager.Instance.StartBattle();
         }
+        public void FinishGame()
+        {
+            _mainTopBar.SwitchVisible(true, true);
+            _quickBar.SwitchVisible(true, true);
+            _miniProfileIcon.gameObject.SetActive(true);
+            _levelInfoView.gameObject.SetActive(true);
+
+            _gameBottomBar.SetActive(false);
+        }
 
         #endregion
     }

@@ -6,6 +6,7 @@ using Kamen.UI;
 using TMPro;
 using WOFL.Game;
 using System;
+using WOFL.Control;
 
 namespace WOFL.UI
 {
@@ -48,33 +49,66 @@ namespace WOFL.UI
         [SerializeField] private float _increaseRewardFactor;
 
         [Header("Variables")]
-        [SerializeField] private List<EndGameRewardView> _rewardViews = new List<EndGameRewardView>();
+        private List<EndGameRewardView> _rewardViews = new List<EndGameRewardView>();
+
+        #endregion
+
+        #region Unity Methods
+
+        private void OnDestroy()
+        {
+            _increaseRewardsButton.Button.onClick.RemoveListener(TryIncreaseReward);
+            _continueButton.Button.onClick.RemoveListener(Continue);
+        }
 
         #endregion
 
         #region Control Methods
 
-        public void Initialize(List<EndGameRewardInfo> rewardInfos)
+        public override void Initialize()
         {
+            base.Initialize();
+
+            _increaseRewardsButton.Button.onClick.AddListener(TryIncreaseReward);
+            _continueButton.Button.onClick.AddListener(Continue);
+        }
+        public void AdjustRewards(List<EndGameRewardInfo> rewardInfos)
+        {
+            for (int i = 0; i < _rewardViews.Count; i++)
+            {
+                Destroy(_rewardViews[i].gameObject);
+            }
+            _rewardViews.Clear();
+
             for (int i = 0; i < rewardInfos.Count; i++)
             {
-                CreateEndGaemReward(rewardInfos[i]);
+                CreateEndGameReward(rewardInfos[i]);
             }
         }
-        public void CreateEndGaemReward(EndGameRewardInfo rewardInfo)
+        public void CreateEndGameReward(EndGameRewardInfo rewardInfo)
         {
             EndGameRewardView rewardView = Instantiate(_endGameRewardViewPrefab, _rewardHolder.transform);
             rewardView.Initialize(rewardInfo);
 
             _rewardViews.Add(rewardView);
         }
+        public void TryIncreaseReward()
+        {
+            //TODO Add
+
+            IncreaseRewards();
+        }
         public void IncreaseRewards()
         {
-
+            for (int i = 0; i < _rewardViews.Count; i++)
+            {
+                _rewardViews[i].CurrentRewardInfo.IncreaseByFactorValue(_increaseRewardFactor);
+            }
         }
         public void Continue()
         {
-
+            GameManager.Instance.FinishBattle();
+            
         }
 
         #endregion

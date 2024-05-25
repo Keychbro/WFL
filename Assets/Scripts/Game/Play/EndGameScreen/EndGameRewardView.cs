@@ -17,12 +17,23 @@ namespace WOFL.UI
         [SerializeField] private TextMeshProUGUI _rewardAmount;
         [SerializeField] private Image _diamondPassView;
 
+        [Header("Variables")]
+        private EndGameRewardInfo _currentRewardInfo;
+
+        #endregion
+
+        #region Properties
+
+        public EndGameRewardInfo CurrentRewardInfo { get => _currentRewardInfo; }
+
         #endregion
 
         #region Control Methods
 
         public void Initialize(EndGameRewardInfo rewardInfo)
         {
+            _currentRewardInfo = rewardInfo;
+
             _rewardAmount.text = rewardInfo.Amount.ToString();
             _rewardAmount.color = rewardInfo.RewardSettings.TextColor;
 

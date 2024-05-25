@@ -95,10 +95,11 @@ namespace WOFL.Control
 
         #region Messages Methods
 
-        public async Task<List<GetMessageInfo>> GetMessages(string server_uuid, Fraction.FractionName fraction)
+        public async Task<List<GetMessageInfo>> GetMessages(string server_uuid, Fraction.FractionName fraction, bool isGlobalChat)
         {
-            string realFraction = fraction == Fraction.FractionName.None ? "global" : fraction.ToString();
-            using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_getMessagesName}/?server_uuid={server_uuid}&fraction={realFraction}");
+            string realFraction = fraction.ToString();
+            string globalChatValue = isGlobalChat ? "true" : "false";
+            using UnityWebRequest www = UnityWebRequest.Get($"{_hostURL}/{_apiName}/{_getMessagesName}/?server_uuid={server_uuid}&fraction={realFraction}&global_chat={globalChatValue}");
             var operation = www.SendWebRequest();
 
             while (!operation.isDone) await Task.Yield();

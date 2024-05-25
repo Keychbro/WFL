@@ -8,6 +8,8 @@ using Kamen.DataSave;
 using WOFL.UI;
 using System.Threading.Tasks;
 using Kamen.UI;
+using WOFL.Settings;
+using System;
 
 namespace WOFL.Control
 {
@@ -22,6 +24,10 @@ namespace WOFL.Control
         [Space]
         [SerializeField] private ManaView _manaView;
         [SerializeField] private GameCardsPanel _gameCardsPanel;
+        [SerializeField] private UpgradeScreen _upgradeScreen;
+        [SerializeField] private FightScreen _fightScreen;
+        [SerializeField] private EndGameScreenPopup _winPopup;
+        [SerializeField] private EndGameScreenPopup _losePopup;
 
         [Header("Settings")]
         [SerializeField] private float _delayBetweenUpdateBattleControl;
@@ -35,6 +41,8 @@ namespace WOFL.Control
         #region Properties
 
         public bool IsBattleStarted { get; private set; }
+        public event Action OnBattleStarted;
+        public event Action OnBattleFinished;
 
         #endregion
 
@@ -57,7 +65,19 @@ namespace WOFL.Control
         public void StartBattle()
         {
             Fraction playerFraction = FractionManager.Instance.CurrentFraction;
-            _alliedCastle.Initialize(playerFraction.CastleSettings, playerFraction.Units);
+            UpgradeCastleCardLevelsHolder castleCardHealth = _upgradeScreen.UpgradeCastleCardLevelsHolders.First(card => card.Type == UpgradeCastleCardLevelsHolder.UpgradeCastleCardType.CastleHealth);
+            int castleCardHealthLevel = DataSaveManager.Instance.MyData.GetUpgradeCastleCardDataByType(castleCardHealth.Type).Level;
+            castleCardHealthLevel = castleCardHealthLevel < castleCardHealth.CardLeveles.Length ? castleCardHealthLevel : castleCardHealth.CardLeveles.Length - 1;
+
+            UpgradeCastleCardLevelsHolder castleCardManaFill = _upgradeScreen.UpgradeCastleCardLevelsHolders.First(card => card.Type == UpgradeCastleCardLevelsHolder.UpgradeCastleCardType.ManaRegeneration);
+            int castleCardManaFillLevel = DataSaveManager.Instance.MyData.GetUpgradeCastleCardDataByType(castleCardManaFill.Type).Level;
+            castleCardManaFillLevel = castleCardManaFillLevel < castleCardManaFill.CardLeveles.Length ? castleCardManaFillLevel : castleCardManaFill.CardLeveles.Length - 1;
+
+            _alliedCastle.Initialize(
+                playerFraction.CastleSettings, 
+                playerFraction.Units,
+                Mathf.RoundToInt(castleCardHealth.CardLeveles[castleCardHealthLevel].Value),
+                castleCardManaFill.CardLeveles[castleCardManaFillLevel].Value);
             _alliedCastle.OnDead += CallLose;
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
@@ -65,7 +85,7 @@ namespace WOFL.Control
             Fraction enemyFraction = FractionManager.Instance.GetFractionByName(_aiEnemy.EnemyFraction);
 
             _aiEnemyPlayCoroutine = StartCoroutine(_aiEnemy.Play());
-            _enemyCastle.Initialize(enemyFraction.CastleSettings, enemyFraction.Units);
+            _enemyCastle.Initialize(enemyFraction.CastleSettings, enemyFraction.Units, _aiEnemy.LevelSettings.CastleHealth, 0);
             _enemyCastle.OnDead += CallWin;
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)
@@ -75,6 +95,7 @@ namespace WOFL.Control
             }
 
             IsBattleStarted = true;
+            OnBattleStarted?.Invoke();
             _battleControlCoroutine = StartCoroutine(BattleControl());
         }
         public void CallTakeDamageInPointWithRadius(IDamageable.GameSideName targetSideName,Vector3 damagePosition, float radius, int damage)
@@ -100,13 +121,33 @@ namespace WOFL.Control
         }
         private void CallWin(IDeathable deathableObject)
         {
+            if (!IsBattleStarted) return;
+
             IsBattleStarted = false;
             PopupManager.Instance.Show("WinScreenPopup");
+            _winPopup.AdjustRewards(EndGameRewardManager.Instance.GetRewardList(EndGameRewardManager.EndGameType.Win));
+            DataSaveManager.Instance.MyData.GameLevel++;
+            DataSaveManager.Instance.SaveData();
         }
         private void CallLose(IDeathable deathableObject)
         {
+            if (!IsBattleStarted) return;
+
             IsBattleStarted = false;
             PopupManager.Instance.Show("LoseScreenPopup");
+            _losePopup.AdjustRewards(EndGameRewardManager.Instance.GetRewardList(EndGameRewardManager.EndGameType.Lose));
+        }
+        public void FinishBattle()
+        {
+            PopupManager.Instance.HideAllPopups();
+            _fightScreen.FinishGame();
+            OnBattleFinished?.Invoke();
+
+            _alliedCastle.Clear();
+            _enemyCastle.Clear();
+
+            StopCoroutine(_aiEnemyPlayCoroutine);
+            StopCoroutine(_battleControlCoroutine);
         }
 
         #endregion

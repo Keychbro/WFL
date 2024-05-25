@@ -123,7 +123,7 @@ namespace Kamen.UI
 
             if (uuidFromServer != playerUUID)
             {
-                DataSaveManager.Instance.DeletePlayerAuthData();
+               // if (playerUUID != null) DataSaveManager.Instance.DeletePlayerAuthData();
                 playerUUID = null;
             }
 

@@ -24,6 +24,7 @@ namespace WOFL.Game
         #region Propeties
 
         public Fraction.FractionName EnemyFraction { get => _levelSettings.EnemyFractionName; }
+        public AIEnemySettings LevelSettings { get => _levelSettings; }
 
         #endregion
 

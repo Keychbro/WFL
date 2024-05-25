@@ -18,6 +18,7 @@ namespace WOFL.Game
         #region Variables
 
         [Header("Objects")]
+        [SerializeField] private GameObject _viewHolder;
         [SerializeField] private SpriteRenderer _castleView;
         [SerializeField] private Transform _unitsSpawnPoint;
         [SerializeField] private Transform _hitPoint;
@@ -57,6 +58,7 @@ namespace WOFL.Game
         public event Action<int> OnTakedDamage;
         public event Action OnManaValueChanged;
         public event Action<float> OnManaFilled;
+        private Coroutine _manaCollect;
 
         #endregion
 
@@ -74,19 +76,33 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize(CastleSettings castleSettings, UnitInfo[] units)
+        public void Initialize(CastleSettings castleSettings, UnitInfo[] units, int health, float manaFill)
         {
             _castleSettings = castleSettings;
 
             _castleView.sprite = _castleSettings.CastleView;
-            MaxHealth = _castleSettings.StartHealth + _castleSettings.IncreaseHealthStep * DataSaveManager.Instance.MyData.CastleHealthIncreaseLevel;
-            ManaFillDuration = 100f / _castleSettings.StartManaSpeedCollectValue + _castleSettings.IncreaseManaSpeedCollectStep * DataSaveManager.Instance.MyData.CastleManaSpeedCollectLevel;
+            CurrentMana = 0;
+            MaxHealth = health;
+            _currentHealth = MaxHealth;
+            ManaFillDuration = 1f / manaFill;
             _allDamageableObject.Add(this);
 
             _units = units;
             IsAlive = true;
 
-            StartCoroutine(Collect());
+            _manaCollect = StartCoroutine(Collect());
+        }
+        public void Clear()
+        {
+            for (int i = 0; i < _createdUnits.Count; i++)
+            {
+                Destroy(_createdUnits[i].gameObject);
+            }
+            _createdUnits.Clear();
+            _allDamageableObject.Clear();
+            _attackObjects.Clear();
+
+            StopCoroutine(_manaCollect);
         }
         public void CreateUnitForMana(UnitInfo.UniqueUnitName uniqueName)
         {
