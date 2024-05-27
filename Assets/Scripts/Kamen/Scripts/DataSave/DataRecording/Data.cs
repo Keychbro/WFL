@@ -23,7 +23,9 @@ namespace Kamen.DataSave
 
         [Header("Player Data")]
         [SerializeField] private string _username;
+        public event Action OnUsernameChanged;
         [SerializeField] private int _iconNumber;
+        public event Action OnIconNumberChanged;
         [Space]
         [SerializeField] private List<UserStatsData> _userStatsDatas = new List<UserStatsData>();
 
@@ -87,6 +89,7 @@ namespace Kamen.DataSave
                 }
 
                 _username = value;
+                OnUsernameChanged?.Invoke();
             }
         }
         public int IconNumber
@@ -101,6 +104,7 @@ namespace Kamen.DataSave
                 }
 
                 _iconNumber = value;
+                OnIconNumberChanged?.Invoke();
             }
         }
         public List<UserStatsData> UserStatsDatas { get => _userStatsDatas; }

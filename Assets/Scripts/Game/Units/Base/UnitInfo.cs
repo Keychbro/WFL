@@ -29,7 +29,10 @@ namespace WOFL.Settings
             Vampire_Warrior,
             Vampire_Mage,
             Vampire_Barrack,
-            Vampire_King
+            Vampire_King,
+            Zombi_Slow,
+            Zombi_Fast,
+            Zombi_King
         }
 
         #endregion

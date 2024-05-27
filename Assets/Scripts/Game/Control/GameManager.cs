@@ -35,6 +35,7 @@ namespace WOFL.Control
         [Header("Variables")]
         private Coroutine _aiEnemyPlayCoroutine;
         private Coroutine _battleControlCoroutine;
+        private int _levelNumber;
 
         #endregion
 
@@ -58,9 +59,10 @@ namespace WOFL.Control
 
         #region Control Methods
 
-        public void CallUpdateLevel(AIEnemySettings enemySettings)
+        public void CallUpdateLevel(AIEnemySettings enemySettings, int levelNumber)
         {
             _aiEnemy.UpdateLevelSettings(enemySettings);
+            _levelNumber = levelNumber;
         }
         public void StartBattle()
         {
@@ -126,7 +128,10 @@ namespace WOFL.Control
             IsBattleStarted = false;
             PopupManager.Instance.Show("WinScreenPopup");
             _winPopup.AdjustRewards(EndGameRewardManager.Instance.GetRewardList(EndGameRewardManager.EndGameType.Win));
-            DataSaveManager.Instance.MyData.GameLevel++;
+            if (DataSaveManager.Instance.MyData.GameLevel < _levelNumber + 1 ) 
+            {
+                DataSaveManager.Instance.MyData.GameLevel = _levelNumber + 1;
+            }
             DataSaveManager.Instance.SaveData();
         }
         private void CallLose(IDeathable deathableObject)

@@ -11,6 +11,7 @@ using WOFL.Online;
 using Newtonsoft.Json;
 using WOFL.Game;
 using Kamen.DataSave;
+using Cysharp.Threading.Tasks;
 
 namespace WOFL.Control
 {
@@ -42,7 +43,7 @@ namespace WOFL.Control
         {
             //GetServersList();
             //GetMessages("fb988152-8f01-4f9a-b436-3691d2ffe806", Fraction.FractionName.Human);
-            SendMessage("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1", Fraction.FractionName.Human, true, "Test message");
+            //SendMessage("fb988152-8f01-4f9a-b436-3691d2ffe806", "8375b6a3-c965-4b61-977c-c17f17b06741", Fraction.FractionName.Angel, true, "Test message");
             //CreatePlayer("Test player9", "test8gmail.com", 0);
             //GetPlayerUUID("test5@gmail.com");
             //GetPlayerData("fb988152-8f01-4f9a-b436-3691d2ffe806", "7b867119-c1a7-40da-b51e-294d8f66b7f1");
@@ -198,7 +199,7 @@ namespace WOFL.Control
                 }
             }
         }
-        public async void DeletePlayer(string email)
+        public async UniTask DeletePlayer(string email)
         {
             WWWForm form = new WWWForm();
 

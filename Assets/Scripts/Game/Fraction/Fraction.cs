@@ -16,7 +16,8 @@ namespace WOFL.Game
             Angel,
             Demon,
             Vampire,
-            Human
+            Human,
+            Zombi
         }
 
         #endregion

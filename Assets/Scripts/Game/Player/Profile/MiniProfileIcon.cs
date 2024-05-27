@@ -33,6 +33,10 @@ namespace WOFL.UI
         {
             Initialize();
         }
+        private void OnDestroy()
+        {
+            DataSaveManager.Instance.MyData.OnIconNumberChanged -= UpdateIcon;
+        }
 
         #endregion
 
@@ -43,13 +47,18 @@ namespace WOFL.UI
             await UniTask.WaitUntil(() => DataSaveManager.Instance.IsDataLoaded);
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
 
-            _icon.sprite = FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList[DataSaveManager.Instance.MyData.IconNumber];
+            UpdateIcon();
+            DataSaveManager.Instance.MyData.OnIconNumberChanged += UpdateIcon;
             _button = GetComponent<Button>();
             _button.onClick.AddListener(Click);
         }
         private void Click()
         {
             PopupManager.Instance.Show(_popupOpenName);
+        }
+        private void UpdateIcon() 
+        {
+            _icon.sprite = FractionManager.Instance.CurrentFraction.PlayerProfileSettings.IconsList[DataSaveManager.Instance.MyData.IconNumber];
         }
 
         #endregion

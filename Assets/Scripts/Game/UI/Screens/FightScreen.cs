@@ -87,7 +87,7 @@ namespace WOFL.UI
                 FractionManager.Instance.GetFractionByName(_levelSettings[_currentLevel].AIEnemySettings.EnemyFractionName),
                 _currentLevel,
                 _levelSettings.Length);
-            GameManager.Instance.CallUpdateLevel(_levelSettings[_currentLevel].AIEnemySettings);
+            GameManager.Instance.CallUpdateLevel(_levelSettings[_currentLevel].AIEnemySettings, _currentLevel);
         }
         private void StartGame()
         {

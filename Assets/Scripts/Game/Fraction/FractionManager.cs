@@ -16,6 +16,7 @@ namespace WOFL.Control
 
         [Header("Settings")]
         [SerializeField] private Fraction[] _fractions;
+        [SerializeField] private Fraction _zombiFraction;
 
         [Header("Variables")]
         private Fraction _currentFraction;
@@ -25,6 +26,7 @@ namespace WOFL.Control
         #region Properties
 
         public Fraction[] Fractions { get => _fractions; }
+        public Fraction ZombiFraction { get => _zombiFraction; }
         public Fraction CurrentFraction { get => _currentFraction; }
 
         #endregion

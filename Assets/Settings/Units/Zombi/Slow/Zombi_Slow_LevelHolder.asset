@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ce38556f3c7fb4db9c210666481b76, type: 3}
+  m_Name: Zombi_Slow_LevelHolder
+  m_EditorClassIdentifier: 
+  _levels:
+  - {fileID: 11400000, guid: bc1b0de51f2128041bf46ff180ad920f, type: 2}
+  - {fileID: 11400000, guid: fc78ac529d57e1f438694c943906087a, type: 2}
+  - {fileID: 11400000, guid: ab12c4e399689894fbebe0c6a69a884e, type: 2}
+  - {fileID: 11400000, guid: 8b4590b15990cd44693a72d6fd0dc5d0, type: 2}
+  - {fileID: 11400000, guid: db6c803f44f6f4743af6c46cb7e2f958, type: 2}
+  - {fileID: 11400000, guid: 24b2b757913639846b67656b5b85c846, type: 2}
+  - {fileID: 11400000, guid: 4a018231b2db9bf419c25bc2d962e09c, type: 2}
+  - {fileID: 11400000, guid: 448357f7abdd45941abe9374c6af10b0, type: 2}
+  - {fileID: 11400000, guid: 751e0b7fd48834b4696d6ce2d95f9ef3, type: 2}
+  - {fileID: 11400000, guid: d4c112e6362b30f4ab70983e4ab01f56, type: 2}
+  - {fileID: 11400000, guid: 27293a8a892bc1b4ba8c0a2b76c20ed4, type: 2}
+  - {fileID: 11400000, guid: 88a5358c94938c040b34d6e01b58567a, type: 2}
+  - {fileID: 11400000, guid: e8f8ec6c351509f418e78a227054f05f, type: 2}
+  - {fileID: 11400000, guid: a8c0784a13e104b43aa921fbfc87c2ae, type: 2}
+  - {fileID: 11400000, guid: 55134a228ed001a4f94f926e710fce0c, type: 2}
