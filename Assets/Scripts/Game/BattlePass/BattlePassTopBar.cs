@@ -30,6 +30,15 @@ namespace WOFL.BattlePass
 
         #endregion
 
+        #region Unity Methods
+
+        private void OnDestroy()
+        {
+             _currentBattlePassDataSave.OnScoreChanged -= UpdateAmountCompletePoints;
+        }
+
+        #endregion
+
         #region Control Methods
 
         public void Initialize(int seasonNumber, BattlePassManager.SeasonInfo seasonInfo, BattlePassDataSave battlePassDataSave)
@@ -38,11 +47,16 @@ namespace WOFL.BattlePass
             _currentBattlePassDataSave = battlePassDataSave;
 
             _title.text = $"Season {seasonNumber}";
+            UpdateAmountCompletePoints();
 
-            _amountCompletedPoints.text = $"{battlePassDataSave.Score/seasonInfo.BattlePassLine.ScoreForOneLevel}/{battlePassDataSave.TotalLevels}";
+            battlePassDataSave.OnScoreChanged += UpdateAmountCompletePoints;
 
             AdjustButton();
             AdjustTimer(new DateTime(seasonInfo.FinishSeasonDate.Year, seasonInfo.FinishSeasonDate.Month, seasonInfo.FinishSeasonDate.Day));
+        }
+        private void UpdateAmountCompletePoints()
+        {
+            _amountCompletedPoints.text = $"{_currentBattlePassDataSave.Score/_currentSeasonInfo.BattlePassLine.ScoreForOneLevel}/{_currentBattlePassDataSave.TotalLevels}";
         }
         private void AdjustTimer(DateTime finishTime)
         {

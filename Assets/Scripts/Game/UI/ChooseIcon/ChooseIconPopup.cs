@@ -82,6 +82,7 @@ namespace WOFL.UI
         private void SavePopup()
         {
             DataSaveManager.Instance.MyData.IconNumber = _choosenIconNumber;
+            PopupManager.Instance.Hide("ChooseIconPopup");
         }
 
         #endregion

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ff5a2c32227b94c8aafcafaaefe5e0, type: 3}
+  m_Name: Gold Pack
+  m_EditorClassIdentifier: 
+  _name: GOLD PACK
+  _productPanelInfos:
+  - {fileID: 11400000, guid: b239ac26bd6dd7240a8893854124cfa5, type: 2}
+  - {fileID: 11400000, guid: a9194226aae1ff54fa682f9ab6cdb17d, type: 2}

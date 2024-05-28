@@ -618,7 +618,6 @@ MonoBehaviour:
   _levelsBar: {fileID: 4471132723731165886}
   _stageText: {fileID: 1841356957548592899}
   _progressText: {fileID: 3047772463663474869}
-  _uiFixer: {fileID: 650929698342593746}
   _priceName: 
   _diamondPassTicketSettings: {fileID: 11400000, guid: 85c7b30de51ac854393f9a3a0af60532, type: 2}
 --- !u!114 &6905074864668956879
@@ -976,9 +975,9 @@ RectTransform:
   - {fileID: 8245001026506427777}
   m_Father: {fileID: 2697407607680222770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 35, y: -35}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3794296533367261841

@@ -18,7 +18,8 @@ namespace WOFL.Payment
             Gold,
             Diamonds,
             Tools,
-            RealMoney
+            RealMoney,
+            ZombiToken
         }
 
         #endregion

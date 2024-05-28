@@ -7,6 +7,8 @@ using WOFL.Control;
 using Kamen.DataSave;
 using Cysharp.Threading.Tasks;
 using WOFL.Game;
+using WOFL.BattlePass;
+using WOFL.DiamondPass;
 
 namespace WOFL.UI
 {
@@ -23,6 +25,7 @@ namespace WOFL.UI
         [Header("Addiotional Objects")]
         [SerializeField] private KamenButton _deleteAccountButton;
         [SerializeField] private MiniBattlePassView _miniBattlePassView;
+        [SerializeField] private GameObject _soonPanel;
         [SerializeField] private MiniDiamondPassView _miniDiamondPassView;
 
         #endregion
@@ -58,6 +61,24 @@ namespace WOFL.UI
 
             _deleteAccountButton.Initialize();
             _deleteAccountButton.OnClick().AddListener(TryDeleteAccount);
+
+            if (BattlePassManager.Instance.CurrentSeasonInfo != null)
+            {
+                _miniBattlePassView.Initialize(
+                    BattlePassManager.Instance.CurrentSeasonNumber,
+                    BattlePassManager.Instance.CurrentSeasonInfo,
+                    DataSaveManager.Instance.MyData.GetBattlePassDataByName(BattlePassManager.Instance.CurrentSeasonInfo.BattlePassLine.SeasonName));
+
+                _miniBattlePassView.gameObject.SetActive(true);  
+                _soonPanel.gameObject.SetActive(false);
+            }           
+            else 
+            {
+                _miniBattlePassView.gameObject.SetActive(false);  
+                _soonPanel.gameObject.SetActive(true);
+            }
+
+            _miniDiamondPassView.Initialize(DiamondPassManager.Instance.StageInfos, DataSaveManager.Instance.MyData.DiamondPassDataSave);
         }
         private void UpdateUserIcon()
         {
