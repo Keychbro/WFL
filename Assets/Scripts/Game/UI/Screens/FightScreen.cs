@@ -10,11 +10,45 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using WOFL.Control;
+using System;
 
 namespace WOFL.UI
 {
     public class FightScreen : Kamen.UI.Screen
     {
+        #region Enums
+
+        public enum FightModeType
+        {
+            Classic,
+            Zombie
+        }
+
+        #endregion
+
+        #region Classes
+
+        [Serializable] private class FightModeInfo
+        {
+            #region FightModeInfo Variables
+
+            [SerializeField] private FightModeType _type;
+            [SerializeField] private GameObject _panel;
+            [SerializeField] private LevelSettings[] _levelSettings;
+
+            #endregion
+
+            #region FightModeInfo Properties
+
+            public FightModeType Type { get => _type; }
+            public GameObject Panel { get => _panel; }
+            public LevelSettings[] LevelSettings { get => _levelSettings; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Variables
 
         [Header("Objects")]
@@ -27,9 +61,11 @@ namespace WOFL.UI
 
         [Header("Settings")]
         [SerializeField] private LevelSettings[] _levelSettings;
+        [SerializeField] private FightModeInfo[] _fightModeInfo;
 
         [Header("Variables")]
         private int _currentLevel;
+        private FightModeInfo _currentFightModeInfo;
 
         #endregion
 
