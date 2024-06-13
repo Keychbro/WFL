@@ -78,11 +78,12 @@ namespace WOFL.Control
             int castleCardManaFillLevel = DataSaveManager.Instance.MyData.GetUpgradeCastleCardDataByType(castleCardManaFill.Type).Level;
             castleCardManaFillLevel = castleCardManaFillLevel < castleCardManaFill.CardLeveles.Length ? castleCardManaFillLevel : castleCardManaFill.CardLeveles.Length - 1;
 
+            _alliedCastle.CallUpdateCastleView(playerFraction.CastleSettings);
             _alliedCastle.Initialize( 
                 playerFraction.Units,
                 Mathf.RoundToInt(castleCardHealth.CardLeveles[castleCardHealthLevel].Value),
                 castleCardManaFill.CardLeveles[castleCardManaFillLevel].Value,
-                _aiEnemy.EnemyFraction);
+                FractionManager.Instance.CurrentFraction.Name);
             _alliedCastle.OnDead += CallLose;
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);

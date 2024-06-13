@@ -68,6 +68,7 @@ namespace WOFL.UI
         [SerializeField] private QuickBar _quickBar;
         [SerializeField] private MiniProfileIcon _miniProfileIcon;
         [SerializeField] private GameObject _gameBottomBar;
+        [SerializeField] private GameObject _modePanelsHolder;
 
         [Header("Settings")]
         [SerializeField] private FightModeInfo[] _fightModeInfo;
@@ -168,6 +169,7 @@ namespace WOFL.UI
             _quickBar.SwitchVisible(false, true);
             _miniProfileIcon.gameObject.SetActive(false);
             _levelInfoView.gameObject.SetActive(false);
+            _modePanelsHolder.SetActive(false);
 
             _gameBottomBar.SetActive(true);
 
@@ -179,6 +181,7 @@ namespace WOFL.UI
             _quickBar.SwitchVisible(true, true);
             _miniProfileIcon.gameObject.SetActive(true);
             _levelInfoView.gameObject.SetActive(true);
+            _modePanelsHolder.SetActive(true);
 
             _gameBottomBar.SetActive(false);
         }
