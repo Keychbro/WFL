@@ -41,6 +41,9 @@ namespace Kamen.DataSave
         [SerializeField] private int _gameLevel;
         public event Action OnGameLevelChanged;
 
+        [SerializeField] private int _zombieLevel;
+        public event Action OnZombieLevelChanged;
+
         [Header("City")]
         [SerializeField] private int _cityLevel;
         public event Action OnCityLevelChanged;
@@ -208,6 +211,21 @@ namespace Kamen.DataSave
 
                 _gameLevel = value;
                 OnGameLevelChanged?.Invoke();
+            }
+        }
+        public int ZombieLevel
+        {
+            get => _zombieLevel;
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError($"[Data] - Attempt to assign variable ''_zombieLevel'' minus value");
+                    return;
+                }
+
+                _zombieLevel = value;
+                OnZombieLevelChanged?.Invoke();
             }
         }
 

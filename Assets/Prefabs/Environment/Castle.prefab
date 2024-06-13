@@ -50,6 +50,7 @@ MonoBehaviour:
   _castleView: {fileID: 2061933221072097313}
   _unitsSpawnPoint: {fileID: 4650033365128800733}
   _hitPoint: {fileID: 524567633883481088}
+  _healthBar: {fileID: 5616742766857445453}
   _sideName: 0
   _timeToDestroyUnit: 1.3
   _spawnUnitOffset: {x: 0, y: 0, z: 0}
@@ -350,6 +351,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af60b3c160aab844bccb1a8d74b428f, type: 3}
+--- !u!114 &5616742766857445453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8061214118869672255, guid: 2af60b3c160aab844bccb1a8d74b428f, type: 3}
+  m_PrefabInstance: {fileID: 2462767843983180146}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678754b3a8c96b94db2778e303eac909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8981981660806589157 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6812797199713069975, guid: 2af60b3c160aab844bccb1a8d74b428f, type: 3}

@@ -10,6 +10,7 @@ using WOFL.Save;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using Random = UnityEngine.Random;
+using WOFL.Game.Components;
 
 namespace WOFL.Game
 {
@@ -22,6 +23,7 @@ namespace WOFL.Game
         [SerializeField] private SpriteRenderer _castleView;
         [SerializeField] private Transform _unitsSpawnPoint;
         [SerializeField] private Transform _hitPoint;
+        [SerializeField] private HealthBar _healthBar;
 
         [Header("Settings")]
         [SerializeField] private IDamageable.GameSideName _sideName;
@@ -59,6 +61,7 @@ namespace WOFL.Game
         public event Action OnManaValueChanged;
         public event Action<float> OnManaFilled;
         private Coroutine _manaCollect;
+        private Fraction.FractionName _currentFractionName;
 
         #endregion
 
@@ -76,16 +79,21 @@ namespace WOFL.Game
 
         #region Control Methods
 
-        public void Initialize(CastleSettings castleSettings, UnitInfo[] units, int health, float manaFill)
+        public void CallUpdateCastleView(CastleSettings castleSettings)
         {
             _castleSettings = castleSettings;
-
             _castleView.sprite = _castleSettings.CastleView;
+            if (_castleView.sprite == null) _healthBar.gameObject.SetActive(false);
+            else _healthBar.gameObject.SetActive(true);
+        }
+        public void Initialize(UnitInfo[] units, int health, float manaFill, Fraction.FractionName fractionName)
+        {
+            _currentFractionName = fractionName;
             CurrentMana = 0;
             MaxHealth = health;
             _currentHealth = MaxHealth;
             ManaFillDuration = 1f / manaFill;
-            _allDamageableObject.Add(this);
+            if (_currentFractionName != Fraction.FractionName.Zombi) _allDamageableObject.Add(this);
 
             _units = units;
             IsAlive = true;

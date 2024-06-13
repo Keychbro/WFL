@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f5639ccd03d3df4aa88f41cb783c902, type: 3}
-  m_Name: ZombiCastle
+  m_Script: {fileID: 11500000, guid: a36274705394568469059cb6fb176f0b, type: 3}
+  m_Name: ZombieLevelSettings_1
   m_EditorClassIdentifier: 
-  _castleView: {fileID: 0}
-  _startHealth: 10
-  _startManaSpeedCollectValue: 10
-  _increaseHealthStep: 5
-  _increaseManaSpeedCollectStep: 2
+  _aiEnemySettings: {fileID: 11400000, guid: c0899d9848bd1374798fa57794f8e57b, type: 2}

@@ -62,6 +62,9 @@ namespace WOFL.Control
         public void CallUpdateLevel(AIEnemySettings enemySettings, int levelNumber)
         {
             _aiEnemy.UpdateLevelSettings(enemySettings);
+
+            Fraction enemyFraction = _aiEnemy.EnemyFraction == Fraction.FractionName.Zombi ? FractionManager.Instance.ZombiFraction : FractionManager.Instance.GetFractionByName(_aiEnemy.EnemyFraction);
+            _enemyCastle.CallUpdateCastleView(enemyFraction.CastleSettings);
             _levelNumber = levelNumber;
         }
         public void StartBattle()
@@ -75,19 +78,24 @@ namespace WOFL.Control
             int castleCardManaFillLevel = DataSaveManager.Instance.MyData.GetUpgradeCastleCardDataByType(castleCardManaFill.Type).Level;
             castleCardManaFillLevel = castleCardManaFillLevel < castleCardManaFill.CardLeveles.Length ? castleCardManaFillLevel : castleCardManaFill.CardLeveles.Length - 1;
 
-            _alliedCastle.Initialize(
-                playerFraction.CastleSettings, 
+            _alliedCastle.Initialize( 
                 playerFraction.Units,
                 Mathf.RoundToInt(castleCardHealth.CardLeveles[castleCardHealthLevel].Value),
-                castleCardManaFill.CardLeveles[castleCardManaFillLevel].Value);
+                castleCardManaFill.CardLeveles[castleCardManaFillLevel].Value,
+                _aiEnemy.EnemyFraction);
             _alliedCastle.OnDead += CallLose;
             _manaView.Initialize(_alliedCastle);
             _gameCardsPanel.Initialize(_alliedCastle, playerFraction.Units);
 
-            Fraction enemyFraction = FractionManager.Instance.GetFractionByName(_aiEnemy.EnemyFraction);
+            Fraction enemyFraction = _aiEnemy.EnemyFraction == Fraction.FractionName.Zombi ? FractionManager.Instance.ZombiFraction : FractionManager.Instance.GetFractionByName(_aiEnemy.EnemyFraction);
 
             _aiEnemyPlayCoroutine = StartCoroutine(_aiEnemy.Play());
-            _enemyCastle.Initialize(enemyFraction.CastleSettings, enemyFraction.Units, _aiEnemy.LevelSettings.CastleHealth, 0);
+            _enemyCastle.Initialize(
+                enemyFraction.Units, 
+                _aiEnemy.LevelSettings.CastleHealth,
+                0,
+                _aiEnemy.EnemyFraction);
+
             _enemyCastle.OnDead += CallWin;
 
             if (DataSaveManager.Instance.MyData.UnitsDatas[0].CurrentLevel != 1)

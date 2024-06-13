@@ -11,6 +11,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using WOFL.Control;
 using System;
+using System.Linq;
 
 namespace WOFL.UI
 {
@@ -33,16 +34,25 @@ namespace WOFL.UI
             #region FightModeInfo Variables
 
             [SerializeField] private FightModeType _type;
-            [SerializeField] private GameObject _panel;
+            [SerializeField] private KamenButton _panel;
             [SerializeField] private LevelSettings[] _levelSettings;
+            private int _currentLevels;
 
             #endregion
 
             #region FightModeInfo Properties
 
             public FightModeType Type { get => _type; }
-            public GameObject Panel { get => _panel; }
+            public KamenButton Panel { get => _panel; }
             public LevelSettings[] LevelSettings { get => _levelSettings; }
+            public int CurrentLevels 
+            { 
+                get => _currentLevels; 
+                set
+                {
+                    if (value >= 0) _currentLevels = value;
+                }
+            }
 
             #endregion
         }
@@ -60,11 +70,9 @@ namespace WOFL.UI
         [SerializeField] private GameObject _gameBottomBar;
 
         [Header("Settings")]
-        [SerializeField] private LevelSettings[] _levelSettings;
         [SerializeField] private FightModeInfo[] _fightModeInfo;
 
         [Header("Variables")]
-        private int _currentLevel;
         private FightModeInfo _currentFightModeInfo;
 
         #endregion
@@ -89,13 +97,40 @@ namespace WOFL.UI
             await UniTask.WaitUntil(() => DataSaveManager.Instance.MyData.ChoosenFraction != Fraction.FractionName.None);
             await Task.Delay(100);
 
-            _currentLevel = DataSaveManager.Instance.MyData.GameLevel;
+            AdjustFightMode();
 
             _levelInfoView.Initialize();
             _levelInfoView.OnCallPreviousLevel += ShowPreviousLevel;
             _levelInfoView.OnCallNextLevel += ShowNextLevel;
             _levelInfoView.OnCallStartGame += StartGame;
 
+            UdpateAllLevelView();
+        }
+        private void AdjustFightMode()
+        {
+            _currentFightModeInfo = _fightModeInfo.First(fightMode => fightMode.Type == FightModeType.Classic);
+            for (int i = 0; i < _fightModeInfo.Length; i++)
+            {
+                _fightModeInfo[i].Panel.Initialize();
+                _fightModeInfo[i].Panel.OnClick().AddListener(SwitchGameMode);
+                _fightModeInfo[i].Panel.gameObject.SetActive(false);
+            }
+
+            _currentFightModeInfo.Panel.gameObject.SetActive(true);
+
+            FightModeInfo classicMode = _fightModeInfo.First(fightMode => fightMode.Type == FightModeType.Classic);
+            classicMode.CurrentLevels = DataSaveManager.Instance.MyData.GameLevel;
+            if (classicMode.CurrentLevels > classicMode.LevelSettings.Length - 1) classicMode.CurrentLevels = classicMode.LevelSettings.Length - 1;
+
+            FightModeInfo zombieMode = _fightModeInfo.First(fightMode => fightMode.Type == FightModeType.Zombie);
+            zombieMode.CurrentLevels = DataSaveManager.Instance.MyData.GameLevel;
+            if (zombieMode.CurrentLevels > zombieMode.LevelSettings.Length - 1) zombieMode.CurrentLevels = zombieMode.LevelSettings.Length - 1;
+        }
+        private void SwitchGameMode()
+        {
+            _currentFightModeInfo.Panel.gameObject.SetActive(false);
+            _currentFightModeInfo = _fightModeInfo.First(fightMode => fightMode.Type != _currentFightModeInfo.Type);
+            _currentFightModeInfo.Panel.gameObject.SetActive(true);
             UdpateAllLevelView();
         }
         public override void Transit(bool isShow, bool isForth, ScreenManager.TransitionType type, float duration, Ease curve, MyCurve myCurve)
@@ -109,21 +144,23 @@ namespace WOFL.UI
         }
         private void ShowPreviousLevel()
         {
-            _currentLevel--;
+            _currentFightModeInfo.CurrentLevels--;
             UdpateAllLevelView();
         }
         private void ShowNextLevel()
         {
-            _currentLevel++;
+            _currentFightModeInfo.CurrentLevels++;
+            if (_currentFightModeInfo.CurrentLevels >= _currentFightModeInfo.LevelSettings.Length) _currentFightModeInfo.CurrentLevels = _currentFightModeInfo.LevelSettings.Length;
             UdpateAllLevelView();
         }
         private void UdpateAllLevelView()
         {
             _levelInfoView.UpdateCurrentLevel(
-                FractionManager.Instance.GetFractionByName(_levelSettings[_currentLevel].AIEnemySettings.EnemyFractionName),
-                _currentLevel,
-                _levelSettings.Length);
-            GameManager.Instance.CallUpdateLevel(_levelSettings[_currentLevel].AIEnemySettings, _currentLevel);
+                _currentFightModeInfo.Type == FightModeType.Zombie ? FractionManager.Instance.ZombiFraction :
+                FractionManager.Instance.GetFractionByName(_currentFightModeInfo.LevelSettings[_currentFightModeInfo.CurrentLevels].AIEnemySettings.EnemyFractionName),
+                _currentFightModeInfo.CurrentLevels,
+                _currentFightModeInfo.LevelSettings.Length);
+            GameManager.Instance.CallUpdateLevel(_currentFightModeInfo.LevelSettings[_currentFightModeInfo.CurrentLevels].AIEnemySettings, _currentFightModeInfo.CurrentLevels);
         }
         private void StartGame()
         {
