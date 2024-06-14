@@ -99,6 +99,13 @@ namespace WOFL.Game
             IsAlive = true;
 
             _manaCollect = StartCoroutine(Collect());
+            StartCoroutine(AdjustHealthBar());
+        }
+        private IEnumerator AdjustHealthBar()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
 
             if (_castleView.sprite == null) _healthBar.gameObject.SetActive(false);
             else _healthBar.gameObject.SetActive(true);
