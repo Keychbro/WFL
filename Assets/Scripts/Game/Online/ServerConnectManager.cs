@@ -87,7 +87,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+               // Debug.Log(www.downloadHandler.text);
                 return JsonConvert.DeserializeObject<List<ServerInfo>>(www.downloadHandler.text);
             }
         }
@@ -112,7 +112,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+              //  Debug.Log(www.downloadHandler.text);
                 return JsonConvert.DeserializeObject<List<GetMessageInfo>>(www.downloadHandler.text); 
             }
         }
@@ -160,7 +160,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+             //   Debug.Log(www.downloadHandler.text);
                 return true;
             }
         }
@@ -188,7 +188,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+             //   Debug.Log(www.downloadHandler.text);
                 if (www.downloadHandler.text.Contains("email busy"))
                 {
                     return JsonConvert.DeserializeObject<CreatePlayerFailureInfo>(www.downloadHandler.text).info;
@@ -217,7 +217,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+           //     Debug.Log(www.downloadHandler.text);
             }
         }
         public async Task<string> GetPlayerUUID(string email)
@@ -234,7 +234,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+           //     Debug.Log(www.downloadHandler.text);
                 return JsonConvert.DeserializeObject<GetPlayerUUIDInfo>(www.downloadHandler.text).player_uuid;
             }
         }
@@ -253,7 +253,7 @@ namespace WOFL.Control
             else
             {
                 string finish = www.downloadHandler.text.Trim('"').Replace("\\", "");
-                Debug.Log(finish);
+           //     Debug.Log(finish);
 
                 T loadedData;
                 if (finish == "" || finish == null)
@@ -287,7 +287,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+            //    Debug.Log(www.downloadHandler.text);
             }
         }
         public async Task DeletePlayerData(string player_uuid, string server_uuid)
@@ -309,7 +309,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+          //      Debug.Log(www.downloadHandler.text);
             }
         }
 
@@ -331,7 +331,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+         //       Debug.Log(www.downloadHandler.text);
                 return JsonConvert.DeserializeObject<List<GetSupportMessageInfo>>(www.downloadHandler.text);
             }
         }
@@ -355,7 +355,7 @@ namespace WOFL.Control
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
+            //    Debug.Log(www.downloadHandler.text);
                 return true;
             }
         }
