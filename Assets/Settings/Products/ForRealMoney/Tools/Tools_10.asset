@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tools_10
   m_EditorClassIdentifier: 
   _name: Tiny of Gold
+  productID: TOOLS1
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,4 +21,5 @@ MonoBehaviour:
   _iconSize: {x: 180, y: 180}
   _iconPosition: {x: 0, y: -21, z: 0}
   _offerType: 1
+  _isSoonViewActive: 0
   _amountToolsReceive: 10

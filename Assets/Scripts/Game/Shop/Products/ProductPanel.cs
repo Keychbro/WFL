@@ -29,6 +29,9 @@ namespace WOFL.UI
         protected ProductPanelInfo _currentProductPanelInfo;
         protected event UnityAction<int, Action> PaymentMethod;
 
+        [Header("ProductPurchaseData")]
+        [SerializeField] private string ProductID;
+
         #endregion
 
         #region Control Methods
@@ -37,6 +40,7 @@ namespace WOFL.UI
         {
             _currentProductPanelInfo = productPanelInfo;
 
+            ProductID = productPanelInfo.productID;
             _title.text = _currentProductPanelInfo.Name;
             _productIcon.sprite = _currentProductPanelInfo.Icon;
             _productIcon.rectTransform.sizeDelta = _currentProductPanelInfo.IconSize;

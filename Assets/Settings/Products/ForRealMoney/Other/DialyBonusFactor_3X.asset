@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DialyBonusFactor_3X
   m_EditorClassIdentifier: 
   _name: Daily Bonus Factor
+  productID: BONUSFACTOR
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,4 +21,5 @@ MonoBehaviour:
   _iconSize: {x: 170, y: 155}
   _iconPosition: {x: 0, y: -5, z: 0}
   _offerType: 3
+  _isSoonViewActive: 0
   _bonusFactor: 3

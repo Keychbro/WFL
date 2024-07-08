@@ -4,13 +4,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using YG;
 
 namespace WOFL.Payment
 {
     public class PaymentManager : SingletonComponent<PaymentManager>
     {
+
         #region Enums
 
         public enum PaymentType
@@ -65,12 +68,28 @@ namespace WOFL.Payment
 
             successfulCallback?.Invoke();
         }
+
+        private static string _productID;
+        public static void SetProductID(string productID)
+        {
+            _productID = productID;
+        }
+
+        private Action chachedCallBack;
         public void BuyWithRealMoney(int price, Action successfulCallback)
         {
-            //TODO IAP Buy
-
-            successfulCallback?.Invoke();
+            if (!YandexGame.SDKEnabled) throw new Exception("YANDEX SDK IS NOT LOADED YET");
+            YandexGame.BuyPayments(_productID);
+            YandexGame.PurchaseSuccessEvent += ExecuteCallback;
+            chachedCallBack = successfulCallback;
         }
+        public void ExecuteCallback(string empty)
+        {
+            Debug.Log("SUCCES PURCHASE");
+            chachedCallBack?.Invoke();
+            YandexGame.PurchaseSuccessEvent -= ExecuteCallback;
+        }
+
         public UnityAction<int, Action> GetBuyMethodByType(PaymentType type)
         {
             return type switch

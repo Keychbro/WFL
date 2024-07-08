@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Gold_1M
   m_EditorClassIdentifier: 
   _name: Fistful of Gold
+  productID: GOLD1
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,4 +21,5 @@ MonoBehaviour:
   _iconSize: {x: 185, y: 185}
   _iconPosition: {x: 0, y: -14, z: 0}
   _offerType: 0
+  _isSoonViewActive: 0
   _amountGoldReceive: 1000000

@@ -14,6 +14,7 @@ namespace WOFL.Settings
 
         [Header("Main Settings")]
         [SerializeField] protected string _name;
+        [SerializeField] public string productID;
         [Space]
         [SerializeField] protected int _price;
         [SerializeField] protected string _priceName;

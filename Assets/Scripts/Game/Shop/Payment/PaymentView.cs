@@ -59,7 +59,9 @@ namespace WOFL.Payment
         }
         public void UpdatePriceText(string priceText)
         {
-            if (int.TryParse(priceText, out int priceInValue)) _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
+            if (int.TryParse(priceText, out int priceInValue)) 
+                _price.text = BigNumberViewConverter.Instance.Convert(priceInValue).ToString();
+            
             else _price.text = priceText;
         }
         #endregion

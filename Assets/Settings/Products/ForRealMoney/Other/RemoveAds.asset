@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RemoveAds
   m_EditorClassIdentifier: 
   _name: Remove Ads
+  productID: NOADS
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,3 +21,4 @@ MonoBehaviour:
   _iconSize: {x: 195, y: 230}
   _iconPosition: {x: 12, y: 5, z: 0}
   _offerType: 1
+  _isSoonViewActive: 0

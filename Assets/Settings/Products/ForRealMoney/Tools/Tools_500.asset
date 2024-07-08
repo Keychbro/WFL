@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tools_500
   m_EditorClassIdentifier: 
   _name: Chest of Tools
+  productID: TOOLS3
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,4 +21,5 @@ MonoBehaviour:
   _iconSize: {x: 250, y: 250}
   _iconPosition: {x: 0, y: -17, z: 0}
   _offerType: 2
+  _isSoonViewActive: 0
   _amountToolsReceive: 500

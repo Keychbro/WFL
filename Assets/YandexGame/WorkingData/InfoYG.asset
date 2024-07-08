@@ -273,23 +273,95 @@ MonoBehaviour:
     de: 
     hi: 
   purshasesSimulation:
-  - id: gun
-    title: Gun
-    description: Product - Gun
-    imageURI: https://justplaygames.ru/public/Paymant1.png
-    priceValue: 5
+  - id: VIPC1
+    title: VIPC1
+    description: VIPC1
+    imageURI: 
+    priceValue: 100
     consumed: 1
-  - id: armor
-    title: Armor
-    description: Product - Armor
-    imageURI: https://justplaygames.ru/public/Paymant2.png
-    priceValue: 10
+  - id: VIPC2
+    title: VIPC2
+    description: VIPC2
+    imageURI: 
+    priceValue: 100
     consumed: 1
-  - id: grenade
-    title: Grenade
-    description: Product - Grenade
-    imageURI: https://justplaygames.ru/public/Paymant3.png
-    priceValue: 30
+  - id: VIPC3
+    title: VIPC3
+    description: VIPC3
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: VALUE1
+    title: VALUE1
+    description: VALUE1
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: VALUE2
+    title: VALUE2
+    description: VALUE2
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: VALUE3
+    title: VALUE3
+    description: VALUE3
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: GOLD1
+    title: GOLD1
+    description: GOLD1
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: GOLD2
+    title: GOLD2
+    description: GOLD2
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: GOLD3
+    title: GOLD3
+    description: GOLD3
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: BONUSFACTOR
+    title: BONUSFACTOR
+    description: BONUSFACTOR
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: NOADS
+    title: NOADS
+    description: NOADS
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: TOOLS1
+    title: TOOLS1
+    description: TOOLS1
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: TOOLS2
+    title: TOOLS2
+    description: TOOLS2
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: TOOLS3
+    title: TOOLS3
+    description: TOOLS3
+    imageURI: 
+    priceValue: 100
+    consumed: 1
+  - id: SECRETUNIT1
+    title: SECRETUNIT1
+    description: SECRETUNIT1
+    imageURI: 
+    priceValue: 100
     consumed: 1
   metricaEnable: 0
   metricaCounterID: 0

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Chest_VIP_1
   m_EditorClassIdentifier: 
   _name: VIP Chest 1
+  productID: VIPC1
   _price: 0
   _priceName: 
   _paymentType: 3
@@ -20,4 +21,5 @@ MonoBehaviour:
   _iconSize: {x: 210, y: 210}
   _iconPosition: {x: 0, y: 9, z: 0}
   _offerType: 0
+  _isSoonViewActive: 0
   _chestType: 2
