@@ -153,6 +153,7 @@ namespace WOFL.Control
         }
         public void FinishBattle()
         {
+            Time.timeScale = 1;
             PopupManager.Instance.HideAllPopups();
             _fightScreen.FinishGame();
             OnBattleFinished?.Invoke();

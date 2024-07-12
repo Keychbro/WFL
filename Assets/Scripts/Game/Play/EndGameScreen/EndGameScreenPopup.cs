@@ -72,8 +72,11 @@ namespace WOFL.UI
             _increaseRewardsButton.Button.onClick.AddListener(TryIncreaseReward);
             _continueButton.Button.onClick.AddListener(Continue);
         }
+
+        private List<EndGameRewardInfo> chachedRewardInfos;
         public void AdjustRewards(List<EndGameRewardInfo> rewardInfos)
         {
+            chachedRewardInfos = rewardInfos;
             for (int i = 0; i < _rewardViews.Count; i++)
             {
                 Destroy(_rewardViews[i].gameObject);
@@ -85,6 +88,13 @@ namespace WOFL.UI
                 CreateEndGameReward(rewardInfos[i]);
             }
         }
+
+        public void IncreaseAndAdjustChachedReward()
+        {
+            TryIncreaseReward();
+            AdjustRewards(chachedRewardInfos);
+        }
+
         public void CreateEndGameReward(EndGameRewardInfo rewardInfo)
         {
             EndGameRewardView rewardView = Instantiate(_endGameRewardViewPrefab, _rewardHolder.transform);
