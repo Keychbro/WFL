@@ -1,3 +1,4 @@
+using Kamen.DataSave;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,12 +35,17 @@ public class RewardAd : MonoBehaviour
 
     public void ShowAd(int rewardID)
     {
+        if (DataSaveManager.Instance.MyData.IsAdsRemoved && rewardID != 0)
+        {
+            GetReward(rewardID);
+            return;
+        }
         YandexGame.RewVideoShow(rewardID);
     }
 
     private IEnumerator speedRoutine()
     {
-        Time.timeScale = 2;
+        Time.timeScale = 3;
         yield return new WaitForSeconds(300);
         Time.timeScale = 1;
     }

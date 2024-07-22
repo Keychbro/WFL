@@ -138,9 +138,17 @@ namespace WOFL.UI
         {
             base.Transit(isShow, isForth, type, duration, curve, myCurve);
 
-            if (DataSaveManager.Instance.MyData.ChoosenFraction == Fraction.FractionName.None)
+            try
             {
-                PopupManager.Instance.Show("ChooseFractionPopup");
+                if (DataSaveManager.Instance.MyData.ChoosenFraction == Fraction.FractionName.None)
+                {
+                    PopupManager.Instance.Show("ChooseFractionPopup");
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.LogWarning(e);
+                return;
             }
         }
         private void ShowPreviousLevel()

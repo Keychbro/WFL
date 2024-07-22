@@ -41,6 +41,8 @@ namespace WOFL.Game
 
             float targetAngleZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0f, 0f, targetAngleZ), Time.deltaTime * _rotationSpeed);
+
+            if (hitPoint == null) { Destroy(gameObject); }
         }
 
         #endregion

@@ -30,11 +30,11 @@ namespace Kamen.DataSave
         [SerializeField] private List<UserStatsData> _userStatsDatas = new List<UserStatsData>();
 
         [Header("Currency")]
-        [SerializeField] private int _gold = 100000000; //Change to 0
+        [SerializeField] private int _gold = 1000; //Change to 0
         public event Action OnGoldAmountChanged;
-        [SerializeField] private int _diamonds = 100000000; //Change to 0
+        [SerializeField] private int _diamonds = 0; //Change to 0
         public event Action OnDiamondsAmountChanged;
-        [SerializeField] private int _tools = 100000000; //Change to 0
+        [SerializeField] private int _tools = 0; //Change to 0
         public event Action OnToolsAmountChanged;
 
         [Header("Main Game")]

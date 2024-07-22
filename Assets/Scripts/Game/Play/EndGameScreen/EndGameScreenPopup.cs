@@ -7,6 +7,8 @@ using TMPro;
 using WOFL.Game;
 using System;
 using WOFL.Control;
+using Kamen.DataSave;
+using YG;
 
 namespace WOFL.UI
 {
@@ -118,7 +120,9 @@ namespace WOFL.UI
         public void Continue()
         {
             GameManager.Instance.FinishBattle();
-            
+
+            //EXEPTION: NO PLAYER RATING DATA
+            YandexGame.NewLeaderboardScores("BestPlayers", 0);
         }
 
         #endregion

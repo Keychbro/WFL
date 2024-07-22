@@ -40,10 +40,10 @@ namespace WOFL.UI
             _button = GetComponent<Button>();
             _button.onClick.AddListener(Click);
         }
-        private void Click()
+        public void Click()
         {
-            if (_isEnable) PopupManager.Instance.Show(_popupName);
-            else PopupManager.Instance.Hide(_popupName);
+            /*if (_isEnable)*/ PopupManager.Instance.Show(_popupName);
+            //else PopupManager.Instance.Hide(_popupName);
         }
 
         #endregion
